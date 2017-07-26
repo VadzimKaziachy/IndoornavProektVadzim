@@ -1,2 +1,1 @@
-include ':app', ':beaconlibrary', ':beaconlibrari', 'IndoorNavigation'
-
+include ':app', ':beaconlibrari'
