@@ -4,12 +4,8 @@ package com.example.indoornav;
  * Created by Вадим on 25.07.2017.
  */
 
-public class Map {
-    private static String map = "3.Map";
-    public static String getMap(){
-        return map;
-    }
-
+class Map {
+    static final String map = "3.Map";
 }
 //этот класс будет отвечать за карты, а именно, после определения местоположеня человека, класс MainActivity будет отправлять
 //в этот класс именя Beacon которые ему удалось найти, сдесь будет определять на каком этаже мы находимся по имени Beacon

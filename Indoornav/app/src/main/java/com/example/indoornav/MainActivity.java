@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void two(){
-        textView.setText(String.valueOf(Bluetooth.getBlutooth()));
-        textView1.setText(String.valueOf(TypeBeacon.getTypeBeacon()));
-        textView2.setText(String.valueOf(Map.getMap()));
-        textView3.setText(String.valueOf(WaveAlgorithm.getWaveAlgorithm()));
+        textView.setText(String.valueOf(Bluetooth.Bluetooth));
+        textView1.setText(String.valueOf(TypeBeacon.typeBeacon));
+        textView2.setText(String.valueOf(Map.map));
+        textView3.setText(String.valueOf(WaveAlgorithm.waveAlgorithm));
 
     }
 }

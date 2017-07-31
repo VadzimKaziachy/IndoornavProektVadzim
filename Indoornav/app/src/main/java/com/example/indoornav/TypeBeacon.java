@@ -1,15 +1,13 @@
 package com.example.indoornav;
 
+import com.example.beaconlibrari.TrilateratiaBeacon;
+
 /**
  * Created by Вадим on 25.07.2017.
  */
 
-public class TypeBeacon {
-    private static String typeBeacon = "2.TypeBeacon";
-    public static String getTypeBeacon(){
-        String a = typeBeacon + "  "+Trilateration.getTrilateration();
-        return a;
-    }
+class TypeBeacon {
+    static final String typeBeacon = "2.TypeBeacon " +Trilateration.trilateration + TrilateratiaBeacon.trilateratiaBeacon;
 }
 //этот класс получает с главного класс (MainActivity) данные, а именно сколько биканов было обнаруженно, и какого типа они
 //то есть какой фирмы, в зависимости от этого этот класс будет отправлять полученные данные в соотвествующий модуль, то есть

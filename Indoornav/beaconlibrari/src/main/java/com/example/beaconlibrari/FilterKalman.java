@@ -4,11 +4,9 @@ package com.example.beaconlibrari;
  * Created by Вадим on 25.07.2017.
  */
 
-public class FilterKalman {
-    private static String map = "3.FilterKalman";
-    public static String getFilterKalman(){
-        return map;
-    }
+class FilterKalman {
+    static final String map = "2.2.2 FilterKalman";
+
 }
 //сюда будут приходить данные из класса TypeBeacon, при случаи если тип бикана не определися, то есть не одни из сторонних SDK
 //не подходит. Сигнал будет тут усредняться и сглаживаться, чтоб не было сильных расхождение в сигнале, после чего усредненый

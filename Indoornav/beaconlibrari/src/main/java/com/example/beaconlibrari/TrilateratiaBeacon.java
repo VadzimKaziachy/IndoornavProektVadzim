@@ -5,12 +5,7 @@ package com.example.beaconlibrari;
  */
 
 public class TrilateratiaBeacon {
-    private static String trilateratiaBeacon = "3.TrilateratiaBeacon";
-    public static String getTrilateratiaBeacon(){
-        FilterKalman.getFilterKalman();
-        return trilateratiaBeacon;
-    }
-
+    public static final String trilateratiaBeacon = "2.2.1 TrilateratiaBeacon " + FilterKalman.map;
 }
 //здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
 //после чего по силе сигнала будем определять расстояние до Beacon и по трем Beacon будем определять координаты человека
