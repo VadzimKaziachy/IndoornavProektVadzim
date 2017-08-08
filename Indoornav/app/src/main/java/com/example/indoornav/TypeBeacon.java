@@ -1,6 +1,8 @@
 package com.example.indoornav;
 
+
 import com.example.beaconlibrari.TrilateratiaBeacon;
+
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -8,6 +10,7 @@ import com.example.beaconlibrari.TrilateratiaBeacon;
 
 class TypeBeacon {
     static final String typeBeacon = "2.TypeBeacon " +Trilateration.trilateration + TrilateratiaBeacon.trilateratiaBeacon;
+
 }
 //этот класс получает с главного класс (MainActivity) данные, а именно сколько биканов было обнаруженно, и какого типа они
 //то есть какой фирмы, в зависимости от этого этот класс будет отправлять полученные данные в соотвествующий модуль, то есть
