@@ -1,4 +1,10 @@
-package com.example.indoornav;
+package com.example.indoornav.by.grsu.ftf.indoornav.ui.MainActivity;
+
+/**
+ * этот класс являеться главным, неким ядром программы.
+ * программа при запуске переходит в класс Bluetooth где проверяет включин ли Bluetooth
+ */
+
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,9 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.beaconlibrari.Distance;
+import com.example.indoornav.R;
+import com.example.indoornav.by.grsu.ftf.indoornav.connectivity.bluetooth.Bluetooth;
+
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView, textView1, textView2, textView3 ,textView4, textView5, textView6, textView7, textView8, textView9;
+
+
+    TextView textView4, textView5, textView6, textView7, textView8, textView9;
 
 
 
@@ -35,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void one(){
-        textView = (TextView) findViewById(R.id.textView);
-        textView1 = (TextView) findViewById(R.id.textView1);
-        textView2 = (TextView) findViewById(R.id.textView2);
-        textView3 = (TextView) findViewById(R.id.textView3);
         textView4 = (TextView) findViewById(R.id.textView4);
         textView5 = (TextView) findViewById(R.id.textView5);
         textView6 = (TextView) findViewById(R.id.textView6);
@@ -48,10 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void two(){
-        textView.setText(String.valueOf(Bluetooth.Bluetooth));
-        textView1.setText(String.valueOf(TypeBeacon.typeBeacon));
-        textView2.setText(String.valueOf(Map.map));
-        textView3.setText(String.valueOf(WaveAlgorithm.waveAlgorithm));
         textView4.setText(String.valueOf(Distance.Bottom_Left));
         textView5.setText(String.valueOf(Distance.Bottom_Rights));
         textView6.setText(String.valueOf(Distance.Top_Left));
@@ -69,6 +72,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-//этот класс являеться главным, неким ядром программы.
-//программа при запуске переходит в класс Bluetooth где проверяет включин ли Bluetooth
 

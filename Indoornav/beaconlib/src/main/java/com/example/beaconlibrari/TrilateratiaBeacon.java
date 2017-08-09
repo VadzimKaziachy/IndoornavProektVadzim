@@ -1,17 +1,23 @@
 package com.example.beaconlibrari;
 
+/**
+ * Created by Вадим on 25.07.2017.
+ *
+ * здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
+ * после чего по силе сигнала будем определять расстояние до Beacon и по трем Beacon будем определять координаты человека
+ * после чего значение x и y будет отправляться в класс TypeBeacon, а оттуда в главный класс MainActivity
+ */
+
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
-/**
- * Created by Вадим on 25.07.2017.
- */
+
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class TrilateratiaBeacon extends Distance {
-    public static final String trilateratiaBeacon = "2.2.1 TrilateratiaBeacon " + FilterKalman.map;
+
 
     public int getClosest() {
         double minim = 100;
@@ -88,6 +94,3 @@ public class TrilateratiaBeacon extends Distance {
 
 
 
-//здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
-//после чего по силе сигнала будем определять расстояние до Beacon и по трем Beacon будем определять координаты человека
-//после чего значение x и y будет отправляться в класс TypeBeacon, а оттуда в главный класс MainActivity

@@ -1,1 +1,1 @@
-include ':app', ':beaconlibrari'
+include ':app', ':beaconlib'

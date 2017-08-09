@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Indoornav.iml" filepath="$PROJECT_DIR$/Indoornav.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/beaconlibrari/beaconlibrari.iml" filepath="$PROJECT_DIR$/beaconlibrari/beaconlibrari.iml" />
+      <module fileurl="file://$PROJECT_DIR$/beaconlib/beaconlib.iml" filepath="$PROJECT_DIR$/beaconlib/beaconlib.iml" />
     </modules>
   </component>
 </project>
