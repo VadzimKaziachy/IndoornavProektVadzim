@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="by.grsu.ftf.indoornav.navigation.map.MapProcessor"/>
+        <service android:name="by.grsu.ftf.indoornav.widget.PathCalculator"/>
+        <service android:name="by.grsu.ftf.by.grsu.ftf.Bluetooth.Bluetooth"/>
     </application>
 
 </manifest>

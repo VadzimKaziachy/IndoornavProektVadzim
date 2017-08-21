@@ -17,14 +17,5 @@ package by.grsu.ftf.beacomlib;
  */
 
 public class BeaconController {
-   private String BEACONCONTROLLER;
-
-    public BeaconController(String BEACONCONTROLLER) {
-        this.BEACONCONTROLLER = BEACONCONTROLLER;
-    }
-
-    public String getBEACONCONTROLLER() {
-        return BEACONCONTROLLER;
-    }
 }
 

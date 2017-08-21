@@ -1,4 +1,10 @@
-package Bluetooth;
+package by.grsu.ftf.by.grsu.ftf.Bluetooth;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -8,14 +14,19 @@ package Bluetooth;
  * после чего передает все эти данные в главный класс, который в дальнейшем передает эти данные в класс TypeBeacon
  */
 
-public class Bluetooth {
-    private String BLUETOOTH;
+public class Bluetooth extends Service {
+    private static final String BLUETOOTH = "BLUETOOTH";
 
-    public Bluetooth(String BLUETOOTH) {
-        this.BLUETOOTH = BLUETOOTH;
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        return START_NOT_STICKY;
     }
 
-    public String getBLUETOOTH() {
-        return BLUETOOTH;
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 }
