@@ -18,7 +18,7 @@
         </activity>
         <service android:name="by.grsu.ftf.indoornav.navigation.map.MapProcessor"/>
         <service android:name="by.grsu.ftf.indoornav.widget.PathCalculator"/>
-        <service android:name="by.grsu.ftf.by.grsu.ftf.Bluetooth.Bluetooth"/>
+        <service android:name="by.grsu.ftf.beacomlib.Bluetooth"/>
     </application>
 
 </manifest>

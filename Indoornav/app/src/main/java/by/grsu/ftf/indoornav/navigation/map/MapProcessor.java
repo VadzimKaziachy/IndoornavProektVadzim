@@ -25,14 +25,15 @@ import static by.grsu.ftf.indoornav.MainActivity.KEY_VALUE_MAPPROCESSOR;
 public class MapProcessor extends Service {
     private static final String MAP = "MAP";
 
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Intent intent1 = new Intent(KEY_INTENT_FILTER);
         intent1.putExtra(KEY_VALUE_MAPPROCESSOR, MAP);
         sendBroadcast(intent1);
+
         return START_NOT_STICKY;
     }
+
 
     @Nullable
     @Override

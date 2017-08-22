@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.indoornav.R;
 
-import by.grsu.ftf.by.grsu.ftf.Bluetooth.Bluetooth;
+import by.grsu.ftf.beacomlib.Bluetooth;
 import by.grsu.ftf.indoornav.navigation.map.MapProcessor;
 import by.grsu.ftf.indoornav.widget.PathCalculator;
 
@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setOnClickListeners();
         initBroadcast();
-
-
     }
 
     private void initViews() {
