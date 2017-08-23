@@ -19,6 +19,11 @@
         <service android:name="by.grsu.ftf.indoornav.navigation.map.MapProcessor"/>
         <service android:name="by.grsu.ftf.indoornav.widget.PathCalculator"/>
         <service android:name="by.grsu.ftf.beacomlib.Bluetooth"/>
+        <receiver android:name="by.grsu.ftf.indoornav.Broadcast">
+            <intent-filter>
+                <action android:name="KEY_INTENT_FILTER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import static by.grsu.ftf.indoornav.MainActivity.KEY_INTENT_FILTER;
-import static by.grsu.ftf.indoornav.MainActivity.KEY_VALUE_PATHCALCULATOR;
+import static by.grsu.ftf.indoornav.Broadcast.KEY_VALUE_PATHCALCULATOR;
+
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -22,7 +22,7 @@ public class PathCalculator extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Intent intent1 = new Intent(KEY_INTENT_FILTER);
+        Intent intent1 = new Intent("KEY_INTENT_FILTER");
         intent1.putExtra(KEY_VALUE_PATHCALCULATOR, PATHCALCULATOR);
         sendBroadcast(intent1);
 
