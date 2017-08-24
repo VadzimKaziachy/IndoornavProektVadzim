@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.example.indoornav.R;
 
-import by.grsu.ftf.beacomlib.Bluetooth;
-import by.grsu.ftf.indoornav.navigation.map.MapProcessor;
-import by.grsu.ftf.indoornav.widget.PathCalculator;
+import by.grsu.ftf.beacomlib.BeaconController;
 
 
 /*
@@ -47,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(MainActivity.this, MapProcessor.class));
-                startService(new Intent(MainActivity.this, PathCalculator.class));
-                startService(new Intent(MainActivity.this, Bluetooth.class));
+                startService(new Intent(MainActivity.this, BeaconController.class));
             }
         });
     }

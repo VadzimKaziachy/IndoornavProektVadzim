@@ -1,5 +1,13 @@
 package by.grsu.ftf.beacomlib;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Вадим on 25.07.2017.
  * этот класс получает с главного класс (MainActivity) данные, а именно сколько биканов было обнаруженно, и какого типа они
@@ -16,6 +24,42 @@ package by.grsu.ftf.beacomlib;
  * в этот класс, и отсюда в главный класс (MainActivity).
  */
 
-public class BeaconController {
+public class BeaconController extends Service{
+
+    BeaconSimulator beaconSimulator = new BeaconSimulator();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        someTask();
+
+
+
+        return START_NOT_STICKY;
+    }
+
+
+    void someTask() {
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        Intent intent1 = new Intent("KEY_INTENT_FILTER");
+                        intent1.putExtra("KEY_VALUE_BLUTOOTH", beaconSimulator.getList());
+                        sendBroadcast(intent1);
+                        Log.d("Log", "отправка");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 }
 

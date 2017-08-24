@@ -1,12 +1,5 @@
 package by.grsu.ftf.indoornav.navigation.map;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-
-import static by.grsu.ftf.indoornav.Broadcast.KEY_VALUE_MAPPROCESSOR;
-
 /**
  * Created by Вадим on 25.07.2017.
  * <p>
@@ -21,24 +14,5 @@ import static by.grsu.ftf.indoornav.Broadcast.KEY_VALUE_MAPPROCESSOR;
  * будет отправляться в класс WaveAlgorithm куда тоже будут отправляться координаты местоположения человека.
  */
 
-public class MapProcessor extends Service {
-    private static final String MAP = "MAP";
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Intent intent1 = new Intent("KEY_INTENT_FILTER");
-        intent1.putExtra(KEY_VALUE_MAPPROCESSOR, MAP);
-        sendBroadcast(intent1);
-
-        return START_NOT_STICKY;
-    }
-
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-
-        return null;
-    }
+public class MapProcessor {
 }

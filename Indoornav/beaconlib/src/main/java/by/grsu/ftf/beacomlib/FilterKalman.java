@@ -9,13 +9,5 @@ package by.grsu.ftf.beacomlib;
  */
 
 public class FilterKalman {
-   private String FILTERKALMAN;
 
-    public FilterKalman(String FILTERKALMAN) {
-        this.FILTERKALMAN = FILTERKALMAN;
-    }
-
-    public String getFILTERKALMAN() {
-        return FILTERKALMAN;
-    }
 }

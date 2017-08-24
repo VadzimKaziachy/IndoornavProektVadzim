@@ -8,13 +8,5 @@ package by.grsu.ftf.beacomlib;
  */
 
 public class TrilateratiaBeacon {
-    private String TRILATERATIABEACON;
 
-    public TrilateratiaBeacon(String TRILATERATIABEACON) {
-        this.TRILATERATIABEACON = TRILATERATIABEACON;
-    }
-
-    public String getTRILATERATIABEACON() {
-        return TRILATERATIABEACON;
-    }
 }

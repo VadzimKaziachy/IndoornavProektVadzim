@@ -7,13 +7,5 @@ package by.grsu.ftf.indoornav.util;
  */
 
 public class Trilateration {
-    String TRLATERATION;
 
-    public Trilateration(String TRLATERATION) {
-        this.TRLATERATION = TRLATERATION;
-    }
-
-    public String getTRLATERATION() {
-        return TRLATERATION;
-    }
 }
