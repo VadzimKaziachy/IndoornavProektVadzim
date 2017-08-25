@@ -15,7 +15,7 @@ public class BeaconBroadcast extends BroadcastReceiver {
 
 //BeaconBroadcast
 
-    public static final String TAG = BeaconBroadcast.class.getSimpleName();
+    public static final String TAG = "Log";
     public static final String KEY_VALUE_BLUTOOTH = "KEY_VALUE_BLUTOOTH";
     private ArrayList<String> list = new ArrayList<>();
 
@@ -26,7 +26,6 @@ public class BeaconBroadcast extends BroadcastReceiver {
 
         list = intent.getStringArrayListExtra(KEY_VALUE_BLUTOOTH);
         Log.d(TAG, list.get(0) +" "+ list.get(1));
-        Log.d("Log", "принятие");
     }
 }
 

@@ -1,5 +1,8 @@
 package by.grsu.ftf.beacomlib;
 
+import java.util.ArrayList;
+
+
 /**
  * Created by Вадим on 25.07.2017.
  * здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
@@ -8,5 +11,14 @@ package by.grsu.ftf.beacomlib;
  */
 
 public class TrilateratiaBeacon {
+    private ArrayList<String> list = new ArrayList<>();
 
+    void setList(ArrayList<String> list) {
+        this.list = list;
+
+    }
+
+    public ArrayList<String> getList() {
+        return list;
+    }
 }

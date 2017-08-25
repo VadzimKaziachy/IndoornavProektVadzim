@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TextView textView1;
     private Button button;
+    private Button button1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -34,10 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
         setOnClickListeners();
+        iii();
     }
 
     private void initViews() {
         button = (Button) findViewById(R.id.button);
+        button1 = (Button) findViewById(R.id.button1);
     }
 
 
@@ -46,6 +50,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startService(new Intent(MainActivity.this, BeaconController.class));
+                Log.d("Log", "START");
+            }
+        });
+
+    }
+    private void iii(){
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService(new Intent(MainActivity.this, BeaconController.class));
+                Log.d("Log", "STOP");
             }
         });
     }

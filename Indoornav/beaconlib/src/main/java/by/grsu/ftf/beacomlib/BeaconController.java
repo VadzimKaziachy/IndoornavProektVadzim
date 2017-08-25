@@ -2,11 +2,11 @@ package by.grsu.ftf.beacomlib;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -24,38 +24,54 @@ import java.util.concurrent.TimeUnit;
  * в этот класс, и отсюда в главный класс (MainActivity).
  */
 
-public class BeaconController extends Service{
+public class BeaconController extends Service {
 
+    Intent intent1 = new Intent("KEY_INTENT_FILTER");
     BeaconSimulator beaconSimulator = new BeaconSimulator();
+    private Handler mHandler = new Handler();
+    TrilateratiaBeacon trilateratiaBeacon = new TrilateratiaBeacon();
+    ArrayList<String> list;
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        someTask();
-
-
+        mHandler.removeCallbacks(timeUpdaterRunnable);
+        mHandler.postDelayed(timeUpdaterRunnable, 1); //запускаем mHandler через какоето время
 
         return START_NOT_STICKY;
     }
 
+    private Runnable timeUpdaterRunnable = new Runnable() {
+        public void run() {
+            trilateratiaBeacon.setList(beaconSimulator.getList());
+            intent1.putExtra("KEY_VALUE_BLUTOOTH", trilateratiaBeacon.getList());
+            sendBroadcast(intent1);
+            mHandler.postDelayed(this, 1000); //перезапускает самого же себе через какоето время
+        }
+    };
 
-    void someTask() {
-        new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        Intent intent1 = new Intent("KEY_INTENT_FILTER");
-                        intent1.putExtra("KEY_VALUE_BLUTOOTH", beaconSimulator.getList());
-                        sendBroadcast(intent1);
-                        Log.d("Log", "отправка");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+    public ArrayList<String> getList() {
+        return list;
     }
+    //
+//    void someTask() {
+//        new Thread(new Runnable() {
+//            public void run() {
+//                while (true) {
+//                    try {
+//                        TimeUnit.SECONDS.sleep(1);
+//                        Intent intent1 = new Intent("KEY_INTENT_FILTER");
+//                        intent1.putExtra("KEY_VALUE_BLUTOOTH", beaconSimulator.getList());
+//                        sendBroadcast(intent1);
+//                        Log.d("Log", "отправка");
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }).start();
+//    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
