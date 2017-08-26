@@ -1,7 +1,5 @@
 package by.grsu.ftf.beacomlib;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,17 +14,12 @@ public class BeaconSimulator {
     private Random random = new Random();
 
 
-
     ArrayList<String> getList() {
         list.clear();
         rssi = random.nextInt(30) - 80;
         id = 4 - random.nextInt(4);
-        list.add("id "+String.valueOf(id));
+        list.add("id " + String.valueOf(id));
         list.add(String.valueOf(rssi));
-        Log.d("Log" , "лист");
         return list;
-
     }
-
-
 }

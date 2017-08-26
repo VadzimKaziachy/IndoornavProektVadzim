@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by Вадим on 22.08.2017.
  */
@@ -26,6 +27,7 @@ public class BeaconBroadcast extends BroadcastReceiver {
 
         list = intent.getStringArrayListExtra(KEY_VALUE_BLUTOOTH);
         Log.d(TAG, list.get(0) +" "+ list.get(1));
+
     }
 }
 

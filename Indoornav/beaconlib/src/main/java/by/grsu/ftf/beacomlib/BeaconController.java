@@ -27,34 +27,34 @@ import java.util.ArrayList;
 public class BeaconController extends Service {
 
     Intent intent1 = new Intent("KEY_INTENT_FILTER");
+    Intent intent2 = new Intent("FILTR");
     BeaconSimulator beaconSimulator = new BeaconSimulator();
+    ArrayList<String> list = new ArrayList<>();
     private Handler mHandler = new Handler();
-    TrilateratiaBeacon trilateratiaBeacon = new TrilateratiaBeacon();
-    ArrayList<String> list;
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mHandler.removeCallbacks(timeUpdaterRunnable);
-        mHandler.postDelayed(timeUpdaterRunnable, 1); //запускаем mHandler через какоето время
-
+        mHandler.postDelayed(timeUpdaterRunnable, 1);
         return START_NOT_STICKY;
+
     }
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
-            trilateratiaBeacon.setList(beaconSimulator.getList());
-            intent1.putExtra("KEY_VALUE_BLUTOOTH", trilateratiaBeacon.getList());
+            list = beaconSimulator.getList();
+            intent1.putExtra("KEY_VALUE_BLUTOOTH", list);
+            intent2.putExtra("LOG", list);
             sendBroadcast(intent1);
-            mHandler.postDelayed(this, 1000); //перезапускает самого же себе через какоето время
+            sendBroadcast(intent2);
+
+            mHandler.postDelayed(this, 1000);
         }
     };
 
-    public ArrayList<String> getList() {
-        return list;
-    }
-    //
-//    void someTask() {
+
+
+    //    void someTask() {
 //        new Thread(new Runnable() {
 //            public void run() {
 //                while (true) {
