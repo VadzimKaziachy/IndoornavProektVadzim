@@ -26,16 +26,22 @@ import java.util.ArrayList;
 
 public class BeaconController extends Service {
 
+    private ArrayList<String> list = new ArrayList<>();
+
     Intent intent1 = new Intent("KEY_INTENT_FILTER");
-    Intent intent2 = new Intent("FILTR");
+
     BeaconSimulator beaconSimulator = new BeaconSimulator();
-    ArrayList<String> list = new ArrayList<>();
+    SortingBeacon sortingBeacon = new SortingBeacon();
+    FilterKalman filterKalman = new FilterKalman();
+
     private Handler mHandler = new Handler();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mHandler.removeCallbacks(timeUpdaterRunnable);
         mHandler.postDelayed(timeUpdaterRunnable, 1);
+        mHandler.postDelayed(sorting_beacon, 1);
+        mHandler.postDelayed(jj, 1);
         return START_NOT_STICKY;
 
     }
@@ -44,14 +50,33 @@ public class BeaconController extends Service {
         public void run() {
             list = beaconSimulator.getList();
             intent1.putExtra("KEY_VALUE_BLUTOOTH", list);
-            intent2.putExtra("LOG", list);
             sendBroadcast(intent1);
-            sendBroadcast(intent2);
-
             mHandler.postDelayed(this, 1000);
         }
     };
 
+    private Runnable sorting_beacon = new Runnable() {
+        @Override
+        public void run() {
+            sortingBeacon.setList(list);
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+    private Runnable jj = new Runnable() {
+        @Override
+        public void run() {
+
+//            filterKalman.setLIST_BEACON_ID1_RSSI(sortingBeacon.getLIST_BEACON_ID1_RSSI());
+//
+//            filterKalman.setLIST_BEACON_ID2_RSSI(sortingBeacon.getLIST_BEACON_ID2_RSSI());
+//
+//            filterKalman.setLIST_BEACON_ID3_RSSI(sortingBeacon.getLIST_BEACON_ID3_RSSI());
+//
+//            filterKalman.setLIST_BEACON_ID4_RSSI(sortingBeacon.getLIST_BEACON_ID4_RSSI());
+
+
+        }
+    };
 
 
     //    void someTask() {
