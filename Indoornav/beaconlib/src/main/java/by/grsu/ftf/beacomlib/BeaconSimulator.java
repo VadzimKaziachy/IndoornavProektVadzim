@@ -7,7 +7,7 @@ import java.util.Random;
  * Created by Вадим on 24.08.2017.
  */
 
-public class BeaconSimulator {
+class BeaconSimulator {
     private ArrayList<String> list = new ArrayList<>();
     private Integer id = 0;
     private Integer rssi = 0;

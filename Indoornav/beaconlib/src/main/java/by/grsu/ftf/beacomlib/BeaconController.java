@@ -32,22 +32,24 @@ public class BeaconController extends Service {
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
     SortingBeacon sortingBeacon = new SortingBeacon();
-    FilterKalman filterKalman = new FilterKalman();
+    Distance distance = new Distance();
+    TrilateratiaBeacon trilateratiaBeacon = new TrilateratiaBeacon();
 
     private Handler mHandler = new Handler();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         mHandler.removeCallbacks(timeUpdaterRunnable);
         mHandler.postDelayed(timeUpdaterRunnable, 1);
         mHandler.postDelayed(sorting_beacon, 1);
-        mHandler.postDelayed(jj, 1);
-        return START_NOT_STICKY;
 
+        return START_NOT_STICKY;
     }
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
+
             list = beaconSimulator.getList();
             intent1.putExtra("KEY_VALUE_BLUTOOTH", list);
             sendBroadcast(intent1);
@@ -58,23 +60,19 @@ public class BeaconController extends Service {
     private Runnable sorting_beacon = new Runnable() {
         @Override
         public void run() {
+
             sortingBeacon.setList(list);
+            mHandler.postDelayed(distance_beacon, 1);
             mHandler.postDelayed(this, 1000);
         }
     };
-    private Runnable jj = new Runnable() {
+
+    private Runnable distance_beacon = new Runnable() {
         @Override
         public void run() {
 
-//            filterKalman.setLIST_BEACON_ID1_RSSI(sortingBeacon.getLIST_BEACON_ID1_RSSI());
-//
-//            filterKalman.setLIST_BEACON_ID2_RSSI(sortingBeacon.getLIST_BEACON_ID2_RSSI());
-//
-//            filterKalman.setLIST_BEACON_ID3_RSSI(sortingBeacon.getLIST_BEACON_ID3_RSSI());
-//
-//            filterKalman.setLIST_BEACON_ID4_RSSI(sortingBeacon.getLIST_BEACON_ID4_RSSI());
-
-
+            distance.ii(sortingBeacon.fourRSSI());
+            trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
         }
     };
 

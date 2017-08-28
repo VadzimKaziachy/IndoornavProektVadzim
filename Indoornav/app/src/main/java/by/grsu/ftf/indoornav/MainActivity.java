@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setOnClickListeners();
         iii();
+        startService(new Intent(MainActivity.this, BeaconController.class));
+        Log.d("Log", "START");
     }
 
     private void initViews() {

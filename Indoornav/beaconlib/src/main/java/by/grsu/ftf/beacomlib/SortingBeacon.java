@@ -1,5 +1,7 @@
 package by.grsu.ftf.beacomlib;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -7,10 +9,12 @@ import java.util.ArrayList;
  */
 
 class SortingBeacon {
+
     private ArrayList<Integer> LIST_BEACON_ID1_RSSI = new ArrayList<>();
     private ArrayList<Integer> LIST_BEACON_ID2_RSSI = new ArrayList<>();
     private ArrayList<Integer> LIST_BEACON_ID3_RSSI = new ArrayList<>();
     private ArrayList<Integer> LIST_BEACON_ID4_RSSI = new ArrayList<>();
+    private ArrayList<Float> LIST_RSSI = new ArrayList<>();
 
 
     private String BEACON_ID;
@@ -56,5 +60,16 @@ class SortingBeacon {
         }
         RSSI = filterKalman.s(list);
         return RSSI;
+    }
+
+    ArrayList<Float> fourRSSI() {
+        if (RSSI_1 != 0 && RSSI_2 != 0 && RSSI_3 != 0 && RSSI_4 != 0) {
+            LIST_RSSI.clear();
+            LIST_RSSI.add(RSSI_1);
+            LIST_RSSI.add(RSSI_2);
+            LIST_RSSI.add(RSSI_3);
+            LIST_RSSI.add(RSSI_4);
+        }
+        return LIST_RSSI;
     }
 }
