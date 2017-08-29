@@ -5,10 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.indoornav.R;
 
@@ -23,8 +21,6 @@ import by.grsu.ftf.beacomlib.BeaconController;
 public class MainActivity extends AppCompatActivity {
 
 
-    private TextView textView;
-    private TextView textView1;
     private Button button;
     private Button button1;
 
@@ -36,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
         setOnClickListeners();
-        iii();
-        startService(new Intent(MainActivity.this, BeaconController.class));
-        Log.d("Log", "START");
     }
 
     private void initViews() {
@@ -52,23 +45,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startService(new Intent(MainActivity.this, BeaconController.class));
-                Log.d("Log", "START");
             }
         });
-
-    }
-    private void iii(){
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopService(new Intent(MainActivity.this, BeaconController.class));
-                Log.d("Log", "STOP");
+                stopService( new Intent(MainActivity.this, BeaconController.class));
             }
         });
+
     }
+
 }
 
 
-//интрентс сервис
-// сорстрим,
 

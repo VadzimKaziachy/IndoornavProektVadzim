@@ -1,7 +1,8 @@
 package by.grsu.ftf.beacomlib;
 
+import android.util.Log;
+
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -14,8 +15,9 @@ class TrilateratiaBeacon {
     private ArrayList<Double> LIST_DISTANCE = new ArrayList<>();
 
     void setList(ArrayList<Double> LIST_DISTANCE) {
-        if (LIST_DISTANCE.size() > 4) {
-            this.LIST_DISTANCE.clear();
+
+        if (this.LIST_DISTANCE.size() > 4) {
+            this.LIST_DISTANCE.remove(0);
             this.LIST_DISTANCE.remove(1);
             this.LIST_DISTANCE.remove(2);
             this.LIST_DISTANCE.remove(3);
@@ -23,6 +25,9 @@ class TrilateratiaBeacon {
         } else {
             this.LIST_DISTANCE = LIST_DISTANCE;
         }
-        Collections.sort(this.LIST_DISTANCE);
+
+        if(this.LIST_DISTANCE.size() == 4) {
+            Log.d("Log", "-- " + this.LIST_DISTANCE);
+        }
     }
 }

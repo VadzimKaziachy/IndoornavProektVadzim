@@ -22,17 +22,15 @@ class Distance {
     private double DISTANCE;
 
 
-    void ii(ArrayList<Float> LIST_RSSI) {
+    void determinationDistance(ArrayList<Float> LIST_RSSI) {
 
-        if (LIST_RSSI.size() > 4) {
-            this.LIST_RSSI.remove(0);
-            this.LIST_RSSI.remove(1);
-            this.LIST_RSSI.remove(2);
-            this.LIST_RSSI.remove(3);
+        if (this.LIST_RSSI.size() > 4) {
+            this.LIST_RSSI.clear();
             this.LIST_RSSI = LIST_RSSI;
         } else {
             this.LIST_RSSI = LIST_RSSI;
         }
+        LIST_DISTANCE.clear();
         for (int i = 0; i < LIST_RSSI.size(); i++) {
             LIST_DISTANCE.add(distanceCalculation(LIST_RSSI.get(i), POWER_BEACON_1));
         }

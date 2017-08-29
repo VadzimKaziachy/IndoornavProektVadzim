@@ -44,7 +44,14 @@ public class BeaconController extends Service {
         mHandler.postDelayed(timeUpdaterRunnable, 1);
         mHandler.postDelayed(sorting_beacon, 1);
 
+
         return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        mHandler.removeMessages(0);
+        super.onDestroy();
     }
 
     private Runnable timeUpdaterRunnable = new Runnable() {
@@ -71,29 +78,11 @@ public class BeaconController extends Service {
         @Override
         public void run() {
 
-            distance.ii(sortingBeacon.fourRSSI());
-            trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
+           distance.determinationDistance(sortingBeacon.fourRSSI());
+           trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
         }
     };
 
-
-    //    void someTask() {
-//        new Thread(new Runnable() {
-//            public void run() {
-//                while (true) {
-//                    try {
-//                        TimeUnit.SECONDS.sleep(1);
-//                        Intent intent1 = new Intent("KEY_INTENT_FILTER");
-//                        intent1.putExtra("KEY_VALUE_BLUTOOTH", beaconSimulator.getList());
-//                        sendBroadcast(intent1);
-//                        Log.d("Log", "отправка");
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }).start();
-//    }
 
     @Nullable
     @Override
@@ -101,4 +90,3 @@ public class BeaconController extends Service {
         return null;
     }
 }
-
