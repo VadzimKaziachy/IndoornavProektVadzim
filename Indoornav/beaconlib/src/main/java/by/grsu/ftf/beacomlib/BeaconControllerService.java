@@ -24,11 +24,11 @@ import java.util.ArrayList;
  * в этот класс, и отсюда в главный класс (MainActivity).
  */
 
-public class BeaconController extends Service {
+public class BeaconControllerService extends Service {
 
-    private ArrayList<String> list = new ArrayList<>();
 
     Intent intent1 = new Intent("KEY_INTENT_FILTER");
+    public static final String KEY_VALUE_BLUTOOTH = "KEY_VALUE_BLUTOOTH";
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
     SortingBeacon sortingBeacon = new SortingBeacon();
@@ -37,51 +37,41 @@ public class BeaconController extends Service {
 
     private Handler mHandler = new Handler();
 
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        mHandler.removeCallbacks(timeUpdaterRunnable);
-        mHandler.postDelayed(timeUpdaterRunnable, 1);
-        mHandler.postDelayed(sorting_beacon, 1);
-
+        timeUpdaterRunnable.run();
 
         return START_NOT_STICKY;
     }
+
+
+
+    private Runnable timeUpdaterRunnable = new Runnable() {
+        public void run() {
+
+            ArrayList<String> list = beaconSimulator.getList();
+            intent1.putExtra("KEY_VALUE_BLUTOOTH", list);
+            sendBroadcast(intent1);
+
+            sortingBeacon.setList(list);
+
+            distance.determinationDistance(sortingBeacon.getLIST_RSSI());
+            trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
+
+            mHandler.postDelayed(this, 100);
+        }
+    };
+
+
 
     @Override
     public void onDestroy() {
         mHandler.removeMessages(0);
         super.onDestroy();
     }
-
-    private Runnable timeUpdaterRunnable = new Runnable() {
-        public void run() {
-
-            list = beaconSimulator.getList();
-            intent1.putExtra("KEY_VALUE_BLUTOOTH", list);
-            sendBroadcast(intent1);
-            mHandler.postDelayed(this, 1000);
-        }
-    };
-
-    private Runnable sorting_beacon = new Runnable() {
-        @Override
-        public void run() {
-
-            sortingBeacon.setList(list);
-            mHandler.postDelayed(distance_beacon, 1);
-            mHandler.postDelayed(this, 1000);
-        }
-    };
-
-    private Runnable distance_beacon = new Runnable() {
-        @Override
-        public void run() {
-
-           distance.determinationDistance(sortingBeacon.fourRSSI());
-           trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
-        }
-    };
 
 
     @Nullable
@@ -90,3 +80,8 @@ public class BeaconController extends Service {
         return null;
     }
 }
+
+
+//гид игнор
+// build, idea -------- шаупрефенест
+//

@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.example.indoornav.R;
 
-import by.grsu.ftf.beacomlib.BeaconController;
+import by.grsu.ftf.beacomlib.BeaconControllerService;
 
 
 /*
@@ -44,19 +44,19 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(MainActivity.this, BeaconController.class));
+                startService(new Intent(MainActivity.this, BeaconControllerService.class));
             }
         });
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopService( new Intent(MainActivity.this, BeaconController.class));
+                stopService( new Intent(MainActivity.this, BeaconControllerService.class));
             }
         });
 
     }
-
 }
+
 
 
 

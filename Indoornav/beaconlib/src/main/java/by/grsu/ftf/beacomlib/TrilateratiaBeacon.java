@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Вадим on 25.07.2017.
  * здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
  * после чего по силе сигнала будем определять расстояние до Beacon и по трем Beacon будем определять координаты человека
- * после чего значение x и y будет отправляться в класс BeaconController, а оттуда в главный класс MainActivity
+ * после чего значение x и y будет отправляться в класс BeaconControllerService, а оттуда в главный класс MainActivity
  */
 
 class TrilateratiaBeacon {
@@ -34,7 +34,7 @@ class TrilateratiaBeacon {
 
 
         if (this.LIST_DISTANCE.size() == 4) {
-            cleaningBeacon(this.LIST_DISTANCE);
+            //cleaningBeacon(this.LIST_DISTANCE);
             setCoord(this.LIST_DISTANCE.get(0), this.LIST_DISTANCE.get(1), this.LIST_DISTANCE.get(2), this.LIST_DISTANCE.get(3));
             getClosest();
             trilateratia();
@@ -43,19 +43,19 @@ class TrilateratiaBeacon {
     }
 
 
-    private void cleaningBeacon(ArrayList<Double> list) {
-
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (i == 0) {
-                a = Math.min(list.get(i), list.get(i + 1));
-            } else if (i == 1) {
-                a = Math.min(a, list.get(i + 1));
-            } else if (i == 2) {
-                a = Math.min(a, list.get(i + 1));
-            }
-        }
-        list.set(list.indexOf(a), (double) 0);
-    }
+//    private void cleaningBeacon(ArrayList<Double> list) {
+//
+//        for (int i = 0; i < list.size() - 1; i++) {
+//            if (i == 0) {
+//                a = Math.min(list.get(i), list.get(i + 1));
+//            } else if (i == 1) {
+//                a = Math.min(a, list.get(i + 1));
+//            } else if (i == 2) {
+//                a = Math.min(a, list.get(i + 1));
+//            }
+//        }
+//        list.set(list.indexOf(a), (double) 0);
+//    }
 
 
     private void setCoord(double beacon1, double beacon2, double beacon3, double beacon4) {
@@ -115,12 +115,15 @@ class TrilateratiaBeacon {
         return 1;
     }
 
+
     private void trilateratia() {
+
         if (getClosest() == 1) {
             double x1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[1]].getDist(), 2) + Math.pow(beacons[used[1]].getX(), 2)) / (2 * beacons[used[1]].getX()));
             double y1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[2]].getDist(), 2) - Math.pow(x1, 2) + Math.pow(x1 - beacons[used[2]].getX(), 2) + Math.pow(beacons[used[2]].getY(), 2)) / (2 * beacons[used[2]].getY()));
             Log.d("Log", "x - " + String.valueOf(x1) + " y - " + String.valueOf(y1));
-        }
 
+        }
     }
 }
+

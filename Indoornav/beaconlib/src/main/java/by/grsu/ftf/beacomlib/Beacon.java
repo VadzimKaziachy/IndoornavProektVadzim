@@ -1,7 +1,5 @@
 package by.grsu.ftf.beacomlib;
 
-import java.util.ArrayList;
-
 /**
  * Created by egor on 14.7.17.
  */
@@ -12,7 +10,7 @@ public class Beacon
     private String name;
 
     private double dist = 0;
-    private ArrayList<Integer> mid = new ArrayList<>();
+
 
     void setBeacon(double a, double b, String c, double d)
     {
@@ -37,8 +35,6 @@ public class Beacon
     {
         return name;
     }
-
-
 
     double getDist()
     {
