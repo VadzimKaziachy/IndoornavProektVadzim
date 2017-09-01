@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class BeaconControllerService extends Service {
 
 
-    Intent intent1 = new Intent("KEY_INTENT_FILTER");
+    Intent intent1 = new Intent("by.grsu.ftf.indoornav.KEY_INTENT_FILTER");
     public static final String KEY_VALUE_BLUTOOTH = "KEY_VALUE_BLUTOOTH";
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();

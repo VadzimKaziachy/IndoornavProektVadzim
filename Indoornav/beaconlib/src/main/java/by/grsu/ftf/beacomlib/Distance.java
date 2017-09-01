@@ -31,6 +31,7 @@ class Distance {
         }
 
         LIST_DISTANCE.clear();
+
         for (int i = 0; i < LIST_RSSI.size(); i++) {
             DISTANCE = Math.pow(10, (LIST_RSSI.get(i) - POWER_BEACON_1) / ((float) -10 * 3.2));
             LIST_DISTANCE.add(DISTANCE);

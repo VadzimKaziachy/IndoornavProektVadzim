@@ -18,7 +18,7 @@
         </activity>
         <receiver android:name="by.grsu.ftf.indoornav.BeaconBroadcast">
             <intent-filter>
-                <action android:name="KEY_INTENT_FILTER" />
+                <action android:name="by.grsu.ftf.indoornav.KEY_INTENT_FILTER" />
             </intent-filter>
         </receiver>
     </application>
