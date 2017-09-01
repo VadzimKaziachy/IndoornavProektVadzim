@@ -15,12 +15,12 @@ class SortingBeacon {
     private ArrayList<Float> LIST_RSSI = new ArrayList<>();
 
 
-
     private int BEACON_RSSI;
     private float RSSI_1 = 0;
     private float RSSI_2 = 0;
     private float RSSI_3 = 0;
     private float RSSI_4 = 0;
+
 
     private FilterKalman filterKalman = new FilterKalman();
 
@@ -46,6 +46,7 @@ class SortingBeacon {
                 break;
         }
 
+
         if (RSSI_1 != 0 && RSSI_2 != 0 && RSSI_3 != 0 && RSSI_4 != 0) {
             LIST_RSSI.clear();
             LIST_RSSI.add(RSSI_1);
@@ -58,7 +59,6 @@ class SortingBeacon {
 
     private float entryBeacon(ArrayList<Integer> list) {
         float RSSI;
-
         if (list.size() < 6) {
             list.add(BEACON_RSSI);
         } else {
@@ -74,3 +74,20 @@ class SortingBeacon {
         return LIST_RSSI;
     }
 }
+
+//if (RSSI_1 != 0 && RSSI_2 != 0 && RSSI_3 != 0 && RSSI_4 != 0) {
+//        LIST_RSSI.clear();
+//        LIST_RSSI.add(RSSI_1);
+//        LIST_RSSI.add(RSSI_2);
+//        LIST_RSSI.add(RSSI_3);
+//        LIST_RSSI.add(RSSI_4);
+//        } else if ((RSSI_1 != 0 && RSSI_2 != 0 && RSSI_3 != 0 && RSSI_4 == 0) ||
+//        (RSSI_1 != 0 && RSSI_2 != 0 && RSSI_3 == 0 && RSSI_4 != 0) ||
+//        (RSSI_1 != 0 && RSSI_2 == 0 && RSSI_3 != 0 && RSSI_4 != 0) ||
+//        (RSSI_1 == 0 && RSSI_2 != 0 && RSSI_3 != 0 && RSSI_4 != 0)) {
+//        LIST_RSSI.clear();
+//        LIST_RSSI.add(RSSI_1);
+//        LIST_RSSI.add(RSSI_2);
+//        LIST_RSSI.add(RSSI_3);
+//        LIST_RSSI.add(RSSI_4);
+//        }

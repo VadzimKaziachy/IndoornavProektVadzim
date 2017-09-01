@@ -14,8 +14,6 @@ class Distance {
     private ArrayList<Double> LIST_DISTANCE = new ArrayList<>();
 
 
-
-
     void determinationDistance(ArrayList<Float> LIST_RSSI) {
         float POWER_BEACON_1 = -65;
         float POWER_BEACON_2 = -65;
@@ -29,11 +27,10 @@ class Distance {
         } else {
             this.LIST_RSSI = LIST_RSSI;
         }
-
         LIST_DISTANCE.clear();
 
-        for (int i = 0; i < LIST_RSSI.size(); i++) {
-            DISTANCE = Math.pow(10, (LIST_RSSI.get(i) - POWER_BEACON_1) / ((float) -10 * 3.2));
+        for (int i = 0; i < this.LIST_RSSI.size(); i++) {
+            DISTANCE = Math.pow(10, (this.LIST_RSSI.get(i) - POWER_BEACON_1) / ((float) -10 * 3.2));
             LIST_DISTANCE.add(DISTANCE);
         }
     }

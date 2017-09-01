@@ -17,16 +17,13 @@ class TrilateratiaBeacon {
     private double a;
 
     private int numBeacons = 4;
+    private int mandatoryBeacons = 3;
     private Beacon[] beacons = (Beacon[]) new Beacon[numBeacons];
     private int[] used = new int[3];
 
     void setList(ArrayList<Double> LIST_DISTANCE) {
-
         if (this.LIST_DISTANCE.size() > 4) {
-            this.LIST_DISTANCE.remove(0);
-            this.LIST_DISTANCE.remove(1);
-            this.LIST_DISTANCE.remove(2);
-            this.LIST_DISTANCE.remove(3);
+            this.LIST_DISTANCE.clear();
             this.LIST_DISTANCE = LIST_DISTANCE;
         } else {
             this.LIST_DISTANCE = LIST_DISTANCE;
@@ -34,7 +31,7 @@ class TrilateratiaBeacon {
 
 
         if (this.LIST_DISTANCE.size() == 4) {
-            //cleaningBeacon(this.LIST_DISTANCE);
+           // cleaningBeacon(this.LIST_DISTANCE);
             setCoord(this.LIST_DISTANCE.get(0), this.LIST_DISTANCE.get(1), this.LIST_DISTANCE.get(2), this.LIST_DISTANCE.get(3));
             getClosest();
             trilateratia();
@@ -43,19 +40,19 @@ class TrilateratiaBeacon {
     }
 
 
-//    private void cleaningBeacon(ArrayList<Double> list) {
-//
-//        for (int i = 0; i < list.size() - 1; i++) {
-//            if (i == 0) {
-//                a = Math.min(list.get(i), list.get(i + 1));
-//            } else if (i == 1) {
-//                a = Math.min(a, list.get(i + 1));
-//            } else if (i == 2) {
-//                a = Math.min(a, list.get(i + 1));
-//            }
-//        }
-//        list.set(list.indexOf(a), (double) 0);
-//    }
+    private void cleaningBeacon(ArrayList<Double> list) {
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (i == 0) {
+                a = Math.min(list.get(i), list.get(i + 1));
+            } else if (i == 1) {
+                a = Math.min(a, list.get(i + 1));
+            } else if (i == 2) {
+                a = Math.min(a, list.get(i + 1));
+            }
+        }
+        list.set(list.indexOf(a), (double) 0);
+    }
 
 
     private void setCoord(double beacon1, double beacon2, double beacon3, double beacon4) {
@@ -77,11 +74,11 @@ class TrilateratiaBeacon {
 
         double minim = 100;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < mandatoryBeacons; i++) {
             used[i] = -1;
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < mandatoryBeacons; i++) {
             for (int j = 0; j < numBeacons; j++) {
                 if ((beacons[j].getDist() <= minim) && (used[0] != j) && (used[1] != j) && (used[2] != j) && (beacons[j].getDist() != 0)) {
                     used[i] = j;
@@ -91,13 +88,13 @@ class TrilateratiaBeacon {
             minim = 100;
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < mandatoryBeacons; i++) {
             if (used[i] == -1) {
                 return 0;
             }
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < mandatoryBeacons; i++) {
             if (beacons[used[i]].getX() == 0 && beacons[used[i]].getY() == 0) {
                 int x = used[0];
                 used[0] = used[i];
