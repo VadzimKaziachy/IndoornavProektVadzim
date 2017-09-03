@@ -20,7 +20,7 @@ class Distance {
         float POWER_BEACON_3 = -65;
         float POWER_BEACON_4 = -65;
         double DISTANCE;
-
+//        Log.d("Log", LIST_RSSI + " ");
         if (this.LIST_RSSI.size() > 4) {
             this.LIST_RSSI.clear();
             this.LIST_RSSI = LIST_RSSI;

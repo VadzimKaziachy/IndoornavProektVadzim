@@ -13,9 +13,8 @@ import java.util.ArrayList;
 class FilterKalman {
 
     float s (ArrayList<Integer> list) {
-        int AMOUNT_BEACON;
+        float AMOUNT_BEACON = 0;
         float RSSI;
-        AMOUNT_BEACON = 0;
 
         for (int i = 0; i < list.size(); i++) {
             AMOUNT_BEACON += list.get(i);
