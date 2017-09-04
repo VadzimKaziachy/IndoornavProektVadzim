@@ -1,12 +1,14 @@
 package by.grsu.ftf.beacomlib;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
  * Created by Вадим on 25.07.2017.
- * здесь будет определяться местоположение человека в помещение, данные буду приходить из класса FilterKalman
- * после чего по силе сигнала будем определять расстояние до Beacon и по трем Beacon будем определять координаты человека
- * после чего значение x и y будет отправляться в класс BeaconControllerService, а оттуда в главный класс MainActivity
+ * Here will determine the location of the person in the room,
+ * the data will come with BeaconControllerService and by three Beacons we will determine the coordinates of a person,
+ * after which the value of x and y will be sent to the class BeaconControllerService, and from there to the main class Beacon Broadcast.
  */
 
 class TrilateratiaBeacon {
@@ -119,14 +121,13 @@ class TrilateratiaBeacon {
         if (getClosest() == 1) {
             x1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[1]].getDist(), 2) + Math.pow(beacons[used[1]].getX(), 2)) / (2 * beacons[used[1]].getX()));
             y1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[2]].getDist(), 2) - Math.pow(x1, 2) + Math.pow(x1 - beacons[used[2]].getX(), 2) + Math.pow(beacons[used[2]].getY(), 2)) / (2 * beacons[used[2]].getY()));
-//            Log.d("Log", "x - " + String.valueOf(x1) + " y - " + String.valueOf(y1));
+            Log.d("Log", "x - " + String.valueOf(x1) + " y - " + String.valueOf(y1));
         }
         if (x1 != 0 && y1 != 0 && x1 < 1000) {
             LIST_X_Y.clear();
             LIST_X_Y.add(String.valueOf(x1));
             LIST_X_Y.add(String.valueOf(y1));
         }
-
     }
 
     ArrayList<String> getLIST_X_Y() {

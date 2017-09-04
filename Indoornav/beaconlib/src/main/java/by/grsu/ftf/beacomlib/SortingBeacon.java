@@ -5,6 +5,7 @@ import java.util.Collections;
 
 /**
  * Created by Вадим on 27.08.2017.
+ * Here the Beacon is sorted, sorted by id, and then RSSI are written to the corresponding ArrayList.
  */
 
 class SortingBeacon {

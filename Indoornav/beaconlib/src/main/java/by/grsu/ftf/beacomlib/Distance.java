@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Вадим on 06.08.2017.
- * в этом классе будет определяться расстояние до Beacon, сейчас я решил пропустить класс TypeBeacon так как у нас пока есть
- * тока один тип Beacon
+ * In this class, the distance to Beacon will be determined.
  */
 
 

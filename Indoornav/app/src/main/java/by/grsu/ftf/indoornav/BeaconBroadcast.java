@@ -13,6 +13,7 @@ import static by.grsu.ftf.beacomlib.BeaconControllerService.KEY_VALUE_X_Y;
 
 /**
  * Created by Вадим on 22.08.2017.
+ * The class responsible for accepting data from the module.
  */
 
 public class BeaconBroadcast extends BroadcastReceiver {

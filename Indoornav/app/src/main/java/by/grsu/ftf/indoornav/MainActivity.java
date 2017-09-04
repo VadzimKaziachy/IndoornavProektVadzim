@@ -14,8 +14,8 @@ import by.grsu.ftf.beacomlib.BeaconControllerService;
 
 
 /*
- * этот класс являеться главным, неким ядром программы.
- * программа при запуске переходит в класс Bluetooth где проверяет включин ли Bluetooth
+ * This class is the main, some kind of kernel program.
+ * The program goes to the Bluetooth class at startup, which checks if Bluetooth is turned on.
  */
 
 public class MainActivity extends AppCompatActivity {
