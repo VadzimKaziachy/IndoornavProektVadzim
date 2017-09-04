@@ -19,8 +19,8 @@ import static by.grsu.ftf.beacomlib.BeaconControllerService.KEY_VALUE_X_Y;
 public class BeaconBroadcast extends BroadcastReceiver {
 
 
-    public static final String TAG = BeaconBroadcast.class.getSimpleName();
-    //public static final String TAG = "Log";
+    //public static final String TAG = BeaconBroadcast.class.getSimpleName();
+    public static final String TAG = "Log";
 
 
     @Override
