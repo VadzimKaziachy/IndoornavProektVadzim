@@ -1,5 +1,7 @@
 package by.grsu.ftf.beacomlib;
 
+import android.graphics.PointF;
+
 import java.util.ArrayList;
 
 /**
@@ -11,94 +13,97 @@ import java.util.ArrayList;
 
 class TrilateratiaBeacon {
 
-    private ArrayList<String> LIST_X_Y = new ArrayList<>();
+    private static ArrayList<String> LIST_X_Y = new ArrayList<>();
+    private ArrayList<PointF> coordinates = new ArrayList<>();
+    private float a = 0;
 
-    private double x1 = 0;
-    private double y1 = 0;
+    private ArrayList<Float> LIST_DISTANCE_BEACON = new ArrayList<>();
+    private ArrayList<PointF> LIST_COORDINATE = new ArrayList<>();
 
-    private int numBeacons = 4;
-    private Beacon[] beacons = (Beacon[]) new Beacon[numBeacons];
-    private int[] used = new int[3];
+    void setList(ArrayList<Float> LIST_DISTANCE) {
 
-
-    void setList(ArrayList<Double> LIST_DISTANCE) {
+        coordinates.add(new PointF(1, 1));
+        coordinates.add(new PointF(5, 1));
+        coordinates.add(new PointF(1, 4));
+        coordinates.add(new PointF(5, 4));
 
         if (LIST_DISTANCE.size() > 2) {
-            setCoord(LIST_DISTANCE.get(0), LIST_DISTANCE.get(1), LIST_DISTANCE.get(2), LIST_DISTANCE.get(3));
-            getClosest();
-            trilateratia();
+            cleaningBeacon(LIST_DISTANCE);
         }
     }
 
-    private void setCoord(double beacon1, double beacon2, double beacon3, double beacon4) {
-
-        beacons[0] = new Beacon();
-        beacons[0].setBeacon(0, 0, "id1", beacon1);
-
-        beacons[1] = new Beacon();
-        beacons[1].setBeacon(4, 0, "id2", beacon2);
-
-        beacons[2] = new Beacon();
-        beacons[2].setBeacon(0, 3, "id3", beacon3);
-
-        beacons[3] = new Beacon();
-        beacons[3].setBeacon(4, 3, "id4", beacon4);
-    }
-
-    private int getClosest() {
-        int mandatoryBeacons = 3;
-        double minim = 100;
-
-        for (int i = 0; i < mandatoryBeacons; i++) {
-            used[i] = -1;
-        }
-
-        for (int i = 0; i < mandatoryBeacons; i++) {
-            for (int j = 0; j < numBeacons; j++) {
-                if ((beacons[j].getDist() <= minim) && (used[0] != j) && (used[1] != j) && (used[2] != j) && (beacons[j].getDist() != 0)) {
-                    used[i] = j;
-                    minim = beacons[j].getDist();
-                }
-            }
-            minim = 100;
-        }
-
-        for (int i = 0; i < mandatoryBeacons; i++) {
-            if (used[i] == -1) {
-                return 0;
+    private void cleaningBeacon(ArrayList<Float> LIST_DISTANCE) {
+        for (int i = 0; i < LIST_DISTANCE.size() - 1; i++) {
+            if (i == 0) {
+                a = Math.max(LIST_DISTANCE.get(i), LIST_DISTANCE.get(i + 1));
+            } else if (i == 1) {
+                a = Math.max(a, LIST_DISTANCE.get(i + 1));
+            } else if (i == 2) {
+                a = Math.max(a, LIST_DISTANCE.get(i + 1));
             }
         }
-
-        for (int i = 0; i < mandatoryBeacons; i++) {
-            if (beacons[used[i]].getX() == 0 && beacons[used[i]].getY() == 0) {
-                int x = used[0];
-                used[0] = used[i];
-                used[i] = x;
-            } else if (beacons[used[i]].getY() == 0) {
-                int x = used[1];
-                used[1] = used[i];
-                used[i] = x;
-            } else if (beacons[used[i]].getX() == 0) {
-                int x = used[2];
-                used[2] = used[i];
-                used[i] = x;
+        LIST_DISTANCE.set(LIST_DISTANCE.indexOf(a), (float) 0);
+        LIST_DISTANCE_BEACON.clear();
+        LIST_COORDINATE.clear();
+        for (int i = 0; i < 4; i++) {
+            if (LIST_DISTANCE.get(i) != 0) {
+                LIST_DISTANCE_BEACON.add(LIST_DISTANCE.get(i));
+                LIST_COORDINATE.add(coordinates.get(i));
             }
         }
-        return 1;
+        trilaterate(LIST_COORDINATE.get(0), LIST_COORDINATE.get(1), LIST_COORDINATE.get(2),
+                LIST_DISTANCE_BEACON.get(0), LIST_DISTANCE_BEACON.get(1), LIST_DISTANCE_BEACON.get(2));
     }
 
 
-    private void trilateratia() {
-
-        if (getClosest() == 1) {
-            x1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[1]].getDist(), 2) + Math.pow(beacons[used[1]].getX(), 2)) / (2 * beacons[used[1]].getX()));
-            y1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[2]].getDist(), 2) - Math.pow(x1, 2) + Math.pow(x1 - beacons[used[2]].getX(), 2) + Math.pow(beacons[used[2]].getY(), 2)) / (2 * beacons[used[2]].getY()));
+    private static void trilaterate(PointF a, PointF b, PointF c, float distA, float distB, float distC) {
+        float P1[] = {a.x, a.y, 0};
+        float P2[] = {b.x, b.y, 0};
+        float P3[] = {c.x, c.y, 0};
+        float ex[] = {0, 0, 0};
+        float P2P1 = 0;
+        for (int i = 0; i < 3; i++) {
+            P2P1 += Math.pow(P2[i] - P1[i], 2);
         }
-        if (x1 != 0 && y1 != 0 && x1 < 1000) {
-            LIST_X_Y.clear();
-            LIST_X_Y.add(String.valueOf(x1));
-            LIST_X_Y.add(String.valueOf(y1));
+        for (int i = 0; i < 3; i++) {
+            ex[i] = (float) ((P2[i] - P1[i]) / Math.sqrt(P2P1));
         }
+        float p3p1[] = {0, 0, 0};
+        for (int i = 0; i < 3; i++) {
+            p3p1[i] = P3[i] - P1[i];
+        }
+        float ivar = 0;
+        for (int i = 0; i < 3; i++) {
+            ivar += (ex[i] * p3p1[i]);
+        }
+        float p3p1i = 0;
+        for (int i = 0; i < 3; i++) {
+            p3p1i += Math.pow(P3[i] - P1[i] - ex[i] * ivar, 2);
+        }
+        float ey[] = {0, 0, 0};
+        for (int i = 0; i < 3; i++) {
+            ey[i] = (float) ((P3[i] - P1[i] - ex[i] * ivar) / Math.sqrt(p3p1i));
+        }
+        float ez[] = {0, 0, 0};
+        float d = (float) Math.sqrt(P2P1);
+        float jvar = 0;
+        for (int i = 0; i < 3; i++) {
+            jvar += (ey[i] * p3p1[i]);
+        }
+        float x = (float) ((Math.pow(distA, 2) - Math.pow(distB, 2) + Math.pow(d, 2)) / (2 * d));
+        float y = (float) (((Math.pow(distA, 2) - Math.pow(distC, 2) + Math.pow(ivar, 2)
+                + Math.pow(jvar, 2)) / (2 * jvar)) - ((ivar / jvar) * x));
+        float z = (float) Math.sqrt(Math.pow(distA, 2) - Math.pow(x, 2) - Math.pow(y, 2));
+        if (Float.isNaN(z)) z = 0;
+        float triPt[] = {0, 0, 0};
+        for (int i = 0; i < 3; i++) {
+            triPt[i] = P1[i] + ex[i] * x + ey[i] * y + ez[i] * z;
+        }
+        float lon = triPt[0];
+        float lat = triPt[1];
+        LIST_X_Y.clear();
+        LIST_X_Y.add(String.valueOf(lon));
+        LIST_X_Y.add(String.valueOf(lat));
     }
 
     ArrayList<String> getLIST_X_Y() {

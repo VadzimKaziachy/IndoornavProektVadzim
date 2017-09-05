@@ -70,7 +70,3 @@ public class BeaconControllerService extends Service {
     }
 }
 
-
-//гид игнор
-// build, idea -------- шаупрефенест
-//
