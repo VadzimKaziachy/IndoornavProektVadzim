@@ -1,7 +1,5 @@
 package by.grsu.ftf.beacomlib;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -13,9 +11,8 @@ import java.util.ArrayList;
 
 class TrilateratiaBeacon {
 
-    private ArrayList<Double> LIST_DISTANCE = new ArrayList<>();
     private ArrayList<String> LIST_X_Y = new ArrayList<>();
-    private double a;
+
     private double x1 = 0;
     private double y1 = 0;
 
@@ -25,38 +22,13 @@ class TrilateratiaBeacon {
 
 
     void setList(ArrayList<Double> LIST_DISTANCE) {
-        if (this.LIST_DISTANCE.size() > 4) {
-            this.LIST_DISTANCE.clear();
-            this.LIST_DISTANCE = LIST_DISTANCE;
-        } else {
-            this.LIST_DISTANCE = LIST_DISTANCE;
-        }
 
-
-        if (this.LIST_DISTANCE.size() == 4) {
-            // cleaningBeacon(this.LIST_DISTANCE);
-            setCoord(this.LIST_DISTANCE.get(0), this.LIST_DISTANCE.get(1), this.LIST_DISTANCE.get(2), this.LIST_DISTANCE.get(3));
+        if (LIST_DISTANCE.size() > 2) {
+            setCoord(LIST_DISTANCE.get(0), LIST_DISTANCE.get(1), LIST_DISTANCE.get(2), LIST_DISTANCE.get(3));
             getClosest();
             trilateratia();
         }
-
     }
-
-
-    private void cleaningBeacon(ArrayList<Double> list) {
-
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (i == 0) {
-                a = Math.min(list.get(i), list.get(i + 1));
-            } else if (i == 1) {
-                a = Math.min(a, list.get(i + 1));
-            } else if (i == 2) {
-                a = Math.min(a, list.get(i + 1));
-            }
-        }
-        list.set(list.indexOf(a), (double) 0);
-    }
-
 
     private void setCoord(double beacon1, double beacon2, double beacon3, double beacon4) {
 
@@ -121,7 +93,6 @@ class TrilateratiaBeacon {
         if (getClosest() == 1) {
             x1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[1]].getDist(), 2) + Math.pow(beacons[used[1]].getX(), 2)) / (2 * beacons[used[1]].getX()));
             y1 = Math.abs((Math.pow(beacons[used[0]].getDist(), 2) - Math.pow(beacons[used[2]].getDist(), 2) - Math.pow(x1, 2) + Math.pow(x1 - beacons[used[2]].getX(), 2) + Math.pow(beacons[used[2]].getY(), 2)) / (2 * beacons[used[2]].getY()));
-            Log.d("Log", "x - " + String.valueOf(x1) + " y - " + String.valueOf(y1));
         }
         if (x1 != 0 && y1 != 0 && x1 < 1000) {
             LIST_X_Y.clear();

@@ -1,5 +1,7 @@
 package by.grsu.ftf.beacomlib;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -17,12 +19,12 @@ class SortingBeacon {
     private ArrayList<Float> LIST_RSSI = new ArrayList<>();
     private ArrayList<Float> LIST = new ArrayList<>();
 
-
     private int BEACON_RSSI;
     private float RSSI_1 = 0;
     private float RSSI_2 = 0;
     private float RSSI_3 = 0;
     private float RSSI_4 = 0;
+
     private int i1 = 0;
     private int i2 = 0;
     private int i3 = 0;
@@ -35,7 +37,7 @@ class SortingBeacon {
 
     void setList(ArrayList<String> list) {
         String BEACON_ID;
-
+        Log.d("Log", list + " ");
         BEACON_ID = list.get(0);
         BEACON_RSSI = Integer.valueOf(list.get(1));
 

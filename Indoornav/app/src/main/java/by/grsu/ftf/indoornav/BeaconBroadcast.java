@@ -19,8 +19,7 @@ import static by.grsu.ftf.beacomlib.BeaconControllerService.KEY_VALUE_X_Y;
 public class BeaconBroadcast extends BroadcastReceiver {
 
 
-    //public static final String TAG = BeaconBroadcast.class.getSimpleName();
-    public static final String TAG = "Log";
+    public static final String TAG = BeaconBroadcast.class.getSimpleName();
 
 
     @Override
@@ -31,7 +30,7 @@ public class BeaconBroadcast extends BroadcastReceiver {
         }
         if (intent.hasExtra(KEY_VALUE_X_Y)) {
             ArrayList<String> list1 = intent.getStringArrayListExtra(KEY_VALUE_X_Y);
-           Log.d(TAG,list1 + " ");
+            Log.d(TAG, list1 + " ");
         }
 
     }

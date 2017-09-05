@@ -1,6 +1,8 @@
 package by.grsu.ftf.beacomlib;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Вадим on 06.08.2017.
@@ -9,27 +11,18 @@ import java.util.ArrayList;
 
 
 class Distance {
-    private ArrayList<Float> LIST_RSSI = new ArrayList<>();
     private ArrayList<Double> LIST_DISTANCE = new ArrayList<>();
 
 
     void determinationDistance(ArrayList<Float> LIST_RSSI) {
-        float POWER_BEACON_1 = -65;
-        float POWER_BEACON_2 = -65;
-        float POWER_BEACON_3 = -65;
-        float POWER_BEACON_4 = -65;
+
+        List<Integer> POWER_BEACON = Arrays.asList(-65, -65, -65, -65);
         double DISTANCE;
-//        Log.d("Log", LIST_RSSI + " ");
-        if (this.LIST_RSSI.size() > 4) {
-            this.LIST_RSSI.clear();
-            this.LIST_RSSI = LIST_RSSI;
-        } else {
-            this.LIST_RSSI = LIST_RSSI;
-        }
+
         LIST_DISTANCE.clear();
 
-        for (int i = 0; i < this.LIST_RSSI.size(); i++) {
-            DISTANCE = Math.pow(10, (this.LIST_RSSI.get(i) - POWER_BEACON_1) / ((float) -10 * 3.2));
+        for (int i = 0; i < LIST_RSSI.size(); i++) {
+            DISTANCE = Math.pow(10, (LIST_RSSI.get(i) - POWER_BEACON.get(i)) / ((float) -10 * 3.2));
             LIST_DISTANCE.add(DISTANCE);
         }
     }
