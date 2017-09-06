@@ -1,6 +1,7 @@
 package by.grsu.ftf.beacomlib;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,26 +34,39 @@ class TrilateratiaBeacon {
     }
 
     private void cleaningBeacon(ArrayList<Float> LIST_DISTANCE) {
-        for (int i = 0; i < LIST_DISTANCE.size() - 1; i++) {
-            if (i == 0) {
-                a = Math.max(LIST_DISTANCE.get(i), LIST_DISTANCE.get(i + 1));
-            } else if (i == 1) {
-                a = Math.max(a, LIST_DISTANCE.get(i + 1));
-            } else if (i == 2) {
-                a = Math.max(a, LIST_DISTANCE.get(i + 1));
+        if (LIST_DISTANCE.contains((float) 0)) {
+            LIST_DISTANCE_BEACON.clear();
+            LIST_COORDINATE.clear();
+            for (int i = 0; i < LIST_DISTANCE.size(); i++) {
+                if (LIST_DISTANCE.get(i) != 0) {
+                    LIST_DISTANCE_BEACON.add(LIST_DISTANCE.get(i));
+                    LIST_COORDINATE.add(coordinates.get(i));
+                }
             }
-        }
-        LIST_DISTANCE.set(LIST_DISTANCE.indexOf(a), (float) 0);
-        LIST_DISTANCE_BEACON.clear();
-        LIST_COORDINATE.clear();
-        for (int i = 0; i < 4; i++) {
-            if (LIST_DISTANCE.get(i) != 0) {
-                LIST_DISTANCE_BEACON.add(LIST_DISTANCE.get(i));
-                LIST_COORDINATE.add(coordinates.get(i));
+            trilaterate(LIST_COORDINATE.get(0), LIST_COORDINATE.get(1), LIST_COORDINATE.get(2),
+                    LIST_DISTANCE_BEACON.get(0), LIST_DISTANCE_BEACON.get(1), LIST_DISTANCE_BEACON.get(2));
+        } else {
+            for (int j = 0; j < LIST_DISTANCE.size() - 3; j++) {
+                for (int i = 0; i < LIST_DISTANCE.size() - 1; i++) {
+                    if (i == 0) {
+                        a = Math.max(LIST_DISTANCE.get(i), LIST_DISTANCE.get(i + 1));
+                    } else {
+                        a = Math.max(a, LIST_DISTANCE.get(i + 1));
+                    }
+                }
+                LIST_DISTANCE.set(LIST_DISTANCE.indexOf(a), (float) 0);
             }
+            LIST_DISTANCE_BEACON.clear();
+            LIST_COORDINATE.clear();
+            for (int i = 0; i < LIST_DISTANCE.size(); i++) {
+                if (LIST_DISTANCE.get(i) != 0) {
+                    LIST_DISTANCE_BEACON.add(LIST_DISTANCE.get(i));
+                    LIST_COORDINATE.add(coordinates.get(i));
+                }
+            }
+            trilaterate(LIST_COORDINATE.get(0), LIST_COORDINATE.get(1), LIST_COORDINATE.get(2),
+                    LIST_DISTANCE_BEACON.get(0), LIST_DISTANCE_BEACON.get(1), LIST_DISTANCE_BEACON.get(2));
         }
-        trilaterate(LIST_COORDINATE.get(0), LIST_COORDINATE.get(1), LIST_COORDINATE.get(2),
-                LIST_DISTANCE_BEACON.get(0), LIST_DISTANCE_BEACON.get(1), LIST_DISTANCE_BEACON.get(2));
     }
 
 

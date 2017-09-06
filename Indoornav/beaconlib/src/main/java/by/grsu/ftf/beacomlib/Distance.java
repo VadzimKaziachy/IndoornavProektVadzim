@@ -1,7 +1,5 @@
 package by.grsu.ftf.beacomlib;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +20,12 @@ class Distance {
         float DISTANCE;
         LIST_DISTANCE.clear();
         for (int i = 0; i < LIST_RSSI.size(); i++) {
-            DISTANCE =(float) Math.pow(10, (LIST_RSSI.get(i) - POWER_BEACON.get(i)) / ((float) -10 * 3.2));
-            LIST_DISTANCE.add(DISTANCE);
+            if (LIST_RSSI.get(i) != 0) {
+                DISTANCE = (float) Math.pow(10, (LIST_RSSI.get(i) - POWER_BEACON.get(i)) / ((float) -10 * 3.2));
+                LIST_DISTANCE.add(DISTANCE);
+            } else {
+                LIST_DISTANCE.add((float) 0);
+            }
         }
     }
 
