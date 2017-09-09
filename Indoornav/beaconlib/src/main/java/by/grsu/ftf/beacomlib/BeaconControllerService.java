@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-
 /**
  * Created by Вадим on 25.07.2017.
  * This class is the core of the module beaconlib.
@@ -18,12 +16,8 @@ public class BeaconControllerService extends Service {
 
     Intent intent1 = new Intent("by.grsu.ftf.indoornav.KEY_INTENT_FILTER");
     public static final String KEY_VALUE_BLUTOOTH = "KEY_VALUE_BLUTOOTH";
-    public static final String KEY_VALUE_X_Y = "KEY_VALUE_X_Y";
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
-    SortingBeacon sortingBeacon = new SortingBeacon();
-    Distance distance = new Distance();
-    TrilateratiaBeacon trilateratiaBeacon = new TrilateratiaBeacon();
 
     private Handler mHandler = new Handler();
 
@@ -40,15 +34,7 @@ public class BeaconControllerService extends Service {
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
 
-            ArrayList<String> list = beaconSimulator.getList();
-
-            sortingBeacon.setList(list);
-            distance.determinationDistance(sortingBeacon.getLIST_RSSI());
-            trilateratiaBeacon.setList(distance.getLIST_DISTANCE());
-
-
-            intent1.putExtra(KEY_VALUE_BLUTOOTH, list);
-            intent1.putExtra(KEY_VALUE_X_Y, trilateratiaBeacon.getLIST_X_Y());
+            intent1.putExtra(KEY_VALUE_BLUTOOTH, beaconSimulator.getList());
             sendBroadcast(intent1);
 
             mHandler.postDelayed(this, 100);
