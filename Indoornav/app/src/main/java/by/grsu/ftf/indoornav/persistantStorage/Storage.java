@@ -30,9 +30,7 @@ public abstract class Storage {
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString(a, b).apply();
         }
-
     }
-
 }
 
 

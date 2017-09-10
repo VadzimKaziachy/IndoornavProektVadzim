@@ -6,9 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.indoornav.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 import by.grsu.ftf.beacomlib.BeaconControllerService;
 
@@ -20,9 +26,11 @@ import by.grsu.ftf.beacomlib.BeaconControllerService;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private Button button;
-    private Button button1;
+    private Button start;
+    private Button stop;
+    static ListView listView;
+    private static List<String> mNumbers = new ArrayList<>();
+    static ArrayAdapter<String> mAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,25 +43,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        button = (Button) findViewById(R.id.button);
-        button1 = (Button) findViewById(R.id.button1);
+        start = (Button) findViewById(R.id.button);
+        stop = (Button) findViewById(R.id.button1);
+        listView = (ListView) findViewById(R.id.ListView);
+        mAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, mNumbers);
+
     }
 
-
     private void setOnClickListeners() {
-        button.setOnClickListener(new View.OnClickListener() {
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startService(new Intent(MainActivity.this, BeaconControllerService.class));
             }
         });
-        button1.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopService( new Intent(MainActivity.this, BeaconControllerService.class));
+                stopService(new Intent(MainActivity.this, BeaconControllerService.class));
             }
         });
+    }
 
+    public static void List(ArrayList<String> list) {
+        mNumbers.clear();
+        for(int i = 0; i<list.size(); i++){
+            mNumbers.add(list.get(i));
+        }
+        listView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }
 
