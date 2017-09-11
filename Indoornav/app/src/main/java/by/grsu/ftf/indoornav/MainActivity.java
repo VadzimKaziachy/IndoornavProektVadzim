@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import by.grsu.ftf.beacomlib.BeaconControllerService;
+import by.grsu.ftf.beaconlib.BeaconControllerService;
 
 
 /*
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button start;
     private Button stop;
     static ListView listView;
-    private static List<String> mNumbers = new ArrayList<>();
+    private static List<String> LIST_BEACON = new ArrayList<>();
     static ArrayAdapter<String> mAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         start = (Button) findViewById(R.id.button);
         stop = (Button) findViewById(R.id.button1);
         listView = (ListView) findViewById(R.id.ListView);
-        mAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, mNumbers);
+        mAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, LIST_BEACON);
 
     }
 
@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void List(ArrayList<String> list) {
-        mNumbers.clear();
+        LIST_BEACON.clear();
         for(int i = 0; i<list.size(); i++){
-            mNumbers.add(list.get(i));
+            LIST_BEACON.add(list.get(i));
         }
         listView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

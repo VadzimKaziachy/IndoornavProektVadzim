@@ -1,4 +1,4 @@
-package by.grsu.ftf.beacomlib.Bluetooth;
+package by.grsu.ftf.beaconlib.Bluetooth;
 
 /**
  * Created by Вадим on 04.09.2017.

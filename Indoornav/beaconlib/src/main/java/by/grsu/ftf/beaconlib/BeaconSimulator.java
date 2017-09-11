@@ -1,4 +1,4 @@
-package by.grsu.ftf.beacomlib;
+package by.grsu.ftf.beaconlib;
 
 import java.util.ArrayList;
 import java.util.Random;

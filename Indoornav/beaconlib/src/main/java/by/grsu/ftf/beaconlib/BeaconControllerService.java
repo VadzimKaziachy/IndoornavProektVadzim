@@ -1,4 +1,4 @@
-package by.grsu.ftf.beacomlib;
+package by.grsu.ftf.beaconlib;
 
 import android.app.Service;
 import android.content.Intent;

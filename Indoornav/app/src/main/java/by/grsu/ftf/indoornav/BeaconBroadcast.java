@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import by.grsu.ftf.indoornav.util.Distance;
 
-import static by.grsu.ftf.beacomlib.BeaconControllerService.KEY_VALUE_BLUTOOTH;
+import static by.grsu.ftf.beaconlib.BeaconControllerService.KEY_VALUE_BLUTOOTH;
 
 
 /**
