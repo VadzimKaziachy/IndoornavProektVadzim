@@ -29,7 +29,8 @@ public abstract class Storage {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString(a, b).apply();
-        }
+
+         }
     }
 }
 

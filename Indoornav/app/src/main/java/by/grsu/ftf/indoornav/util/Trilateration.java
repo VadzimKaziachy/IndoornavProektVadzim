@@ -12,6 +12,9 @@ import java.util.ArrayList;
  */
 
 class Trilateration {
+
+    public static final String TAG = Trilateration.class.getSimpleName();
+
     private static ArrayList<String> LIST_BEACON = new ArrayList<>();
     private static ArrayList<Float> LIST_DISTANCE = new ArrayList<>();
 
@@ -107,7 +110,7 @@ class Trilateration {
         }
         float lon = triPt[0];
         float lat = triPt[1];
-        Log.d("Log", " x = " + lon + " y = " + lat);
+        Log.d(TAG, " x = " + lon + " y = " + lat);
     }
 
 }

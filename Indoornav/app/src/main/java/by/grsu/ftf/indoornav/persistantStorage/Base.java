@@ -1,6 +1,9 @@
 package by.grsu.ftf.indoornav.persistantStorage;
 
-import android.util.Log;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -10,10 +13,12 @@ import by.grsu.ftf.indoornav.MainActivity;
  * Created by Вадим on 10.09.2017.
  */
 
-public class Base {
+public class Base extends Service{
     private static ArrayList<String> LIST_BEACON = new ArrayList<>();
     private static ArrayList<Float> LIST_DISTANCE = new ArrayList<>();
     private static ArrayList<String> LIST = new ArrayList<>();
+
+    public static final String context = "context";
 
 
     public void sortingBeacon(ArrayList<String> list) {
@@ -26,9 +31,16 @@ public class Base {
             LIST_DISTANCE.add(Float.valueOf(list.get(1)));
         }
         LIST.clear();
-        for (int i = 0; i<LIST_BEACON.size(); i++){
+        for (int i = 0; i < LIST_BEACON.size(); i++) {
             LIST.add(LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i));
         }
         MainActivity.List(LIST);
+        Storage.setMai(getBaseContext(), LIST.get(0));
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 }
