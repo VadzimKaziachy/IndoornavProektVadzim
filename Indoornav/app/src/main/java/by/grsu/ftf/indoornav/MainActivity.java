@@ -1,6 +1,9 @@
 package by.grsu.ftf.indoornav;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,8 +18,8 @@ import com.example.indoornav.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.storage.TestBeacon;
 
 
 /*
@@ -28,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Button start;
     private Button stop;
-    static ListView listView;
+    private ListView listView;
     private static List<String> LIST_BEACON = new ArrayList<>();
     static ArrayAdapter<String> mAdapter;
+
+    private BroadcastReceiver br;
+    public static final String KEY_INTENT_FILTER = "KEY_INTENT_FILTER";
+    public static final String KEY_VALUE = "KEY_VALUE";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
         setOnClickListeners();
+        initBroadcast();
     }
 
     private void initViews() {
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startService(new Intent(MainActivity.this, BeaconControllerService.class));
+                startService(new Intent(MainActivity.this, TestBeacon.class));
             }
         });
         stop.setOnClickListener(new View.OnClickListener() {
@@ -65,15 +74,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static void List(ArrayList<String> list) {
-        LIST_BEACON.clear();
-        for(int i = 0; i<list.size(); i++){
-            LIST_BEACON.add(list.get(i));
-        }
-        listView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        regReceiver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(br);
+
+    }
+
+    private void regReceiver() {
+        registerReceiver(br, new IntentFilter(KEY_INTENT_FILTER));
+    }
+
+    private void initBroadcast() {
+        br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.hasExtra(KEY_VALUE)) {
+                    List<String> list = intent.getStringArrayListExtra(KEY_VALUE);
+                    LIST_BEACON.clear();
+                    for (int i = 0; i < list.size(); i++) {
+                        LIST_BEACON.add(list.get(i));
+                    }
+                    listView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        };
     }
 }
+//интент, и запустить через start,
+//передаю данные черзе intent в TestBeacon и от туда передаю в Persistan...
+//
+
+
+//переноваться Start сервис
 
 
 

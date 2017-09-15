@@ -1,7 +1,8 @@
-package by.grsu.ftf.indoornav.persistantStorage;
+package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -18,14 +19,15 @@ public abstract class Storage {
         } else return null;
     }
 
-    public static String getMaiString(Context context) {
+    public static String getRepository(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         if (sharedPreferences != null) {
             return sharedPreferences.getString(a, null);
         } else return null;
     }
 
-    public static void setMai(Context context, String b) {
+    public static void setRepository(Context context, String b) {
+        Log.d("Log", "nene");
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString(a, b).apply();

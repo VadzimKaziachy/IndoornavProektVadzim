@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.persistantStorage;
+package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;

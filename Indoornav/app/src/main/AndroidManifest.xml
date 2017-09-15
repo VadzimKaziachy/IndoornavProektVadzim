@@ -21,7 +21,7 @@
                 <action android:name="by.grsu.ftf.indoornav.KEY_INTENT_FILTER" />
             </intent-filter>
         </receiver>
-        <service android:name="by.grsu.ftf.indoornav.persistantStorage.Base"/>
+        <service android:name="by.grsu.ftf.indoornav.storage.TestBeacon"/>
     </application>
 
 </manifest>

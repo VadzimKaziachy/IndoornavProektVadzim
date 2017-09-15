@@ -2,7 +2,7 @@ package by.grsu.ftf.indoornav.util;
 
 import java.util.ArrayList;
 
-import by.grsu.ftf.indoornav.persistantStorage.Base;
+import by.grsu.ftf.indoornav.storage.TestBeacon;
 
 /**
  * Created by Вадим on 08.09.2017.
@@ -11,7 +11,7 @@ import by.grsu.ftf.indoornav.persistantStorage.Base;
 public class Distance {
     private BeaconInfo beaconInfo = new BeaconInfo();
     private Trilateration trilateration = new Trilateration();
-    private Base base = new Base();
+    private TestBeacon base = new TestBeacon();
 
     private ArrayList<String> LIST_BEACON_DISTANCE = new ArrayList<>();
 
@@ -25,5 +25,6 @@ public class Distance {
         this.LIST_BEACON_DISTANCE.add(String.valueOf(DISTANCE));
         trilateration.sortingBeacon(LIST_BEACON_DISTANCE);
         base.sortingBeacon(LIST_BEACON_DISTANCE);
+
     }
 }
