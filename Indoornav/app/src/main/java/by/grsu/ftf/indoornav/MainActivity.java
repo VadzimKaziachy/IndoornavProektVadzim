@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter<String> mAdapter;
 
     private BroadcastReceiver br;
-    public static final String KEY_INTENT_FILTER = "KEY_INTENT_FILTER";
-    public static final String KEY_VALUE = "KEY_VALUE";
+    public static final String KEY_INTENT_FILTER = "by.grsu.ftf.indoornav.FILTER_ACTIVITY";
+    public static final String KEY_VALUE_LIST = "KEY_VALUE_LIST";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         br = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(KEY_VALUE)) {
-                    List<String> list = intent.getStringArrayListExtra(KEY_VALUE);
+                if (intent.hasExtra(KEY_VALUE_LIST)) {
+                    List<String> list = intent.getStringArrayListExtra(KEY_VALUE_LIST);
                     LIST_BEACON.clear();
                     for (int i = 0; i < list.size(); i++) {
                         LIST_BEACON.add(list.get(i));

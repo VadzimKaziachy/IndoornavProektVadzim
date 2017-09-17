@@ -2,7 +2,6 @@ package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -27,7 +26,6 @@ public abstract class Storage {
     }
 
     public static void setRepository(Context context, String b) {
-        Log.d("Log", "nene");
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString(a, b).apply();
