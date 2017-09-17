@@ -34,11 +34,6 @@ public class TestBeacon extends Service {
         for (int i = 0; i < LIST_BEACON.size(); i++) {
             LIST.add(LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i));
         }
-
-//        MainActivity.List(LIST);
-//        startActivity(new Intent(TestBeacon.this, MainActivity.class));
-//        Storage.setRepository(this, LIST.get(0));
-
     }
 
     @Override

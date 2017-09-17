@@ -2,8 +2,7 @@ package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import static android.content.Context.MODE_PRIVATE;
+import android.util.Log;
 
 /**
  * Created by Вадим on 08.09.2017.
@@ -14,8 +13,9 @@ public abstract class Storage {
 
     private static SharedPreferences getSharedPreferences(Context context) {
         if (context != null) {
-            return context.getApplicationContext().getSharedPreferences(a, MODE_PRIVATE);
+            return context.getApplicationContext().getSharedPreferences(a, Context.MODE_PRIVATE);
         } else return null;
+
     }
 
     public static String getRepository(Context context) {
@@ -30,7 +30,7 @@ public abstract class Storage {
         if (sharedPreferences != null) {
             sharedPreferences.edit().putString(a, b).apply();
 
-         }
+        }
     }
 }
 
