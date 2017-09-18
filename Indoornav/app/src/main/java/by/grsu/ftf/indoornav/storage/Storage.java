@@ -2,7 +2,6 @@ package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Created by Вадим on 08.09.2017.

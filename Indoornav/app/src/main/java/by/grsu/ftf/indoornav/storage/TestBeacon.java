@@ -20,6 +20,7 @@ public class TestBeacon extends Service {
     private static ArrayList<Float> LIST_DISTANCE = new ArrayList<>();
     private static ArrayList<String> LIST = new ArrayList<>();
     private Handler mHandler = new Handler();
+    private static String LIST_A = "";
 
     public void sortingBeacon(ArrayList<String> list) {
         if (LIST_BEACON.contains(list.get(0))) {
@@ -31,9 +32,11 @@ public class TestBeacon extends Service {
             LIST_DISTANCE.add(Float.valueOf(list.get(1)));
         }
         LIST.clear();
+        LIST_A = "";
         for (int i = 0; i < LIST_BEACON.size(); i++) {
-            LIST.add(LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i));
+            LIST_A += LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i) + ",";
         }
+
     }
 
     @Override
@@ -45,7 +48,7 @@ public class TestBeacon extends Service {
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
             Intent intent1 = new Intent(KEY_INTENT_FILTER);
-            intent1.putExtra(KEY_VALUE_LIST, LIST);
+            intent1.putExtra(KEY_VALUE_LIST, LIST_A);
             sendBroadcast(intent1);
             mHandler.postDelayed(this, 100);
         }

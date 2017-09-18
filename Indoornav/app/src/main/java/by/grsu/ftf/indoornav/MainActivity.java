@@ -8,12 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.indoornav.R;
 
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private Button start;
     private Button stop;
     private ListView listView;
-    private TextView textView; //тут
     private static List<String> LIST_BEACON = new ArrayList<>();
     static ArrayAdapter<String> mAdapter;
 
@@ -59,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         stop = (Button) findViewById(R.id.button1);
         listView = (ListView) findViewById(R.id.ListView);
         mAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, LIST_BEACON);
-        textView = (TextView) findViewById(R.id.textView); //тут
-
     }
 
     private void setOnClickListeners() {
@@ -83,9 +78,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        textView.setText(Storage.getRepository(getApplication())); //тут
-        Log.d("Log", Storage.getRepository(getApplicationContext()) + " Возрадилcя "); //тут
         regReceiver();
+
+        String LIST_A = Storage.getRepository(getApplicationContext());
+        String[] MASSIF_BEACON = LIST_A.split(",");
+        LIST_BEACON.clear();
+        for (int i = 0; i < MASSIF_BEACON.length; i++) {
+            LIST_BEACON.add(MASSIF_BEACON[i]);
+        }
+        listView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -103,14 +105,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(KEY_VALUE_LIST)) {
-                    List<String> list = intent.getStringArrayListExtra(KEY_VALUE_LIST);
+                    String LIST_A = intent.getStringExtra(KEY_VALUE_LIST);
 
-                    Storage.setRepository(getApplicationContext(), LIST_BEACON + ""); //тут
-                    textView.setText(Storage.getRepository(getApplication())); //тут
-
+                    Storage.setRepository(getApplicationContext(), LIST_A);
+                    String[] MASSIF_BEACON = LIST_A.split(",");
                     LIST_BEACON.clear();
-                    for (int i = 0; i < list.size(); i++) {
-                        LIST_BEACON.add(list.get(i));
+                    for (int i = 0; i < MASSIF_BEACON.length; i++) {
+                        LIST_BEACON.add(MASSIF_BEACON[i]);
                     }
                     listView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
