@@ -11,21 +11,22 @@ import java.util.ArrayList;
  * if all Beacons are the same (that is ones firm), then this class will not be used.
  */
 
-class Trilateration {
+abstract class Trilateration {
 
     public static final String TAG = Trilateration.class.getSimpleName();
 
     private static ArrayList<String> LIST_BEACON = new ArrayList<>();
     private static ArrayList<Float> LIST_DISTANCE = new ArrayList<>();
 
-    private ArrayList<Float> LIST_DISTANCE_BEACON = new ArrayList<>();
-    private ArrayList<Float> LIST = new ArrayList<>();
-    private ArrayList<PointF> LIST_COORDINATE = new ArrayList<>();
-    private float a;
 
-    private BeaconInfo beaconInfo = new BeaconInfo();
+    static void sortingBeacon(ArrayList<String> list) {
+        float a = 0;
+        ArrayList<PointF> LIST_COORDINATE = new ArrayList<>();
+        ArrayList<Float> LIST = new ArrayList<>();
+        ArrayList<Float> LIST_DISTANCE_BEACON = new ArrayList<>();
+        BeaconInfo beaconInfo = new BeaconInfo();
 
-    void sortingBeacon(ArrayList<String> list) {
+
         if (LIST_BEACON.contains(list.get(0))) {
             int index = LIST_BEACON.indexOf(list.get(0));
             LIST_BEACON.set(index, list.get(0));
@@ -36,7 +37,7 @@ class Trilateration {
         }
         if (LIST_BEACON.size() > 2) {
             for (int i = 0; i < LIST_DISTANCE.size(); i++) {
-                this.LIST.add(LIST_DISTANCE.get(i));
+                LIST.add(LIST_DISTANCE.get(i));
             }
             for (int j = 0; j < LIST.size() - 3; j++) {
                 for (int i = 0; i < LIST.size() - 1; i++) {

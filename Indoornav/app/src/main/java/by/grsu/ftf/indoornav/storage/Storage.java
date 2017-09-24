@@ -8,11 +8,12 @@ import android.content.SharedPreferences;
  */
 
 public abstract class Storage {
+    private static final String KEY_SETTINGS = "a";
     private static final String a = "a";
 
     private static SharedPreferences getSharedPreferences(Context context) {
         if (context != null) {
-            return context.getApplicationContext().getSharedPreferences(a, Context.MODE_PRIVATE);
+            return context.getApplicationContext().getSharedPreferences(KEY_SETTINGS, Context.MODE_PRIVATE);
         } else return null;
 
     }

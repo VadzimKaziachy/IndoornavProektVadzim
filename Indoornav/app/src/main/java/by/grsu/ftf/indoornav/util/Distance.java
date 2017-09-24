@@ -10,7 +10,6 @@ import by.grsu.ftf.indoornav.storage.TestBeacon;
 
 public class Distance {
     private BeaconInfo beaconInfo = new BeaconInfo();
-    private Trilateration trilateration = new Trilateration();
     private TestBeacon base = new TestBeacon();
 
     private ArrayList<String> LIST_BEACON_DISTANCE = new ArrayList<>();
@@ -23,7 +22,7 @@ public class Distance {
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
         this.LIST_BEACON_DISTANCE.add(String.valueOf(DISTANCE));
-        trilateration.sortingBeacon(LIST_BEACON_DISTANCE);
+        Trilateration.sortingBeacon(LIST_BEACON_DISTANCE);
         base.sortingBeacon(LIST_BEACON_DISTANCE);
 
     }

@@ -18,7 +18,6 @@ import static by.grsu.ftf.indoornav.MainActivity.KEY_VALUE_LIST;
 public class TestBeacon extends Service {
     private static ArrayList<String> LIST_BEACON = new ArrayList<>();
     private static ArrayList<Float> LIST_DISTANCE = new ArrayList<>();
-    private static ArrayList<String> LIST = new ArrayList<>();
     private Handler mHandler = new Handler();
     private static String LIST_A = "";
 
@@ -31,7 +30,6 @@ public class TestBeacon extends Service {
             LIST_BEACON.add(list.get(0));
             LIST_DISTANCE.add(Float.valueOf(list.get(1)));
         }
-        LIST.clear();
         LIST_A = "";
         for (int i = 0; i < LIST_BEACON.size(); i++) {
             LIST_A += LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i) + ",";
