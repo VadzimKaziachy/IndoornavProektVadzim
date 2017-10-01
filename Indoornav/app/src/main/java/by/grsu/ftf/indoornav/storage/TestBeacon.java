@@ -8,9 +8,6 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import static by.grsu.ftf.indoornav.MainActivity.KEY_INTENT_FILTER;
-import static by.grsu.ftf.indoornav.MainActivity.KEY_VALUE_LIST;
-
 /**
  * Created by Вадим on 10.09.2017.
  */
@@ -45,9 +42,9 @@ public class TestBeacon extends Service {
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
-            Intent intent1 = new Intent(KEY_INTENT_FILTER);
-            intent1.putExtra(KEY_VALUE_LIST, LIST_A);
-            sendBroadcast(intent1);
+//            Intent intent1 = new Intent(KEY_INTENT_FILTER);
+//            intent1.putExtra(KEY_VALUE_LIST, LIST_A);
+//            sendBroadcast(intent1);
             mHandler.postDelayed(this, 100);
         }
     };

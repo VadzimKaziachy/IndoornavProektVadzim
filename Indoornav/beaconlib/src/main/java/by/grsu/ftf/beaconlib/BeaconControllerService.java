@@ -1,10 +1,14 @@
 package by.grsu.ftf.beaconlib;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import java.util.List;
 
 /**
  * Created by Вадим on 25.07.2017.
@@ -19,7 +23,9 @@ public class BeaconControllerService extends Service {
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
 
+    private final IBinder mBinder = new MyBinder();
     private Handler mHandler = new Handler();
+    Callbacks activity;
 
 
     @Override
@@ -36,15 +42,19 @@ public class BeaconControllerService extends Service {
 
             intent1.putExtra(KEY_VALUE_BLUTOOTH, beaconSimulator.getList());
             sendBroadcast(intent1);
-
+            activity.updateClient(beaconSimulator.getList());
             mHandler.postDelayed(this, 100);
         }
     };
 
+    public void registerClient(Activity activity) {
+        this.activity = (Callbacks) activity;
+    }
+
 
     @Override
     public void onDestroy() {
-        mHandler.removeMessages(0);
+        mHandler.removeCallbacks(timeUpdaterRunnable);
         super.onDestroy();
     }
 
@@ -52,7 +62,17 @@ public class BeaconControllerService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
+    }
+
+    public class MyBinder extends Binder {
+        public BeaconControllerService getService() {
+            return BeaconControllerService.this;
+        }
+    }
+
+    public interface Callbacks {
+        void updateClient(List<String> list);
     }
 }
 

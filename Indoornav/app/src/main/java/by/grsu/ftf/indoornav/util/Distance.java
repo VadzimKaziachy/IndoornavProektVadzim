@@ -1,6 +1,7 @@
 package by.grsu.ftf.indoornav.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import by.grsu.ftf.indoornav.storage.TestBeacon;
 
@@ -14,7 +15,7 @@ public class Distance {
 
     private ArrayList<String> LIST_BEACON_DISTANCE = new ArrayList<>();
 
-    public void distanceBeacon(ArrayList<String> LIST_BEACON) {
+    public List<String> distanceBeacon(List<String> LIST_BEACON) {
         Float DISTANCE;
         String name = LIST_BEACON.get(0);
         Integer index = beaconInfo.getBEACON_ID().indexOf(name);
@@ -24,6 +25,6 @@ public class Distance {
         this.LIST_BEACON_DISTANCE.add(String.valueOf(DISTANCE));
         Trilateration.sortingBeacon(LIST_BEACON_DISTANCE);
         base.sortingBeacon(LIST_BEACON_DISTANCE);
-
+        return LIST_BEACON_DISTANCE;
     }
 }

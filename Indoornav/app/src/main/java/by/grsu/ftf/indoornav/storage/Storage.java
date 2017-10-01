@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
  * Created by Вадим on 08.09.2017.
  */
 
-public abstract class Storage {
-    private static final String KEY_SETTINGS = "a";
+public  class Storage {
+    private static final String KEY_SETTINGS = "KEY_SETTINGS";
     private static final String a = "a";
 
     private static SharedPreferences getSharedPreferences(Context context) {

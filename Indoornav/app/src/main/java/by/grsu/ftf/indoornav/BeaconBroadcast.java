@@ -29,7 +29,7 @@ public class BeaconBroadcast extends BroadcastReceiver {
         if (intent.hasExtra(KEY_VALUE_BLUTOOTH)) {
             ArrayList<String> list = intent.getStringArrayListExtra(KEY_VALUE_BLUTOOTH);
             Log.d(TAG, list.get(0) + " " + list.get(1));
-            distance.distanceBeacon(list);
+//            distance.distanceBeacon(list);
         }
     }
 }

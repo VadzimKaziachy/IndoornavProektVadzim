@@ -10,8 +10,7 @@ import java.util.ArrayList;
  * In this class, the coordinates of the person's location in the room will be determined, in cases where all Beacons are different,
  * if all Beacons are the same (that is ones firm), then this class will not be used.
  */
-
-abstract class Trilateration {
+ class Trilateration {
 
     public static final String TAG = Trilateration.class.getSimpleName();
 
