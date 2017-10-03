@@ -19,7 +19,7 @@ public class BeaconControllerService extends Service {
 
 
     Intent intent1 = new Intent("by.grsu.ftf.indoornav.KEY_INTENT_FILTER");
-    public static final String KEY_VALUE_BLUTOOTH = "KEY_VALUE_BLUTOOTH";
+    public static final String KEY_VALUE_BLUETOOTH = "KEY_VALUE_BLUETOOTH";
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
 
@@ -40,7 +40,7 @@ public class BeaconControllerService extends Service {
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
 
-            intent1.putExtra(KEY_VALUE_BLUTOOTH, beaconSimulator.getList());
+            intent1.putExtra(KEY_VALUE_BLUETOOTH, beaconSimulator.getList());
             sendBroadcast(intent1);
             activity.updateClient(beaconSimulator.getList());
             mHandler.postDelayed(this, 100);

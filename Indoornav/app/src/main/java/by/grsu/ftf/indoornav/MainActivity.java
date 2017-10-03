@@ -95,12 +95,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         super.onStart();
         bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection, Context.BIND_AUTO_CREATE);
         if (Storage.getRepository(getApplicationContext()) != null) {
-            String list_beacon = Storage.getRepository(getApplicationContext());
-            String[] massif_beacon = list_beacon.split(",");
-            LIST.clear();
-            for (int i = 0; i < massif_beacon.length; i++) {
-                LIST.add(massif_beacon[i]);
-            }
+            writeInList(Storage.getRepository(getApplicationContext()));
             listView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }
@@ -147,13 +142,17 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             list_a += LIST_BEACON.get(i) + " - " + LIST_DISTANCE.get(i) + ",";
         }
         Storage.setRepository(getApplicationContext(), list_a);
-        String[] massif_beacon = list_a.split(",");
+        writeInList(list_a);
+        listView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void writeInList(String list){
+        String[] massif_beacon = list.split(",");
         LIST.clear();
         for (int i = 0; i < massif_beacon.length; i++) {
             LIST.add(massif_beacon[i]);
         }
-        listView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
     }
 }
 

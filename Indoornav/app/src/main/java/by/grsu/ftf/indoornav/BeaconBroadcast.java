@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import by.grsu.ftf.indoornav.util.Distance;
 
-import static by.grsu.ftf.beaconlib.BeaconControllerService.KEY_VALUE_BLUTOOTH;
+import static by.grsu.ftf.beaconlib.BeaconControllerService.KEY_VALUE_BLUETOOTH;
 
 
 /**
@@ -26,8 +26,8 @@ public class BeaconBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.hasExtra(KEY_VALUE_BLUTOOTH)) {
-            ArrayList<String> list = intent.getStringArrayListExtra(KEY_VALUE_BLUTOOTH);
+        if (intent.hasExtra(KEY_VALUE_BLUETOOTH)) {
+            ArrayList<String> list = intent.getStringArrayListExtra(KEY_VALUE_BLUETOOTH);
             Log.d(TAG, list.get(0) + " " + list.get(1));
 //            distance.distanceBeacon(list);
         }

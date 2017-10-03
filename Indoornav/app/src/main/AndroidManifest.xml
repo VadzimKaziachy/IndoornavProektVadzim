@@ -16,12 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="by.grsu.ftf.indoornav.BeaconBroadcast">
+
+        <receiver
+            android:name="by.grsu.ftf.indoornav.BeaconBroadcast"
+            android:exported="false">
             <intent-filter>
                 <action android:name="by.grsu.ftf.indoornav.KEY_INTENT_FILTER" />
             </intent-filter>
         </receiver>
-        <service android:name="by.grsu.ftf.indoornav.storage.TestBeacon"/>
+        <service android:name="by.grsu.ftf.indoornav.storage.TestBeacon" />
     </application>
 
 </manifest>
