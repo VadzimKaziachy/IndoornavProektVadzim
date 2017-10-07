@@ -12,19 +12,6 @@
         android:orientation="vertical"
         android:gravity="bottom">
 
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/start" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/stop" />
-
         <ListView
             android:id="@+id/ListView"
             android:layout_width="match_parent"

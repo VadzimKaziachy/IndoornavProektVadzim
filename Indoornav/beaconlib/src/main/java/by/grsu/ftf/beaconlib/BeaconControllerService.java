@@ -17,44 +17,34 @@ import java.util.List;
 
 public class BeaconControllerService extends Service {
 
-
-    Intent intent1 = new Intent("by.grsu.ftf.indoornav.KEY_INTENT_FILTER");
-    public static final String KEY_VALUE_BLUETOOTH = "KEY_VALUE_BLUETOOTH";
-
     BeaconSimulator beaconSimulator = new BeaconSimulator();
 
     private final IBinder mBinder = new MyBinder();
     private Handler mHandler = new Handler();
-    Callbacks activity;
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        timeUpdaterRunnable.run();
-
-        return START_NOT_STICKY;
-    }
-
+    Callbacks callbacks;
+    boolean serviceRun = true;
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
-
-            intent1.putExtra(KEY_VALUE_BLUETOOTH, beaconSimulator.getList());
-            sendBroadcast(intent1);
-            activity.updateClient(beaconSimulator.getList());
+            List<String> list_Beacon = beaconSimulator.getList();
+            callbacks.updateClient(list_Beacon);
             mHandler.postDelayed(this, 100);
         }
     };
 
-    public void registerClient(Activity activity) {
-        this.activity = (Callbacks) activity;
+    public void registerClient(Activity resiver) {
+        this.callbacks = (Callbacks) resiver;
+        if (serviceRun) {
+            timeUpdaterRunnable.run();
+            serviceRun = false;
+        }
     }
 
 
     @Override
     public void onDestroy() {
         mHandler.removeCallbacks(timeUpdaterRunnable);
+        serviceRun = true;
         super.onDestroy();
     }
 
