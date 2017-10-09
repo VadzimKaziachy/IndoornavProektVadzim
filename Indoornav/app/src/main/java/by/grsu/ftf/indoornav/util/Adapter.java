@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,38 +14,26 @@ import java.util.List;
  */
 
 public class Adapter extends ArrayAdapter<String> {
-    private Context context;
-    private static List<String> LIST;
 
-    public Adapter(Context context, int textViewResourceId, String beacon) {
-        super(context, textViewResourceId);
-        this.context = context;
-        if (beacon != null) {
-            LIST = writeInList(beacon);
+    private static String[] beacon_adapter = null;
+    private Context mContext;
 
-        }
+    public Adapter(Context context, int textViewResourceId,List<String> beacon_list) {
+        super(context, textViewResourceId, beacon_list.toArray(new String[beacon_list.size()]));
+        this.mContext = context;
+        String[] beacon = beacon_list.toArray(new String[beacon_list.size()]);
+        beacon_adapter = beacon;
     }
-
-    private List<String> writeInList(String beacon) {
-        List<String> LIST = new ArrayList<>();
-        String[] massif_beacon = beacon.split(",");
-        LIST.clear();
-        for (int i = 0; i < massif_beacon.length; i++) {
-            LIST.add(massif_beacon[i]);
-        }
-        return LIST;
-    }
-
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView,@NonNull ViewGroup parent) {
         TextView textView = (TextView) convertView;
 
         if (convertView == null) {
-            convertView = new TextView(context);
+            convertView = new TextView(mContext);
             textView = (TextView) convertView;
         }
-        textView.setText(LIST.get(position));
-        return (convertView);
+        textView.setText(beacon_adapter[position]);
+        return convertView;
     }
 }

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.indoornav.R;
@@ -31,9 +30,9 @@ import by.grsu.ftf.indoornav.util.Distance;
 public class MainActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
 
     private ListView listView;
-    ArrayAdapter<String> mAdapter;
-    static List<String > list = new ArrayList<>();
-    static String list_a;
+    Adapter mAdapter;
+    static List<String> list = new ArrayList<>();
+    static List<String> list_a;
 
     Distance distance = new Distance();
     TestBeacon testBeacon = new TestBeacon();
@@ -57,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     protected void onStart() {
         super.onStart();
-        bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection,
+                Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -90,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         list = distance.distanceBeacon(list1);
         list_a = testBeacon.sortingBeacon(list);
 
-        mAdapter = new Adapter(this, android.R.layout.simple_list_item_1, list_a);
+        mAdapter = new Adapter(getApplicationContext(),
+                android.R.layout.simple_list_item_1, list_a);
         listView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
 
         list.clear();
-        list_a = "";
+        list_a.clear();
 
     }
 }
