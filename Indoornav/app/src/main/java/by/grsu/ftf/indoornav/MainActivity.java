@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.storage.Storage;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
 import by.grsu.ftf.indoornav.util.Adapter;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -31,11 +32,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private ListView listView;
     Adapter mAdapter;
-    static List<String> list = new ArrayList<>();
-    static List<String> list_a;
+    private List<String> list = new ArrayList<>();
+    private List<String> list_a = new ArrayList<>();
 
-    Distance distance = new Distance();
-    TestBeacon testBeacon = new TestBeacon();
+    private Distance distance = new Distance();
+    private TestBeacon testBeacon = new TestBeacon();
 
     boolean mBound;
     BeaconControllerService myBinder;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private void initViews() {
         listView = (ListView) findViewById(R.id.ListView);
+        new TestBeacon(this);
     }
 
     @Override
@@ -58,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         super.onStart();
         bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection,
                 Context.BIND_AUTO_CREATE);
+        if (Storage.getRepository(this) != null) {
+            list_a.clear();
+            list_a = testBeacon.writeInList(Storage.getRepository(this));
+            writeInList(list_a);
+        }
     }
 
     @Override
@@ -87,16 +94,19 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     @Override
     public void updateClient(List<String> list1) {
-        list = distance.distanceBeacon(list1);
-        list_a = testBeacon.sortingBeacon(list);
-
-        mAdapter = new Adapter(getApplicationContext(),
-                android.R.layout.simple_list_item_1, list_a);
-        listView.setAdapter(mAdapter);
-
         list.clear();
         list_a.clear();
 
+        list = distance.distanceBeacon(list1);
+        list_a = testBeacon.sortingBeacon(list);
+
+        writeInList(list_a);
+    }
+
+    private void writeInList(List<String> list) {
+        mAdapter = new Adapter(this, list);
+        listView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }
 

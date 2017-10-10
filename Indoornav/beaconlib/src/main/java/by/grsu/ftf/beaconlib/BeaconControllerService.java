@@ -28,7 +28,7 @@ public class BeaconControllerService extends Service {
         public void run() {
             List<String> list_Beacon = beaconSimulator.getList();
             callbacks.updateClient(list_Beacon);
-            mHandler.postDelayed(this, 1000);
+            mHandler.postDelayed(this, 100);
         }
     };
 
