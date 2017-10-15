@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.indoornav.R;
 
@@ -17,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.storage.Storage;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
 import by.grsu.ftf.indoornav.util.Adapter;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -33,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private ListView listView;
     Adapter mAdapter;
     private List<String> list = new ArrayList<>();
-    private List<String> list_a = new ArrayList<>();
+    private List<String> list_beacon = new ArrayList<>();
+    private List<String> list_distance = new ArrayList<>();
 
     private Distance distance = new Distance();
     private TestBeacon testBeacon = new TestBeacon();
@@ -48,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         setContentView(R.layout.activity_main);
 
         initViews();
+        setOnclickListener();
     }
 
     private void initViews() {
         listView = (ListView) findViewById(R.id.ListView);
-        new TestBeacon(this);
     }
 
     @Override
@@ -60,11 +63,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         super.onStart();
         bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection,
                 Context.BIND_AUTO_CREATE);
-        if (Storage.getRepository(this) != null) {
-            list_a.clear();
-            list_a = testBeacon.writeInList(Storage.getRepository(this));
-            writeInList(list_a);
-        }
     }
 
     @Override
@@ -95,19 +93,34 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public void updateClient(List<String> list1) {
         list.clear();
-        list_a.clear();
 
         list = distance.distanceBeacon(list1);
-        list_a = testBeacon.sortingBeacon(list);
+        testBeacon.sortingBeacon(list);
+        list_beacon = TestBeacon.LIST_BEACON;
+        list_distance = TestBeacon.LIST_DISTANCE;
 
-        writeInList(list_a);
-    }
-
-    private void writeInList(List<String> list) {
-        mAdapter = new Adapter(this, list);
+        mAdapter = new Adapter(this, list_beacon, list_distance);
         listView.setAdapter(mAdapter);
+        listView.setDivider(getResources().getDrawable(android.R.color.transparent));
         mAdapter.notifyDataSetChanged();
     }
+
+    private void setOnclickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,long id) {
+
+                TextView textView = (TextView) itemClicked.findViewById(R.id.textView);
+                String ID =(String) textView.getText();
+
+                Intent intent = new Intent(MainActivity.this, beaconMainActivity.class);
+                intent.putExtra("id", ID);
+                startActivity(intent);
+            }
+        });
+    }
+
+    ;
 }
 
 

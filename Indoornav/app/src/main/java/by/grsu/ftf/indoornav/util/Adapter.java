@@ -20,11 +20,13 @@ import java.util.List;
 public class Adapter extends ArrayAdapter<String> {
 
     private List<String> beacon_adapter = new ArrayList<>();
+    private List<String> beacon_distance = new ArrayList<>();
 
-    public Adapter(Context context, List<String> beacon_list) {
-        super(context, -1, beacon_list);
+    public Adapter(Context context, List<String> list_beacon, List<String> list_distance) {
+        super(context, -1, list_beacon);
         beacon_adapter.clear();
-        beacon_adapter = beacon_list;
+        beacon_adapter = list_beacon;
+        beacon_distance = list_distance;
     }
 
     @NonNull
@@ -34,7 +36,9 @@ public class Adapter extends ArrayAdapter<String> {
                 getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.rowlayout, parent, false);
         TextView textView = (TextView) view.findViewById(R.id.textView);
+        TextView textView1 = (TextView) view.findViewById(R.id.textView2);
         textView.setText(beacon_adapter.get(position));
+        textView1.setText(beacon_distance.get(position));
         return view;
     }
 }
