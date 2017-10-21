@@ -24,16 +24,14 @@ import by.grsu.ftf.indoornav.util.Distance;
 
 public class beaconMainActivity extends Activity implements BeaconControllerService.Callbacks {
 
-    private TextView textView;
-    private TextView textView1;
-    private TextView textView2;
+    private TextView beacon;
+    private TextView distanceBeacon;
+    private TextView RSSI;
     private Distance distance = new Distance();
     BeaconControllerService beaconControllerService;
     private Boolean mBound;
     private String id;
     private List<String> list_Beacon = new ArrayList<>();
-
-    int i = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +40,9 @@ public class beaconMainActivity extends Activity implements BeaconControllerServ
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        textView = (TextView) findViewById(R.id.textView3);
-        textView1 = (TextView) findViewById(R.id.textView4);
-        textView2 = (TextView) findViewById(R.id.textView5);
+        beacon = (TextView) findViewById(R.id.beacon);
+        distanceBeacon = (TextView) findViewById(R.id.distance);
+        RSSI = (TextView) findViewById(R.id.RSSI);
     }
 
     @Override
@@ -81,11 +79,12 @@ public class beaconMainActivity extends Activity implements BeaconControllerServ
     @Override
     public void updateClient(List<String> list) {
         if (id.equals(list.get(0))) {
+            String rssi = "RSSI " + list.get(1);
             list_Beacon.clear();
             list_Beacon = distance.distanceBeacon(list);
-            textView.setText(list_Beacon.get(0));
-            textView1.setText(list_Beacon.get(1));
-            textView2.setText("RSSI "+list.get(1));
+            beacon.setText(list_Beacon.get(0));
+            distanceBeacon.setText(list_Beacon.get(1));
+            RSSI.setText(rssi);
         }
     }
 }

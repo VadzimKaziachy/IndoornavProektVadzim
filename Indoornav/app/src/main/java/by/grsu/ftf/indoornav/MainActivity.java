@@ -108,10 +108,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private void setOnclickListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,long id) {
+            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
 
                 TextView textView = (TextView) itemClicked.findViewById(R.id.textView);
-                String ID =(String) textView.getText();
+                String ID = textView.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, beaconMainActivity.class);
                 intent.putExtra("id", ID);
@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             }
         });
     }
-
-    ;
 }
 
 
