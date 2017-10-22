@@ -9,9 +9,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.indoornav.R;
@@ -21,7 +21,8 @@ import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
-import by.grsu.ftf.indoornav.util.Adapter;
+import by.grsu.ftf.indoornav.util.Adapter_RecyclerView;
+import by.grsu.ftf.indoornav.util.ClickListener;
 import by.grsu.ftf.indoornav.util.Distance;
 
 
@@ -32,8 +33,10 @@ import by.grsu.ftf.indoornav.util.Distance;
 
 public class MainActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
 
-    private ListView listView;
-    Adapter mAdapter;
+    private RecyclerView recyclerView;
+    Adapter_RecyclerView adapter_recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     private List<String> list = new ArrayList<>();
     private List<String> list_beacon = new ArrayList<>();
     private List<String> list_distance = new ArrayList<>();
@@ -55,7 +58,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     }
 
     private void initViews() {
-        listView = (ListView) findViewById(R.id.ListView);
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
@@ -99,18 +105,17 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         list_beacon = TestBeacon.LIST_BEACON;
         list_distance = TestBeacon.LIST_DISTANCE;
 
-        mAdapter = new Adapter(this, list_beacon, list_distance);
-        listView.setAdapter(mAdapter);
-        listView.setDivider(getResources().getDrawable(android.R.color.transparent));
-        mAdapter.notifyDataSetChanged();
+        adapter_recyclerView = new Adapter_RecyclerView(list_beacon, list_distance);
+        recyclerView.setAdapter(adapter_recyclerView);
+        adapter_recyclerView.notifyDataSetChanged();
     }
 
-    private void setOnclickListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void setOnclickListener(){
+        recyclerView.addOnItemTouchListener(new ClickListener(this) {
             @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
+            public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
 
-                TextView textView = (TextView) itemClicked.findViewById(R.id.textView);
+                TextView textView = (TextView) itemView.findViewById(R.id.textView);
                 String ID = textView.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, beaconMainActivity.class);
@@ -119,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             }
         });
     }
+
 }
 
 
