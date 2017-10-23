@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.indoornav.R;
 
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.click_Listener.RecyclerTouchListener;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
 import by.grsu.ftf.indoornav.util.Adapter_RecyclerView;
-import by.grsu.ftf.indoornav.util.ClickListener;
 import by.grsu.ftf.indoornav.util.Distance;
 
 
@@ -110,19 +111,48 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         adapter_recyclerView.notifyDataSetChanged();
     }
 
+    //    private void setOnclickListener(){
+//        recyclerView.addOnItemTouchListener(new ClickListener(this) {
+//            @Override
+//            public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
+//
+//                TextView textView = (TextView) itemView.findViewById(R.id.textView);
+//                String ID = textView.getText().toString();
+//
+//                Intent intent = new Intent(MainActivity.this, beaconMainActivity.class);
+//                intent.putExtra("id", ID);
+//                startActivity(intent);
+//            }
+//        });
+//    }
     private void setOnclickListener(){
-        recyclerView.addOnItemTouchListener(new ClickListener(this) {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
+                recyclerView, new ClickListener() {
             @Override
-            public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
+            public void onClick(View view, final int position) {
+                Toast.makeText(MainActivity.this, "Single Click on position :" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
 
-                TextView textView = (TextView) itemView.findViewById(R.id.textView);
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(MainActivity.this, "Long press on position :" + position,
+                        Toast.LENGTH_LONG).show();
+
+                TextView textView = (TextView) view.findViewById(R.id.textView);
                 String ID = textView.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, beaconMainActivity.class);
                 intent.putExtra("id", ID);
                 startActivity(intent);
             }
-        });
+        }));
+    }
+
+
+    public interface ClickListener {
+        public void onClick(View view, int position);
+        public void onLongClick(View view, int position);
     }
 
 }
