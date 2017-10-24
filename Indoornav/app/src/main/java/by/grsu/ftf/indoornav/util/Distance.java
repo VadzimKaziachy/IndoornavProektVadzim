@@ -19,6 +19,7 @@ public class Distance {
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
         this.LIST_BEACON_DISTANCE.add(String.valueOf(DISTANCE));
+        this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(1));
         return LIST_BEACON_DISTANCE;
     }
 }
