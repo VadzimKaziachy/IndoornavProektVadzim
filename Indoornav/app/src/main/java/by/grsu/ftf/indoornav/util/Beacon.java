@@ -9,13 +9,15 @@ import java.util.List;
  * Created by Вадим on 08.09.2017.
  */
 
-class BeaconInfo {
+class Beacon {
 
     private List<String> BEACON_ID = new ArrayList<>();
     private List<PointF> LIST_COORDINATE = new ArrayList<>();
     private List<Integer> POWER_BEACON = new ArrayList<>();
 
-    BeaconInfo() {
+
+    //сделать дефолтный коснтруктор
+    Beacon() {
 
         BEACON_ID.add("id 1");
         BEACON_ID.add("id 2");

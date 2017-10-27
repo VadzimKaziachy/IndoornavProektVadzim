@@ -23,7 +23,6 @@ import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.adapter.Adapter_RecyclerView;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
-import by.grsu.ftf.indoornav.util.Distance;
 
 
 /*
@@ -37,12 +36,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     Adapter_RecyclerView adapter_recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private List<String> list = new ArrayList<>();
     private List<String> list_beacon = new ArrayList<>();
-    private List<String> list_distance = new ArrayList<>();
-    private List<String> list_rssi = new ArrayList<>();
-
-    private Distance distance = new Distance();
     private TestBeacon testBeacon = new TestBeacon();
 
     boolean mBound;
@@ -55,13 +49,43 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         setContentView(R.layout.activity_main);
 
         initViews();
+        adapter();
     }
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+    }
+
+
+    private void adapter() {
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
+        adapter_recyclerView = new Adapter_RecyclerView(new ClickListener<String>() {
+            @Override
+            public void onClick(View view, String s) {
+                view.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                if (mBound) {
+                                    unbindService(mConnection);
+                                    mBound = false;
+                                }
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                bindService(new Intent(MainActivity.this,
+                                                BeaconControllerService.class), mConnection,
+                                        Context.BIND_AUTO_CREATE);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -98,37 +122,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     @Override
     public void updateClient(List<String> list1) {
-        list.clear();
 
-        list = distance.distanceBeacon(list1);
-        testBeacon.sortingBeacon(list);
-        list_beacon = TestBeacon.LIST_BEACON;
-        list_distance = TestBeacon.LIST_DISTANCE;
-        list_rssi = TestBeacon.LIST_RSSI;
+        list_beacon = testBeacon.sortingBeacon(list1);
 
-        adapter_recyclerView = new Adapter_RecyclerView(list_beacon, list_distance, list_rssi, new ClickListener<String>() {
-            @Override
-            public void onClick(View view, String s) {
-                view.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction()){
-                            case MotionEvent.ACTION_DOWN:
-                                if (mBound) {
-                                    unbindService(mConnection);
-                                    mBound = false;
-                                }
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                bindService(new Intent(MainActivity.this, BeaconControllerService.class), mConnection,
-                                        Context.BIND_AUTO_CREATE);
-                                break;
-                        }
-                        return true;
-                    }
-                });
-            }
-        });
+        adapter_recyclerView.setBeacon(list_beacon);
         recyclerView.setAdapter(adapter_recyclerView);
         adapter_recyclerView.notifyDataSetChanged();
     }

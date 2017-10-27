@@ -23,7 +23,7 @@ import java.util.ArrayList;
         ArrayList<PointF> LIST_COORDINATE = new ArrayList<>();
         ArrayList<Float> LIST = new ArrayList<>();
         ArrayList<Float> LIST_DISTANCE_BEACON = new ArrayList<>();
-        BeaconInfo beaconInfo = new BeaconInfo();
+        Beacon beaconInfo = new Beacon();
 
 
         if (LIST_BEACON.contains(list.get(0))) {

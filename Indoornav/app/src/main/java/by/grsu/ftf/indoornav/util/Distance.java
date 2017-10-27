@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class Distance {
-    private BeaconInfo beaconInfo = new BeaconInfo();
+    private Beacon beaconInfo = new Beacon();
     private ArrayList<String> LIST_BEACON_DISTANCE = new ArrayList<>();
 
     public List<String> distanceBeacon(List<String> LIST_BEACON) {
