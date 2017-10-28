@@ -1,11 +1,7 @@
 package by.grsu.ftf.indoornav.adapter;
 
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +42,6 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
     public Adapter_RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rowlayout, parent, false);
-        new DividerDecoration(parent.getContext());
         return new ViewHolder(view, clickListener);
     }
 
@@ -55,6 +50,7 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
         holder.beacon.setText(beacon.get(position));
         holder.distance.setText(beacon_distance.get(position));
         holder.rssi.setText(beacon_rssi.get(position));
+        holder.progressTextView.setValue(Integer.parseInt(beacon_rssi.get(position)));
         if (holder != null) {
             holder.bind(beacon.get(position));
         }
@@ -68,6 +64,7 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView beacon, distance, rssi;
+        private ProgressTextView progressTextView;
         String beacon_position;
 
         ViewHolder(View itemView, ClickListener<String> clickListener) {
@@ -75,6 +72,7 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
             beacon = (TextView) itemView.findViewById(R.id.beacon);
             distance = (TextView) itemView.findViewById(R.id.distance);
             rssi = (TextView) itemView.findViewById(R.id.RSSI);
+            progressTextView = (ProgressTextView) itemView.findViewById(R.id.progressTextView);
             if (clickListener != null) {
                 clickListener.onClick(beacon, beacon_position);
             }
@@ -83,32 +81,5 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
         void bind(String beacon_position) {
             this.beacon_position = beacon_position;
         }
-    }
-
-    class DividerDecoration extends RecyclerView.ItemDecoration {
-        private final Drawable drawable;
-
-        public DividerDecoration(Context context) {
-            Log.d("Log", context.toString());
-            int[] atts = {android.R.attr.listDivider};
-            drawable = context.obtainStyledAttributes(atts).getDrawable(0);
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            super.onDrawOver(c, parent, state);
-            int left = parent.getPaddingLeft();
-            int right = parent.getWidth() - parent.getPaddingRight();
-
-            for (int i = 0; i < parent.getChildCount() - 1; i++) {
-                View item = parent.getChildAt(i);
-                int top = item.getBottom() + ((RecyclerView.LayoutParams) item.getLayoutParams()).bottomMargin;
-                int bottom = top + drawable.getIntrinsicHeight();
-
-                drawable.setBounds(left, top, right, bottom);
-                drawable.draw(c);
-            }
-        }
-
     }
 }
