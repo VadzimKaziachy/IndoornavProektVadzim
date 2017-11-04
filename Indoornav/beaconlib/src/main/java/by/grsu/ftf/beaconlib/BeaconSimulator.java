@@ -16,7 +16,7 @@ class BeaconSimulator {
     ArrayList<String> getList() {
         Integer id;
         Integer rssi;
-        id = 4 - random.nextInt(4);
+        id = 10 - random.nextInt(10);
         rssi = random.nextInt(10) - 80;
         list.clear();
         list.add("id " + String.valueOf(id));

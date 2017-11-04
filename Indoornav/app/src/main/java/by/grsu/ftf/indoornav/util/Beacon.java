@@ -9,14 +9,19 @@ import java.util.List;
  * Created by Вадим on 08.09.2017.
  */
 
-class Beacon {
+public class Beacon {
 
     private List<String> BEACON_ID = new ArrayList<>();
     private List<PointF> LIST_COORDINATE = new ArrayList<>();
     private List<Integer> POWER_BEACON = new ArrayList<>();
+    private String id;
+    private String RSSI;
 
+    public Beacon(String id, String RSSI) {
+        this.id = id;
+        this.RSSI = RSSI;
+    }
 
-    //сделать дефолтный коснтруктор
     Beacon() {
 
         BEACON_ID.add("id 1");
@@ -33,6 +38,14 @@ class Beacon {
         POWER_BEACON.add(-65);
         POWER_BEACON.add(-65);
         POWER_BEACON.add(-65);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getRSSI() {
+        return RSSI;
     }
 
     List<String> getBEACON_ID() {
