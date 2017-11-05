@@ -21,6 +21,7 @@ import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
 import by.grsu.ftf.indoornav.util.Beacon;
+import by.grsu.ftf.indoornav.util.Distance;
 
 
 /*
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private RecyclerView.LayoutManager mLayoutManager;
 
     private TestBeacon testBeacon = new TestBeacon();
+    private Distance distance = new Distance();
     private Beacon beacon;
 
     boolean mBound;
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public void updateClient(List<String> list1) {
 
-        beacon = new Beacon(list1.get(0), list1.get(1));
+        beacon = new Beacon(distance.distanceBeacon(list1));
         testBeacon.sortingBeacon(beacon);
 
         recyclerView_adapter.setBeacon(testBeacon.getBeacon());

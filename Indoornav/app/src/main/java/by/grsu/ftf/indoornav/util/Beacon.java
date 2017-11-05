@@ -16,10 +16,12 @@ public class Beacon {
     private List<Integer> POWER_BEACON = new ArrayList<>();
     private String id;
     private String RSSI;
+    private String distance;
 
-    public Beacon(String id, String RSSI) {
-        this.id = id;
-        this.RSSI = RSSI;
+    public Beacon(List<String> list) {
+        this.id = list.get(0);
+        this.distance = list.get(1);
+        this.RSSI = list.get(2);
     }
 
     Beacon() {
@@ -48,6 +50,10 @@ public class Beacon {
         return RSSI;
     }
 
+    public String getDistance() {
+        return distance;
+    }
+
     List<String> getBEACON_ID() {
         return BEACON_ID;
     }
@@ -59,4 +65,5 @@ public class Beacon {
     List<Integer> getPOWER_BEACON() {
         return POWER_BEACON;
     }
+
 }

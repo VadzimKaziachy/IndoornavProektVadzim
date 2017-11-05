@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:textSize="10pt"
         android:layout_marginLeft="8dp"
-        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="@+id/guideline3"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -41,8 +40,9 @@
 
     <by.grsu.ftf.indoornav.adapter.ProgressRSSI
         android:id="@+id/progressRSSI"
+        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="23dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

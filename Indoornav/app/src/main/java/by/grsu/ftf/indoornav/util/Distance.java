@@ -13,9 +13,10 @@ public class Distance {
 
     public List<String> distanceBeacon(List<String> LIST_BEACON) {
         Float DISTANCE;
+        LIST_BEACON_DISTANCE.clear();
         String name = LIST_BEACON.get(0);
         Integer index = beaconInfo.getBEACON_ID().indexOf(name);
-        float POWER = beaconInfo.getPOWER_BEACON().get(index);
+        float POWER = beaconInfo.getPOWER_BEACON().get(0);
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
         this.LIST_BEACON_DISTANCE.add(String.valueOf(DISTANCE));

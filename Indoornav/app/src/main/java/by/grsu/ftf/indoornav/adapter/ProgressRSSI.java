@@ -28,6 +28,7 @@ public class ProgressRSSI extends View {
                 R.styleable.ProgressRSSI, 0, 0);
         max = typedArray.getString(R.styleable.ProgressRSSI_max);
         min = typedArray.getString(R.styleable.ProgressRSSI_min);
+        typedArray.recycle();
     }
 
     @Override
@@ -36,15 +37,18 @@ public class ProgressRSSI extends View {
         float y = this.getMeasuredHeight();
         paint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, x, y, paint);
-        x = Math.abs((Integer.valueOf(min) - Integer.valueOf(RSSI)) * x) / (Integer.valueOf(max) - Integer.valueOf(min));
+        float z = Math.abs((Integer.valueOf(min) - Integer.valueOf(RSSI)) * x) / (Integer.valueOf(max) - Integer.valueOf(min));
         paint.setColor(Color.GREEN);
-        canvas.drawRect(0, 0, x, y, paint);
+        canvas.drawRect(0, 0, z, y, paint);
         paint.setColor(Color.BLACK);
-        paint.setTextSize(20);
-        canvas.drawText(RSSI, 0, 0, paint);
+        paint.setTextSize(40);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText("RSSI " + this.RSSI, x / 2, 90 - ((y - 40) / 2), paint);
     }
 
     public void setRSSI(String RSSI) {
         this.RSSI = RSSI;
+        invalidate();
+        requestLayout();
     }
 }
