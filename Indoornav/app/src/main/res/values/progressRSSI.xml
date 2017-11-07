@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ProgressRSSI">
-        <attr name="max" format="string"/>
         <attr name="value" format="string"/>
-        <attr name="min" format="string"/>
     </declare-styleable>
 </resources>

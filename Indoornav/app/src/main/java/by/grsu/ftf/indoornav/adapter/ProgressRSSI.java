@@ -16,8 +16,8 @@ import com.example.indoornav.R;
  */
 
 public class ProgressRSSI extends View {
-    private String max;
-    private String min;
+
+    private Float progressRSSI;
     private String RSSI;
 
     Paint paint = new Paint();
@@ -26,8 +26,6 @@ public class ProgressRSSI extends View {
         super(context, attrs);
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.ProgressRSSI, 0, 0);
-        max = typedArray.getString(R.styleable.ProgressRSSI_max);
-        min = typedArray.getString(R.styleable.ProgressRSSI_min);
         typedArray.recycle();
     }
 
@@ -37,16 +35,16 @@ public class ProgressRSSI extends View {
         float y = this.getMeasuredHeight();
         paint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, x, y, paint);
-        float z = Math.abs((Integer.valueOf(min) - Integer.valueOf(RSSI)) * x) / (Integer.valueOf(max) - Integer.valueOf(min));
         paint.setColor(Color.GREEN);
-        canvas.drawRect(0, 0, z, y, paint);
+        canvas.drawRect(0, 0, progressRSSI * x, y, paint);
         paint.setColor(Color.BLACK);
         paint.setTextSize(40);
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText("RSSI " + this.RSSI, x / 2, 90 - ((y - 40) / 2), paint);
     }
 
-    public void setRSSI(String RSSI) {
+    public void setRSSI(Float progressRSSI, String RSSI) {
+        this.progressRSSI = progressRSSI;
         this.RSSI = RSSI;
         invalidate();
         requestLayout();

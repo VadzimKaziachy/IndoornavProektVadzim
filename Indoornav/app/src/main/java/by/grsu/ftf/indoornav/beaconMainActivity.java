@@ -79,12 +79,12 @@ public class beaconMainActivity extends Activity implements BeaconControllerServ
     @Override
     public void updateClient(List<String> list) {
         if (id.equals(list.get(0))) {
-            String rssi = "RSSI " + list.get(1);
-            list_Beacon.clear();
-            list_Beacon = distance.distanceBeacon(list);
-            beacon.setText(list_Beacon.get(0));
-            distanceBeacon.setText(list_Beacon.get(1));
-            RSSI.setText(rssi);
+//            String rssi = "RSSI " + list.get(1);
+//            list_Beacon.clear();
+//            list_Beacon = distance.distanceBeacon(list);
+//            beacon.setText(list_Beacon.get(0));
+//            distanceBeacon.setText(list_Beacon.get(1));
+//            RSSI.setText(rssi);
         }
     }
 }

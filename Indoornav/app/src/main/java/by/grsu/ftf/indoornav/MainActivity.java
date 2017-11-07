@@ -11,6 +11,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.indoornav.R;
 
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
     }
 
     private void adapter() {
@@ -110,9 +110,3 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     }
 
 }
-
-
-//tols:text:='ghthgr';
-//bagraynd
-//arraymap
-//sevInstenc, посмотреть  OnsavedInstanceState

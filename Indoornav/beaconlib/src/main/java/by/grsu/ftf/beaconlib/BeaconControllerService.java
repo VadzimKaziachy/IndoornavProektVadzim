@@ -7,6 +7,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 
@@ -26,20 +27,26 @@ public class BeaconControllerService extends Service {
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
-            List<String> list_Beacon = beaconSimulator.getList();
-            callbacks.updateClient(list_Beacon);
+            if(callbacks !=null){
+                List<String> list_Beacon = beaconSimulator.getList();
+                callbacks.updateClient(list_Beacon);
+            }
             mHandler.postDelayed(this, 100);
         }
     };
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        timeUpdaterRunnable.run();
+    }
+
     public void registerClient(Activity resiver) {
         this.callbacks = (Callbacks) resiver;
         if (serviceRun) {
-            timeUpdaterRunnable.run();
             serviceRun = false;
         }
     }
-
 
     @Override
     public void onDestroy() {
@@ -47,7 +54,6 @@ public class BeaconControllerService extends Service {
         serviceRun = true;
         super.onDestroy();
     }
-
 
     @Nullable
     @Override

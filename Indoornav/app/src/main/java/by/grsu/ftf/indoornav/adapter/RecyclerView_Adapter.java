@@ -35,9 +35,8 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Beacon beacon = this.beacon.get(position);
         holder.beacon.setText(beacon.getId());
-        holder.rssi.setText(beacon.getRSSI());
-        holder.distance.setText(beacon.getDistance());
-        holder.progressRSSI.setRSSI(beacon.getRSSI());
+        holder.progressRSSI.setRSSI(beacon.getProgressRSSI(),beacon.getRSSI());
+        holder.speedometerRSSI.setAngleRSSI(30);
     }
 
     @Override
@@ -50,15 +49,15 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView beacon, rssi,distance;
+        private TextView beacon;
         private ProgressRSSI progressRSSI;
+        private SpeedometerRSSI speedometerRSSI;
 
         ViewHolder(View itemView) {
             super(itemView);
             beacon = (TextView) itemView.findViewById(R.id.beacon);
-            rssi = (TextView) itemView.findViewById(R.id.RSSI);
-            distance = (TextView) itemView.findViewById(R.id.distance);
             progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
+            speedometerRSSI = (SpeedometerRSSI) itemView.findViewById(R.id.speedometerRSSI);
         }
     }
 }
