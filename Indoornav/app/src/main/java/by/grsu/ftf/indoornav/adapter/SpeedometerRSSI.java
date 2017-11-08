@@ -27,7 +27,7 @@ public class SpeedometerRSSI extends View {
     public SpeedometerRSSI(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.SpeedometerRSSI,0,0);
+                R.styleable.SpeedometerRSSI, 0, 0);
         typedArray.recycle();
     }
 
@@ -35,7 +35,7 @@ public class SpeedometerRSSI extends View {
     protected void onDraw(Canvas canvas) {
         int x = canvas.getWidth();
         int y = canvas.getHeight();
-        int r = 200;
+        int r = y / 3;
         paint.setStrokeWidth(10);
         paint.setColor(Color.BLACK);
 

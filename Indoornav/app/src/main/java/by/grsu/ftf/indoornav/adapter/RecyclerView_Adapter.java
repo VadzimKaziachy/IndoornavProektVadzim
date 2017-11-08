@@ -36,7 +36,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         Beacon beacon = this.beacon.get(position);
         holder.beacon.setText(beacon.getId());
         holder.progressRSSI.setRSSI(beacon.getProgressRSSI(),beacon.getRSSI());
-        holder.speedometerRSSI.setAngleRSSI(30);
+        holder.speedometerRSSI.setAngleRSSI(beacon.getAngle());
     }
 
     @Override

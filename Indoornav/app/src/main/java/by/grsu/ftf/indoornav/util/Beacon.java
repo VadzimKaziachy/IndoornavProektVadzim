@@ -1,6 +1,7 @@
 package by.grsu.ftf.indoornav.util;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +19,15 @@ public class Beacon {
     private String RSSI;
     private String distance;
     private Float progressRSSI;
-    private Float maxRSSI = -35f;
-    private Float minRSSI = -90f;
     private String angle;
 
 
-    public Beacon(List<Object> list) {
-        this.id = (String) list.get(0);
-        this.distance = list.get(1).toString();
-        this.RSSI = (String) list.get(2);
-        this.progressRSSI = (Float) list.get(3);
-        this.angle = list.get(4).toString();
+    public Beacon(List<String> list) {
+        this.id = list.get(0);
+        this.distance = list.get(1);
+        this.RSSI = list.get(2);
+        this.progressRSSI = Float.valueOf(list.get(3));
+        this.angle = list.get(4);
     }
 
     Beacon() {
@@ -49,16 +48,8 @@ public class Beacon {
         POWER_BEACON.add(-65);
     }
 
-//    public Integer getAngle() {
-//        return Integer.valueOf(angle);
-//    }
-
-    Float getMaxRSSI() {
-        return maxRSSI;
-    }
-
-    Float getMinRSSI() {
-        return minRSSI;
+    public Integer getAngle() {
+        return Integer.parseInt(angle);
     }
 
     public Float getProgressRSSI() {

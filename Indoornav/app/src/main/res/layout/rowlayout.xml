@@ -25,7 +25,7 @@
     <by.grsu.ftf.indoornav.adapter.SpeedometerRSSI
         android:id="@+id/speedometerRSSI"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -36,7 +36,7 @@
     <by.grsu.ftf.indoornav.adapter.ProgressRSSI
         android:id="@+id/progressRSSI"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
