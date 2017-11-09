@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -19,7 +20,7 @@ import com.example.indoornav.R;
 
 public class SpeedometerRSSI extends View {
 
-    Paint paint = new Paint();
+    Paint paint;
     RectF rect;
     RectF rect1;
     int angleRSSI;
@@ -29,27 +30,31 @@ public class SpeedometerRSSI extends View {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.SpeedometerRSSI, 0, 0);
         typedArray.recycle();
+        paint = new Paint();
     }
 
+
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         int x = canvas.getWidth();
         int y = canvas.getHeight();
-        int r = y / 3;
+        int r = y / 2;
         paint.setStrokeWidth(10);
         paint.setColor(Color.BLACK);
 
-        rect = new RectF(x / 2 - r, y / 2 - r, x / 2 + r, y / 2 + r);
+
+        rect = new RectF(x / 2 - r, 3 * y / 4 - r, x / 2 + r, 3 * y / 4 + r);
         canvas.drawArc(rect, 180, 360, false, paint);
         paint.setColor(Color.WHITE);
-        rect1 = new RectF(x / 2 - r + 10, y / 2 - r + 10, x / 2 + r - 10, y / 2 + r - 10);
+        rect1 = new RectF(x / 2 - r + 10, 3 * y / 4 - r + 10, x / 2 + r - 10, 3 * y / 4 + r - 10);
         canvas.drawArc(rect1, 180, 360, false, paint);
-        canvas.drawRect(0, y / 2, x, y, paint);
+        canvas.drawRect(0, 3 * y / 4, x, y, paint);
         paint.setColor(Color.BLACK);
-        canvas.rotate(180 + angleRSSI, x / 2, y / 2);
-        canvas.drawLine(x / 2, y / 2, x / 2 + r, y / 2, paint);
-        canvas.drawLine(x / 2 + r, y / 2, x / 2 + r - 40, y / 2 - 20, paint);
-        canvas.drawLine(x / 2 + r, y / 2, x / 2 + r - 40, y / 2 + 20, paint);
+        canvas.rotate(angleRSSI, x / 2, 3 * y / 4);
+        canvas.drawLine(x / 2, 3 * y / 4, x / 2 - r, 3 * y / 4, paint);
+        canvas.drawLine(x / 2 - r, 3 * y / 4, x / 2 - r + 40, 3 * y / 4 - 20, paint);
+        canvas.drawLine(x / 2 - r, 3 * y / 4, x / 2 - r + 40, 3 * y / 4 + 20, paint);
     }
 
     public void setAngleRSSI(int angleRSSI) {
