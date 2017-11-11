@@ -15,10 +15,10 @@ public class TestBeacon {
     private List<Beacon> beacon = new ArrayList<>();
     private ArrayMap<String, Beacon> beaconMap = new ArrayMap<>();
 
-    public void sortingBeacon(Beacon beacon){
-        this.beaconMap.put(beacon.getId(),beacon);
+    public void sortingBeacon(Beacon beacon) {
+        this.beaconMap.put(beacon.getId(), beacon);
         this.beacon.clear();
-        for(int i = 0; i<beaconMap.size(); i++){
+        for (int i = 0; i < beaconMap.size(); i++) {
             this.beacon.add(beaconMap.valueAt(i));
         }
     }

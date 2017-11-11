@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <by.grsu.ftf.indoornav.adapter.SpeedometerRSSI
+    <by.grsu.ftf.indoornav.adapter.RSSIspeedometer
         android:id="@+id/speedometerRSSI"
         android:layout_width="0dp"
         android:layout_height="100dp"

@@ -36,7 +36,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         Beacon beacon = this.beacon.get(position);
         holder.beacon.setText(beacon.getId());
         holder.progressRSSI.setRSSI(beacon.getProgressRSSI(),beacon.getRSSI());
-        holder.speedometerRSSI.setAngleRSSI(beacon.getAngle());
+        holder.rssIspeedometer.setAngleRSSI(beacon.getAngle());
     }
 
     @Override
@@ -51,13 +51,13 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView beacon;
         private ProgressRSSI progressRSSI;
-        private SpeedometerRSSI speedometerRSSI;
+        private RSSIspeedometer rssIspeedometer;
 
         ViewHolder(View itemView) {
             super(itemView);
             beacon = (TextView) itemView.findViewById(R.id.beacon);
             progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
-            speedometerRSSI = (SpeedometerRSSI) itemView.findViewById(R.id.speedometerRSSI);
+            rssIspeedometer = (RSSIspeedometer) itemView.findViewById(R.id.speedometerRSSI);
         }
     }
 }

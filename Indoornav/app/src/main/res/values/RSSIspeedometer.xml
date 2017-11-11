@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SpeedometerRSSI">
+    <declare-styleable name="RSSIspeedometer">
         <attr name="value1" format="string" />
     </declare-styleable>
 </resources>
