@@ -65,8 +65,8 @@ public class beaconMainActivity extends Activity implements BeaconControllerServ
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             BeaconControllerService.MyBinder binder = (BeaconControllerService.MyBinder) service;
-            beaconControllerService = binder.getService();
-            beaconControllerService.registerClient(beaconMainActivity.this);
+//            beaconControllerService = binder.getService();
+//            beaconControllerService.registerClient(beaconMainActivity.this);
             mBound = true;
         }
 

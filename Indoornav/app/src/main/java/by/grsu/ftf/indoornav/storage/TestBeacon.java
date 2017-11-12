@@ -1,6 +1,7 @@
 package by.grsu.ftf.indoornav.storage;
 
 import android.util.ArrayMap;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

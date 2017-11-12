@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.util.Log;
 
 import com.example.indoornav.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
@@ -38,10 +40,12 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private TestBeacon testBeacon = new TestBeacon();
     private Distance distance = new Distance();
+
     private Beacon beacon;
+    private List<Beacon> beacons = new ArrayList<>();
+    private final String SAVED_BEACON = "SAVED_BEACON";
 
     boolean mBound;
-    BeaconControllerService myBinder;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -51,6 +55,13 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
         initViews();
         adapter();
+
+        if (savedInstanceState != null) {
+            Log.d("Log", savedInstanceState.toString());
+            beacons = savedInstanceState.getParcelableArrayList(SAVED_BEACON);
+            Log.d("Log", beacons.toString());
+            setRecyclerView_adapter();
+        }
     }
 
     private void initViews() {
@@ -82,13 +93,18 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
     }
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Log", "тут");
+        outState.putParcelableArrayList(SAVED_BEACON, (ArrayList<? extends Parcelable>) beacons);
+    }
 
+    private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             BeaconControllerService.MyBinder binder = (BeaconControllerService.MyBinder) service;
-            myBinder = binder.getService();
-            myBinder.registerClient(MainActivity.this);
+            binder.connectCallbacks(MainActivity.this);
             mBound = true;
         }
 
@@ -103,10 +119,13 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
         beacon = new Beacon(distance.distanceBeacon(list1));
         testBeacon.sortingBeacon(beacon);
+        beacons = testBeacon.getBeacon();
 
-        recyclerView_adapter.setBeacon(testBeacon.getBeacon());
-        recyclerView_adapter.notifyDataSetChanged();
-
+        setRecyclerView_adapter();
     }
 
+    private void setRecyclerView_adapter() {
+        recyclerView_adapter.setBeacon(beacons);
+        recyclerView_adapter.notifyDataSetChanged();
+    }
 }

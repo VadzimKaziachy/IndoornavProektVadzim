@@ -1,6 +1,8 @@
 package by.grsu.ftf.indoornav.util;
 
 import android.graphics.PointF;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.List;
  * Created by Вадим on 08.09.2017.
  */
 
-public class Beacon {
+public class Beacon implements Parcelable {
 
     private List<String> BEACON_ID = new ArrayList<>();
     private List<PointF> LIST_COORDINATE = new ArrayList<>();
@@ -30,8 +32,16 @@ public class Beacon {
         this.angle = list.get(4);
     }
 
-    Beacon() {
+    private Beacon(Parcel parcel) {
+        super();
+        this.id = parcel.readString();
+        this.RSSI = parcel.readString();
+        this.distance = parcel.readString();
+        this.progressRSSI = parcel.readFloat();
+        this.angle = parcel.readString();
+    }
 
+    Beacon() {
         BEACON_ID.add("id 1");
         BEACON_ID.add("id 2");
         BEACON_ID.add("id 3");
@@ -46,6 +56,33 @@ public class Beacon {
         POWER_BEACON.add(-65);
         POWER_BEACON.add(-65);
         POWER_BEACON.add(-65);
+    }
+
+    public static final Parcelable.Creator<Beacon> CREATOR = new Parcelable.Creator<Beacon>() {
+
+        @Override
+        public Beacon createFromParcel(Parcel parcel) {
+            return new Beacon(parcel);
+        }
+
+        @Override
+        public Beacon[] newArray(int i) {
+            return new Beacon[i];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(angle);
+        parcel.writeFloat(progressRSSI);
+        parcel.writeString(distance);
+        parcel.writeString(RSSI);
+        parcel.writeString(id);
     }
 
     public Integer getAngle() {
@@ -79,5 +116,4 @@ public class Beacon {
     List<Integer> getPOWER_BEACON() {
         return POWER_BEACON;
     }
-
 }

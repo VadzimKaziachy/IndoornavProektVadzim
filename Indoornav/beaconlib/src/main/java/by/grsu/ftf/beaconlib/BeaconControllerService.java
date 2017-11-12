@@ -20,16 +20,16 @@ public class BeaconControllerService extends Service {
 
     BeaconSimulator beaconSimulator = new BeaconSimulator();
 
-    private final IBinder mBinder = new MyBinder();
+    private IBinder mBinder = new MyBinder();
     private Handler mHandler = new Handler();
-    Callbacks callbacks;
+    Callbacks callback;
     boolean serviceRun = true;
 
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
-            if(callbacks !=null){
+            if (callback != null) {
                 List<String> list_Beacon = beaconSimulator.getList();
-                callbacks.updateClient(list_Beacon);
+                callback.updateClient(list_Beacon);
             }
             mHandler.postDelayed(this, 100);
         }
@@ -37,16 +37,10 @@ public class BeaconControllerService extends Service {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         timeUpdaterRunnable.run();
+        super.onCreate();
     }
 
-    public void registerClient(Activity resiver) {
-        this.callbacks = (Callbacks) resiver;
-        if (serviceRun) {
-            serviceRun = false;
-        }
-    }
 
     @Override
     public void onDestroy() {
@@ -62,8 +56,12 @@ public class BeaconControllerService extends Service {
     }
 
     public class MyBinder extends Binder {
-        public BeaconControllerService getService() {
-            return BeaconControllerService.this;
+        public void connectCallbacks(Callbacks callbacks) {
+            if(serviceRun){
+                callback =  callbacks;
+                serviceRun = false;
+            }
+
         }
     }
 
