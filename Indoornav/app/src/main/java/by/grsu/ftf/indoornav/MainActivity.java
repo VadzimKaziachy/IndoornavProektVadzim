@@ -23,7 +23,7 @@ import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.storage.TestBeacon;
-import by.grsu.ftf.indoornav.util.Beacon;
+import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.util.Distance;
 
 

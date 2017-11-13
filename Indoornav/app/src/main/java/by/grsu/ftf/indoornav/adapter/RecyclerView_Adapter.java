@@ -11,7 +11,7 @@ import com.example.indoornav.R;
 
 import java.util.List;
 
-import by.grsu.ftf.indoornav.util.Beacon;
+import by.grsu.ftf.indoornav.Beacon.Beacon;
 
 /**
  * Created by Вадим on 22.10.2017.
