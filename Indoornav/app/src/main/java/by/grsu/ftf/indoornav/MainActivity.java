@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private Distance distance = new Distance();
 
     private Beacon beacon;
-    private List<Beacon> beacons = new ArrayList<>();
-    private final String SAVED_BEACON = "SAVED_BEACON";
+    private List<Beacon> beacons;
+    private final String a = "a";
+
 
     boolean mBound;
 
@@ -55,14 +56,22 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
         initViews();
         adapter();
-
         if (savedInstanceState != null) {
-            Log.d("Log", savedInstanceState.toString());
-            beacons = savedInstanceState.getParcelableArrayList(SAVED_BEACON);
-            Log.d("Log", beacons.toString());
-            setRecyclerView_adapter();
+            beacon = (Beacon) savedInstanceState.getSerializable(a);
+            if (beacons != null) {
+                Log.d("Log","первый "+ beacon.getId() + " = " + beacon.getRSSI());
+                setRecyclerView_adapter(beacons);
+            }
         }
+
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(a, beacon);
+        super.onSaveInstanceState(outState);
+    }
+
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -93,12 +102,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("Log", "тут");
-        outState.putParcelableArrayList(SAVED_BEACON, (ArrayList<? extends Parcelable>) beacons);
-    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -120,12 +123,18 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         beacon = new Beacon(distance.distanceBeacon(list1));
         testBeacon.sortingBeacon(beacon);
         beacons = testBeacon.getBeacon();
+        setRecyclerView_adapter(beacons);
 
-        setRecyclerView_adapter();
     }
 
-    private void setRecyclerView_adapter() {
+    private void setRecyclerView_adapter(List<Beacon> beacons) {
+
         recyclerView_adapter.setBeacon(beacons);
         recyclerView_adapter.notifyDataSetChanged();
     }
+
+
 }
+
+
+
