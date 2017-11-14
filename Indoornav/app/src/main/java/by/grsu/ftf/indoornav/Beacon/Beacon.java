@@ -6,11 +6,13 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.List;
 
+import by.grsu.ftf.indoornav.adapter.RSSIspeedometer;
+
 /**
  * Created by Vadzim on 13.11.2017.
  */
 
-public class Beacon implements Serializable {
+public class Beacon implements Parcelable {
 
     private String id;
     private String RSSI;
@@ -26,7 +28,6 @@ public class Beacon implements Serializable {
         this.angle = list.get(4);
     }
 
-
     private Beacon(Parcel parcel) {
         super();
         this.id = parcel.readString();
@@ -35,6 +36,33 @@ public class Beacon implements Serializable {
         this.progressRSSI = parcel.readFloat();
         this.angle = parcel.readString();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(distance);
+        parcel.writeString(RSSI);
+        parcel.writeFloat(progressRSSI);
+        parcel.writeString(angle);
+    }
+
+    public static final Parcelable.Creator<Beacon> CREATOR = new Parcelable.Creator<Beacon>(){
+
+        @Override
+        public Beacon createFromParcel(Parcel parcel) {
+            return new Beacon(parcel);
+        }
+
+        @Override
+        public Beacon[] newArray(int i) {
+            return new Beacon[i];
+        }
+    };
 
     public Integer getAngle() {
         return Integer.parseInt(angle);

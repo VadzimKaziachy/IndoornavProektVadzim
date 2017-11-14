@@ -30,10 +30,6 @@ public class ProgressRSSI extends View {
         typedArray.recycle();
     }
 
-    //выячнить сколько пикселей в dp
-
-    //vectorDrawable    SVG
-
     @Override
     protected void onDraw(Canvas canvas) {
         float x = this.getMeasuredWidth();

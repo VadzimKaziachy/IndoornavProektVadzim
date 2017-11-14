@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private Beacon beacon;
     private List<Beacon> beacons;
-    private final String a = "a";
+    private final String SAVE_BEACON = "SAVE_BEACON";
 
 
     boolean mBound;
@@ -57,21 +57,19 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         initViews();
         adapter();
         if (savedInstanceState != null) {
-            beacon = (Beacon) savedInstanceState.getSerializable(a);
+            beacons = savedInstanceState.getParcelableArrayList(SAVE_BEACON);
             if (beacons != null) {
-                Log.d("Log","первый "+ beacon.getId() + " = " + beacon.getRSSI());
+                testBeacon.entryBeacon(beacons);
                 setRecyclerView_adapter(beacons);
             }
         }
-
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(a, beacon);
         super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SAVE_BEACON, (ArrayList<? extends Beacon>) beacons);
     }
-
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -123,17 +121,14 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         beacon = new Beacon(distance.distanceBeacon(list1));
         testBeacon.sortingBeacon(beacon);
         beacons = testBeacon.getBeacon();
-        setRecyclerView_adapter(beacons);
 
+        setRecyclerView_adapter(beacons);
     }
 
     private void setRecyclerView_adapter(List<Beacon> beacons) {
-
         recyclerView_adapter.setBeacon(beacons);
         recyclerView_adapter.notifyDataSetChanged();
     }
-
-
 }
 
 
