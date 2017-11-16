@@ -8,8 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.example.indoornav.R;
@@ -21,9 +24,9 @@ import com.example.indoornav.R;
 public class RSSIspeedometer extends View {
 
     Paint paint;
-    BitmapFactory.Options options;
     Bitmap bitmap;
     Path path;
+    Rect rect ;
     int angleRSSI;
 
     public RSSIspeedometer(Context context, @Nullable AttributeSet attrs) {
@@ -34,30 +37,33 @@ public class RSSIspeedometer extends View {
 
         path = new Path();
         paint = new Paint();
-        options = new BitmapFactory.Options();
-        options.inSampleSize = 3;
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imgonline12, options);
+        rect = new Rect();
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imgonline12);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setStrokeWidth(10);
+
+        int x = canvas.getWidth();
+        int y = canvas.getHeight();
+        float startX = 0;
+        float startY = 0;
+        float endX = canvas.getWidth();
+        float endY = canvas.getHeight();
+
+        paint.setStrokeWidth(x / 50);
         paint.setColor(Color.BLACK);
-        int x = (canvas.getWidth() / 2) - (bitmap.getWidth() / 2);
-        int y = (canvas.getHeight() / 2) - (bitmap.getHeight() / 2);
 
-        canvas.drawBitmap(bitmap, x, y, null);
+        canvas.drawBitmap(bitmap, null, new RectF(startX, startY, endX, endY), null);
 
+        canvas.rotate(angleRSSI + 150, x / 2, y / 2);
+        canvas.drawLine(x / 2, y / 2, 5 * x / 6, y / 2, paint);
+        canvas.drawCircle(x / 2, y / 2, x / 16, paint);
 
-        canvas.rotate(angleRSSI + 150, x + (bitmap.getWidth() / 2), y + (bitmap.getHeight() / 2));
-        canvas.drawLine(x + (bitmap.getWidth() / 2), y + (bitmap.getHeight() / 2), x + (5 * bitmap.getWidth() / 6), y + (bitmap.getHeight() / 2), paint);
-        canvas.drawCircle(x + (bitmap.getWidth() / 2), y + (bitmap.getHeight() / 2), bitmap.getWidth() / 16, paint);
-
-
-        path.moveTo(x + (5 * bitmap.getWidth() / 6) + 10, y + (bitmap.getHeight() / 2));
-        path.lineTo(x + (5 * bitmap.getWidth() / 6) - bitmap.getWidth() / 20, y + ((bitmap.getHeight() / 2 - bitmap.getWidth() / 30)));
-        path.lineTo(x + (5 * bitmap.getWidth() / 6) - bitmap.getWidth() / 20, y + ((bitmap.getHeight() / 2 + bitmap.getWidth() / 30)));
+        path.moveTo(5 * x / 6, y / 2);
+        path.lineTo((5 * x / 6) - x / 20, y / 2 - x / 30);
+        path.lineTo((5 * x / 6) - x / 20, y / 2 + x / 30);
         path.close();
         canvas.drawPath(path, paint);
     }

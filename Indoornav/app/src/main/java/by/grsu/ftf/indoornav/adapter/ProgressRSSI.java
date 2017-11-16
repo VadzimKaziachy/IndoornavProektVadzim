@@ -39,9 +39,9 @@ public class ProgressRSSI extends View {
         paint.setColor(Color.GREEN);
         canvas.drawRect(0, 0, progressRSSI * x, y, paint);
         paint.setColor(Color.BLACK);
-        paint.setTextSize(y-40);
+        paint.setTextSize(y / 2);
         paint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText("RSSI " + this.RSSI, x / 2, 90 - ((y - 40) / 2), paint);
+        canvas.drawText("RSSI " + this.RSSI, x / 2, 2 * y / 3, paint);
     }
 
     public void setRSSI(Float progressRSSI, String RSSI) {

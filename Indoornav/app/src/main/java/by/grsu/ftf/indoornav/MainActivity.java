@@ -7,12 +7,10 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.indoornav.R;
 
@@ -22,7 +20,7 @@ import java.util.List;
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
-import by.grsu.ftf.indoornav.storage.TestBeacon;
+import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.util.Distance;
 
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     RecyclerView_Adapter recyclerView_adapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private TestBeacon testBeacon = new TestBeacon();
+    private BeaconMerger beaconMerger = new BeaconMerger();
     private Distance distance = new Distance();
 
     private Beacon beacon;
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         if (savedInstanceState != null) {
             beacons = savedInstanceState.getParcelableArrayList(SAVE_BEACON);
             if (beacons != null) {
-                testBeacon.entryBeacon(beacons);
+                beaconMerger.putAll(beacons);
                 setRecyclerView_adapter(beacons);
             }
         }
@@ -119,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     public void updateClient(List<String> list1) {
 
         beacon = new Beacon(distance.distanceBeacon(list1));
-        testBeacon.sortingBeacon(beacon);
-        beacons = testBeacon.getBeacon();
+        beaconMerger.put(beacon);
+        beacons = beaconMerger.getBeacons();
 
         setRecyclerView_adapter(beacons);
     }
