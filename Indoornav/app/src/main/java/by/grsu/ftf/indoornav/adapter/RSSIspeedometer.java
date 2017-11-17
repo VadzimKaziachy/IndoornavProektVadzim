@@ -26,7 +26,7 @@ public class RSSIspeedometer extends View {
     Paint paint;
     Bitmap bitmap;
     Path path;
-    Rect rect ;
+    Rect rect;
     int angleRSSI;
 
     public RSSIspeedometer(Context context, @Nullable AttributeSet attrs) {
@@ -47,23 +47,21 @@ public class RSSIspeedometer extends View {
 
         int x = canvas.getWidth();
         int y = canvas.getHeight();
-        float startX = 0;
-        float startY = 0;
-        float endX = canvas.getWidth();
-        float endY = canvas.getHeight();
 
         paint.setStrokeWidth(x / 50);
         paint.setColor(Color.BLACK);
 
-        canvas.drawBitmap(bitmap, null, new RectF(startX, startY, endX, endY), null);
+        Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap,
+                canvas.getWidth(), canvas.getHeight(), true);
+        canvas.drawBitmap(bitmap1, 0, 0, paint);
 
         canvas.rotate(angleRSSI + 150, x / 2, y / 2);
         canvas.drawLine(x / 2, y / 2, 5 * x / 6, y / 2, paint);
         canvas.drawCircle(x / 2, y / 2, x / 16, paint);
 
-        path.moveTo(5 * x / 6, y / 2);
-        path.lineTo((5 * x / 6) - x / 20, y / 2 - x / 30);
-        path.lineTo((5 * x / 6) - x / 20, y / 2 + x / 30);
+        path.moveTo(6 * x / 7, y / 2);
+        path.lineTo((6 * x / 7) - x / 20, y / 2 - x / 30);
+        path.lineTo((6 * x / 7) - x / 20, y / 2 + x / 30);
         path.close();
         canvas.drawPath(path, paint);
     }
