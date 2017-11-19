@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             beacons = savedInstanceState.getParcelableArrayList(SAVE_BEACON);
             if (beacons != null) {
                 beaconMerger.putAll(beacons);
-                setRecyclerView_adapter(beacons);
+                transmitsBeaconAdapter(beacons);
             }
         }
     }
@@ -120,10 +120,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         beaconMerger.put(beacon);
         beacons = beaconMerger.getBeacons();
 
-        setRecyclerView_adapter(beacons);
+        transmitsBeaconAdapter(beacons);
     }
 
-    private void setRecyclerView_adapter(List<Beacon> beacons) {
+    private void transmitsBeaconAdapter(List<Beacon> beacons) {
         recyclerView_adapter.setBeacon(beacons);
         recyclerView_adapter.notifyDataSetChanged();
     }

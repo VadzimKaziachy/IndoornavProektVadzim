@@ -14,8 +14,7 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
  * Created by Вадим on 10.09.2017.
  */
 
-public class BeaconMerger
-{
+public class BeaconMerger {
     private Map<String, Beacon> beaconMap = new ArrayMap<>();
 
     public void put(Beacon beacon) {
@@ -23,8 +22,7 @@ public class BeaconMerger
     }
 
     public void putAll(Collection<Beacon> beacons) {
-        for (Beacon beacon : beacons)
-        {
+        for (Beacon beacon : beacons) {
             beaconMap.put(beacon.getId(), beacon);
         }
     }
