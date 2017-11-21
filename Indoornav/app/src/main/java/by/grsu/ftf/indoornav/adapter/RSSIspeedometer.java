@@ -38,7 +38,7 @@ public class RSSIspeedometer extends View {
         path = new Path();
         paint = new Paint();
         rect = new Rect();
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.imgonline12);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
     }
 
     @Override
