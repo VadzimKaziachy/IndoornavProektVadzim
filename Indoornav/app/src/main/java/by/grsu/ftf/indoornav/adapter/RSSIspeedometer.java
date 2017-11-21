@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -27,6 +28,9 @@ public class RSSIspeedometer extends View {
     Path path;
     Rect rect;
     Bitmap bitmap1;
+    Bitmap bitmap3;
+    Bitmap bitmap2;
+    Matrix matrix;
     int angleRSSI;
 
     public RSSIspeedometer(Context context, @Nullable AttributeSet attrs) {
@@ -38,29 +42,21 @@ public class RSSIspeedometer extends View {
         path = new Path();
         paint = new Paint();
         rect = new Rect();
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
+        matrix = new Matrix();
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tachometer);
+        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int x = Math.min( canvas.getWidth(),canvas.getHeight());
-        int y = Math.min( canvas.getWidth(),canvas.getHeight());
+        int x = (Math.min(canvas.getWidth(), canvas.getHeight()) / 2) - bitmap3.getWidth() / 2;
+        int y = (Math.min(canvas.getWidth(), canvas.getHeight()) / 2) - bitmap3.getHeight() / 2;
 
-        paint.setStrokeWidth(x / 50);
-        paint.setColor(Color.BLACK);
-
-        canvas.drawBitmap(bitmap1, 0, 0, paint);
-
-        canvas.rotate(angleRSSI + 150, x / 2, y / 2);
-        canvas.drawLine(x / 3, y / 2, 5 * x / 6, y / 2, paint);
-        canvas.drawCircle(x / 2, y / 2, x / 16, paint);
-
-        path.moveTo(6 * x / 7, y / 2);
-        path.lineTo((6 * x / 7) - x / 20, y / 2 - x / 30);
-        path.lineTo((6 * x / 7) - x / 20, y / 2 + x / 30);
-        path.close();
-        canvas.drawPath(path, paint);
+        canvas.drawBitmap(bitmap1, 0, 0, null);
+        matrix.setTranslate(x, y);
+        matrix.preRotate(angleRSSI + 150, bitmap3.getWidth() / 2, bitmap3.getHeight() / 2);
+        canvas.drawBitmap(bitmap3, matrix, null);
     }
 
     public void setAngleRSSI(int angleRSSI) {
@@ -78,5 +74,6 @@ public class RSSIspeedometer extends View {
 
         bitmap1 = Bitmap.createScaledBitmap(bitmap,
                 Math.min(width, height), Math.min(width, height), true);
+        bitmap3 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth() / 2, bitmap2.getHeight() / 2, false);
     }
 }
