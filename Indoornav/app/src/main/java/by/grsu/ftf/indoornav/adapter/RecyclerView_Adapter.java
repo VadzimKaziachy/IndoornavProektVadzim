@@ -1,7 +1,10 @@
 package by.grsu.ftf.indoornav.adapter;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import com.example.indoornav.R;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 
 /**
  * Created by Вадим on 22.10.2017.
@@ -46,7 +50,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder  {
         private TextView beacons;
         private ProgressRSSI progressRSSI;
         private RSSIspeedometer rssIspeedometer;
