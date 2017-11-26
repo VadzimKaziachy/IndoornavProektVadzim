@@ -128,6 +128,3 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView_adapter.notifyDataSetChanged();
     }
 }
-
-
-

@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.adapter;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -54,13 +55,15 @@ public class RSSIspeedometer extends View {
         int y = (Math.min(canvas.getWidth(), canvas.getHeight()) / 2) - bitmap3.getHeight() / 2;
 
         canvas.drawBitmap(bitmap1, 0, 0, null);
+
         matrix.setTranslate(x, y);
         matrix.preRotate(angleRSSI + 150, bitmap3.getWidth() / 2, bitmap3.getHeight() / 2);
         canvas.drawBitmap(bitmap3, matrix, null);
+
     }
 
-    public void setAngleRSSI(int angleRSSI) {
-        this.angleRSSI = angleRSSI;
+    public void setAngleRSSI(Float angleRSSI) {
+        this.angleRSSI = Math.round(240 * angleRSSI);
         invalidate();
     }
 
@@ -74,6 +77,7 @@ public class RSSIspeedometer extends View {
 
         bitmap1 = Bitmap.createScaledBitmap(bitmap,
                 Math.min(width, height), Math.min(width, height), true);
-        bitmap3 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth() / 2, bitmap2.getHeight() / 2, false);
+        bitmap3 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth() / 2,
+                bitmap2.getHeight() / 2, false);
     }
 }

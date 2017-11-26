@@ -18,14 +18,12 @@ public class Beacon implements Parcelable {
     private String RSSI;
     private String distance;
     private Float progressRSSI;
-    private String angle;
 
     public Beacon(List<String> list) {
         this.id = list.get(0);
         this.distance = list.get(1);
         this.RSSI = list.get(2);
         this.progressRSSI = Float.valueOf(list.get(3));
-        this.angle = list.get(4);
     }
 
     private Beacon(Parcel parcel) {
@@ -34,7 +32,6 @@ public class Beacon implements Parcelable {
         this.RSSI = parcel.readString();
         this.distance = parcel.readString();
         this.progressRSSI = parcel.readFloat();
-        this.angle = parcel.readString();
     }
 
     @Override
@@ -48,7 +45,6 @@ public class Beacon implements Parcelable {
         parcel.writeString(distance);
         parcel.writeString(RSSI);
         parcel.writeFloat(progressRSSI);
-        parcel.writeString(angle);
     }
 
     public static final Parcelable.Creator<Beacon> CREATOR = new Parcelable.Creator<Beacon>(){
@@ -63,10 +59,6 @@ public class Beacon implements Parcelable {
             return new Beacon[i];
         }
     };
-
-    public Integer getAngle() {
-        return Integer.parseInt(angle);
-    }
 
     public Float getProgressRSSI() {
         return progressRSSI;
