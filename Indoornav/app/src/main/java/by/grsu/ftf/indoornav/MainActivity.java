@@ -23,6 +23,7 @@ import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
+import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView_adapter.setOnItemClickListener(new ClickListener() {
             @Override
             public void onItemClick(String beacon, View view) {
+                Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                startActivity(intent);
             }
         });
     }
