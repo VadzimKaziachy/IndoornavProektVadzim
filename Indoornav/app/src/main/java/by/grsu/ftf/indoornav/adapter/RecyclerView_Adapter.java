@@ -2,6 +2,7 @@ package by.grsu.ftf.indoornav.adapter;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
 
 public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adapter.ViewHolder> {
     private List<Beacon> beacon;
+    private static ClickListener clickListener;
 
     public void setBeacon(List<Beacon> beacon) {
         this.beacon = beacon;
@@ -46,17 +48,19 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView beacons;
         private ProgressRSSI progressRSSI;
         private RSSIspeedometer rssIspeedometer;
         private Beacon mBeacon;
+
 
         ViewHolder(View itemView) {
             super(itemView);
             beacons = (TextView) itemView.findViewById(R.id.beacon);
             progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
             rssIspeedometer = (RSSIspeedometer) itemView.findViewById(R.id.speedometerRSSI);
+            itemView.setOnClickListener(this);
         }
 
         void bindViewHolder(Beacon beacon) {
@@ -65,5 +69,14 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             progressRSSI.setRSSI(mBeacon.getProgressRSSI(), mBeacon.getRSSI());
             rssIspeedometer.setAngleRSSI(mBeacon.getProgressRSSI());
         }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(mBeacon.getId(), view);
+        }
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        RecyclerView_Adapter.clickListener = clickListener;
     }
 }

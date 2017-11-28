@@ -11,6 +11,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 
 import com.example.indoornav.R;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
@@ -80,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView_adapter = new RecyclerView_Adapter();
         recyclerView.setAdapter(recyclerView_adapter);
+        recyclerView_adapter.setOnItemClickListener(new ClickListener() {
+            @Override
+            public void onItemClick(String beacon, View view) {
+            }
+        });
     }
 
     @Override
