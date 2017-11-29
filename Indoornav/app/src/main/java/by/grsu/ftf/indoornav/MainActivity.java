@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private Beacon beacon;
     private List<Beacon> beacons;
     private final String SAVE_BEACON = "SAVE_BEACON";
+    public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
 
 
     boolean mBound;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             @Override
             public void onItemClick(String beacon, View view) {
                 Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                intent.putExtra(BEACON_FRAGMENT, beacon);
                 startActivity(intent);
             }
         });
