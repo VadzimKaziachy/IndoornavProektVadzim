@@ -1,6 +1,7 @@
 package by.grsu.ftf.indoornav.storage;
 
 import android.util.ArrayMap;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,10 +16,10 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
  */
 
 public class BeaconMerger {
-    private Map<String, Beacon> beaconMap = new ArrayMap<>();
+    private static Map<String, Beacon> beaconMap = new ArrayMap<>();
 
     public void put(Beacon beacon) {
-        this.beaconMap.put(beacon.getId(), beacon);
+        beaconMap.put(beacon.getId(), beacon);
     }
 
     public void putAll(Collection<Beacon> beacons) {
@@ -27,7 +28,7 @@ public class BeaconMerger {
         }
     }
 
-    public List<Beacon> getBeacons() {
+    public static List<Beacon> getBeacons() {
         return new ArrayList<>(beaconMap.values());
     }
 }
