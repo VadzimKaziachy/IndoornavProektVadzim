@@ -2,10 +2,12 @@ package by.grsu.ftf.indoornav.adapter;
 
 import android.view.View;
 
+import by.grsu.ftf.indoornav.Beacon.Beacon;
+
 /**
  * Created by Vadzim on 28.11.2017.
  */
 
 public interface ClickListener {
-    void onItemClick(String beacon, View view);
+    void onItemClick(Beacon beacon, View view);
 }

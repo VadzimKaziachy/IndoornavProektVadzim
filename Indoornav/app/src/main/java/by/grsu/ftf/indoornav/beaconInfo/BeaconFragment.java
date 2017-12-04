@@ -1,16 +1,20 @@
 package by.grsu.ftf.indoornav.beaconInfo;
 
-import android.support.v4.app.Fragment;
+import android.animation.Animator;
+import android.app.Fragment;;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.indoornav.R;
 
+import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.MainActivity;
 
 /**
@@ -18,27 +22,47 @@ import by.grsu.ftf.indoornav.MainActivity;
  */
 
 public class BeaconFragment extends Fragment {
-    TextView textView;
+    TextView fragmentBeacon;
+    TextView fragmentRSSI;
+    TextView fragmentDistance;
     private static final String ARG_BEACON_ID = "ARG_BEACON_ID";
-    private String beacon_id;
+    private Beacon beacon;
+    private Animation animator_id;
+    private Animation animator_rssi;
+    private Animation animator_distance;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        beacon_id = (String) getArguments().getSerializable(ARG_BEACON_ID);
+        beacon = (Beacon) getArguments().getSerializable(ARG_BEACON_ID);
+
+        animator_id = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_beacon_id);
+        animator_rssi = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_beacon_rssi);
+        animator_distance = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_beacon_distance);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_beacon, container, false);
-        textView = (TextView) view.findViewById(R.id.textView);
-        textView.setText(beacon_id);
+
+        fragmentBeacon = (TextView) view.findViewById(R.id.fragmentBeacon);
+        fragmentRSSI = (TextView) view.findViewById(R.id.fragmentRSSI);
+        fragmentDistance = (TextView) view.findViewById(R.id.fragmentDistans);
+
+        fragmentBeacon.setText(beacon.getId());
+        fragmentBeacon.startAnimation(animator_id);
+
+        fragmentRSSI.setText(beacon.getDistance());
+        fragmentRSSI.startAnimation(animator_rssi);
+
+        fragmentDistance.setText(beacon.getRSSI());
+        fragmentDistance.startAnimation(animator_distance);
         return view;
     }
 
-    public static BeaconFragment newInstance(String beacon) {
+    public BeaconFragment newInstance(Beacon beacon) {
         Bundle arg = new Bundle();
         arg.putSerializable(ARG_BEACON_ID, beacon);
 

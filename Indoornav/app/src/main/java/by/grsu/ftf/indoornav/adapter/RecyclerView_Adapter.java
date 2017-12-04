@@ -72,7 +72,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
 
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(mBeacon.getId(), view);
+            clickListener.onItemClick(mBeacon, view);
         }
     }
 

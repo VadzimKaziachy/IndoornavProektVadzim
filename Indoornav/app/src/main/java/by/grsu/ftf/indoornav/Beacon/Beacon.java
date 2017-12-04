@@ -12,7 +12,7 @@ import by.grsu.ftf.indoornav.adapter.RSSIspeedometer;
  * Created by Vadzim on 13.11.2017.
  */
 
-public class Beacon implements Parcelable {
+public class Beacon implements Parcelable, Serializable {
 
     private String id;
     private String RSSI;

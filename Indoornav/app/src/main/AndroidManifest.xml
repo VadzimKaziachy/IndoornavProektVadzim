@@ -17,8 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="by.grsu.ftf.indoornav.beaconInfo.BeaconPagerActivity"
-            android:label="@string/app_name_beacon_Pager_Activity">
+            android:name="by.grsu.ftf.indoornav.beaconInfo.FragmentActivity">
         </activity>
 
     </application>

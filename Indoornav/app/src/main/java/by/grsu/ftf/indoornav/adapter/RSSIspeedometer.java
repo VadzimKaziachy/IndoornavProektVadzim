@@ -81,5 +81,3 @@ public class RSSIspeedometer extends View {
                 bitmap2.getHeight() / 2, false);
     }
 }
-
-//springanimation

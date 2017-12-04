@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Indoornav</string>
-    <string name="app_name_beacon_Pager_Activity">BeaconPagerActivity</string>
-    <string name="RSSI">RSSI</string>
+    <string name="RSSI">RSSI </string>
 </resources>

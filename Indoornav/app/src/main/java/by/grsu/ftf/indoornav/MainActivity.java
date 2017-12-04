@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +16,7 @@ import android.view.View;
 
 import com.example.indoornav.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
-import by.grsu.ftf.indoornav.beaconInfo.BeaconPagerActivity;
+import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView.setAdapter(recyclerView_adapter);
         recyclerView_adapter.setOnItemClickListener(new ClickListener() {
             @Override
-            public void onItemClick(String beacon, View view) {
-                Intent intent = new Intent(MainActivity.this, BeaconPagerActivity.class);
-                intent.putExtra(BEACON_FRAGMENT, beacon);
+            public void onItemClick(Beacon beacon, View view) {
+                Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                intent.putExtra(BEACON_FRAGMENT, (Serializable) beacon);
                 startActivity(intent);
             }
         });
@@ -142,6 +142,3 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView_adapter.notifyDataSetChanged();
     }
 }
-
-
-//глайд
