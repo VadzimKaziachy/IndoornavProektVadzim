@@ -59,7 +59,6 @@ public class RSSIspeedometer extends View {
         matrix.setTranslate(x, y);
         matrix.preRotate(angleRSSI + 150, bitmap3.getWidth() / 2, bitmap3.getHeight() / 2);
         canvas.drawBitmap(bitmap3, matrix, null);
-
     }
 
     public void setAngleRSSI(Float angleRSSI) {
