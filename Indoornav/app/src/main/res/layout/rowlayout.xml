@@ -24,16 +24,26 @@
         tools:text="id1"/>
 
 
-    <by.grsu.ftf.indoornav.adapter.RSSIspeedometer
-        android:id="@+id/speedometerRSSI"
+    <LinearLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:background="@drawable/tachometer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="50dp"
+            android:layout_height="8dp"
+            android:background="@drawable/arrow" />
+    </LinearLayout>
 
     <by.grsu.ftf.indoornav.adapter.ProgressRSSI
         android:id="@+id/progressRSSI"

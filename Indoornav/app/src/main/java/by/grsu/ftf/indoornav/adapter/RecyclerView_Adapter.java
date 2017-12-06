@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.indoornav.R;
@@ -51,15 +53,15 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView beacons;
         private ProgressRSSI progressRSSI;
-        private RSSIspeedometer rssIspeedometer;
         private Beacon mBeacon;
+        private ImageView rssiSpedometer;
 
 
         ViewHolder(View itemView) {
             super(itemView);
             beacons = (TextView) itemView.findViewById(R.id.beacon);
             progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
-            rssIspeedometer = (RSSIspeedometer) itemView.findViewById(R.id.speedometerRSSI);
+            rssiSpedometer = (ImageView) itemView.findViewById(R.id.arrow);
             itemView.setOnClickListener(this);
         }
 
@@ -67,7 +69,14 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             mBeacon = beacon;
             beacons.setText(mBeacon.getId());
             progressRSSI.setRSSI(mBeacon.getProgressRSSI(), mBeacon.getRSSI());
-            rssIspeedometer.setAngleRSSI(mBeacon.getProgressRSSI());
+
+            rssiSpedometer.setPivotX(rssiSpedometer.getWidth() / 2);
+            rssiSpedometer.setPivotY(rssiSpedometer.getHeight() / 2);
+            rssiSpedometer.animate()
+                    .rotation(mBeacon.getRSSIprogress())
+                    .setDuration(500)
+                    .start();
+
         }
 
         @Override

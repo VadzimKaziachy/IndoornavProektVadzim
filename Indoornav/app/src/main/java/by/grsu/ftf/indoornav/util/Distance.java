@@ -1,5 +1,7 @@
 package by.grsu.ftf.indoornav.util;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Distance {
 
 
     public List<String> distanceBeacon(List<String> LIST_BEACON) {
-        Float DISTANCE, progressRSSI;
+        Float DISTANCE, progressRSSI, RSSIprogress;
         Float maxRSSI = -35f;
         Float minRSSI = -90f;
 
@@ -27,11 +29,13 @@ public class Distance {
 
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         progressRSSI = Math.abs((maxRSSI - Float.valueOf(LIST_BEACON.get(1))) / (maxRSSI - minRSSI));
+        RSSIprogress = 150 + 240 * progressRSSI;
 
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
         this.LIST_BEACON_DISTANCE.add(DISTANCE.toString());
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(1));
         this.LIST_BEACON_DISTANCE.add(progressRSSI.toString());
+        this.LIST_BEACON_DISTANCE.add(RSSIprogress.toString());
         return LIST_BEACON_DISTANCE;
     }
 }
