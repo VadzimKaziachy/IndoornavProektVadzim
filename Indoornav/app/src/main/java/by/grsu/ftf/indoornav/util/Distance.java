@@ -29,7 +29,7 @@ public class Distance {
 
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         progressRSSI = Math.abs((maxRSSI - Float.valueOf(LIST_BEACON.get(1))) / (maxRSSI - minRSSI));
-        RSSIprogress = 150 + 240 * progressRSSI;
+        RSSIprogress =  240 * progressRSSI;
 
         this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
         this.LIST_BEACON_DISTANCE.add(DISTANCE.toString());

@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.adapter.RSSIspeedometer;
 
 /**
  * Created by Vadzim on 13.11.2017.

@@ -3,11 +3,13 @@ package by.grsu.ftf.indoornav.beaconInfo;
 import android.app.Fragment;;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +29,6 @@ public class BeaconFragment extends Fragment {
     private Beacon beacon;
     private Animation animator_beacon;
     private Animation animator_distance;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

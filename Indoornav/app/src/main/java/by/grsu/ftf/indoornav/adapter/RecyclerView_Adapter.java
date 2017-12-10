@@ -70,13 +70,10 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             beacons.setText(mBeacon.getId());
             progressRSSI.setRSSI(mBeacon.getProgressRSSI(), mBeacon.getRSSI());
 
-            rssiSpedometer.setPivotX(rssiSpedometer.getWidth() / 2);
-            rssiSpedometer.setPivotY(rssiSpedometer.getHeight() / 2);
             rssiSpedometer.animate()
                     .rotation(mBeacon.getRSSIprogress())
                     .setDuration(500)
                     .start();
-
         }
 
         @Override

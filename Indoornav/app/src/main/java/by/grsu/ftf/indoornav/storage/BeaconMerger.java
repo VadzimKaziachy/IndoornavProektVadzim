@@ -16,9 +16,13 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
 
 public class BeaconMerger {
     private Map<String, Beacon> beaconMap = new ArrayMap<>();
+    private List<Beacon> beacon ;
+    private int position;
 
     public void put(Beacon beacon) {
         this.beaconMap.put(beacon.getId(), beacon);
+        this.beacon = new ArrayList<>(beaconMap.values());
+        position = this.beacon.indexOf(beacon);
     }
 
     public void putAll(Collection<Beacon> beacons) {
@@ -29,6 +33,10 @@ public class BeaconMerger {
 
     public List<Beacon> getBeacons() {
         return new ArrayList<>(beaconMap.values());
+    }
+
+    public int getPosition() {
+        return position;
     }
 }
 

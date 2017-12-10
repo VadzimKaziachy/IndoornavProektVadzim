@@ -140,5 +140,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private void transmitsBeaconAdapter(List<Beacon> beacons) {
         recyclerView_adapter.setBeacon(beacons);
         recyclerView_adapter.notifyDataSetChanged();
+//        recyclerView_adapter.notifyItemChanged(beaconMerger.getPosition());
     }
 }

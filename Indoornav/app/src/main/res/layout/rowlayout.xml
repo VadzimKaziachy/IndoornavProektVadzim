@@ -41,7 +41,7 @@
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="50dp"
-            android:layout_height="8dp"
+            android:layout_height="34dp"
             android:background="@drawable/arrow" />
     </LinearLayout>
 
