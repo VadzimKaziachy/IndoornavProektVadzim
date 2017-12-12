@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Vadzim on 13.11.2017.
  */
 
-public class Beacon implements Parcelable, Serializable {
+public class Beacon implements Serializable {
 
     private String id;
     private String RSSI;
@@ -26,42 +26,6 @@ public class Beacon implements Parcelable, Serializable {
         this.progressRSSI = Float.valueOf(list.get(3));
         this.RSSIprogress = Float.valueOf(list.get(4));
     }
-
-    private Beacon(Parcel parcel) {
-        super();
-        this.id = parcel.readString();
-        this.RSSI = parcel.readString();
-        this.distance = parcel.readString();
-        this.progressRSSI = parcel.readFloat();
-        this.RSSIprogress = parcel.readFloat();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(distance);
-        parcel.writeString(RSSI);
-        parcel.writeFloat(progressRSSI);
-        parcel.writeFloat(RSSIprogress);
-    }
-
-    public static final Parcelable.Creator<Beacon> CREATOR = new Parcelable.Creator<Beacon>() {
-
-        @Override
-        public Beacon createFromParcel(Parcel parcel) {
-            return new Beacon(parcel);
-        }
-
-        @Override
-        public Beacon[] newArray(int i) {
-            return new Beacon[i];
-        }
-    };
 
     public Float getRSSIprogress() {
         return RSSIprogress;

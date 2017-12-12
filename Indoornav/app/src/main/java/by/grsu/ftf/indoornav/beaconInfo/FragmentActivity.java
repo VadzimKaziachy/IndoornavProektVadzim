@@ -13,7 +13,7 @@ import by.grsu.ftf.indoornav.MainActivity;
 public class FragmentActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
-        Beacon beacon = getIntent().getParcelableExtra(MainActivity.BEACON_FRAGMENT);
+        Beacon beacon = (Beacon) getIntent().getSerializableExtra(MainActivity.BEACON_FRAGMENT);
         return new BeaconFragment().newInstance(beacon);
     }
 }

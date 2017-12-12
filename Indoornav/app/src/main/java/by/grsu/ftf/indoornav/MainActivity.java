@@ -1,5 +1,9 @@
 package by.grsu.ftf.indoornav;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +11,7 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
@@ -44,11 +50,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private BeaconMerger beaconMerger = new BeaconMerger();
     private Distance distance = new Distance();
 
+    private Repository repository;
     private Beacon beacon;
     private List<Beacon> beacons;
-    private final String SAVE_BEACON = "SAVE_BEACON";
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
-
 
     boolean mBound;
 
@@ -60,19 +65,15 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
         initViews();
         adapter();
-        if (savedInstanceState != null) {
-            beacons = savedInstanceState.getParcelableArrayList(SAVE_BEACON);
+
+        repository = ViewModelProviders.of(this).get(Repository.class);
+        if (repository.getBeacons() != null) {
+            beacons = repository.getBeacons();
             if (beacons != null) {
                 beaconMerger.putAll(beacons);
                 transmitsBeaconAdapter(beacons);
             }
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(SAVE_BEACON, (ArrayList<? extends Beacon>) beacons);
     }
 
     private void initViews() {
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             @Override
             public void onItemClick(Beacon beacon, View view) {
                 Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
-                intent.putExtra(BEACON_FRAGMENT, (Serializable) beacon);
+                intent.putExtra(BEACON_FRAGMENT, beacon);
                 startActivity(intent);
             }
         });
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             unbindService(mConnection);
             mBound = false;
         }
+        repository.setBeacons(beacons);
     }
 
 
@@ -140,6 +142,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private void transmitsBeaconAdapter(List<Beacon> beacons) {
         recyclerView_adapter.setBeacon(beacons);
         recyclerView_adapter.notifyDataSetChanged();
-//        recyclerView_adapter.notifyItemChanged(beaconMerger.getPosition());
+        recyclerView_adapter.notifyItemChanged(beaconMerger.getPosition());
     }
 }
