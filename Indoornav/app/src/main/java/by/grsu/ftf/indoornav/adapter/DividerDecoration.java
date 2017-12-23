@@ -14,12 +14,10 @@ import android.view.View;
 
 public class DividerDecoration extends RecyclerView.ItemDecoration {
     private final Drawable drawable;
-    private Paint paint;
 
     public DividerDecoration(Context context) {
         int[] atts = {android.R.attr.listDivider};
         drawable = context.obtainStyledAttributes(atts).getDrawable(0);
-        paint = new Paint();
     }
 
     @Override
@@ -32,10 +30,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
             View item = parent.getChildAt(i);
             int top = item.getBottom() + ((RecyclerView.LayoutParams) item.getLayoutParams()).bottomMargin;
             int bottom = top + drawable.getIntrinsicHeight();
-
-            paint.setStrokeWidth(10);
-            paint.setColor(Color.RED);
-            canvas.drawRect(left, top, right, bottom, paint);
+            drawable.setBounds(left, top, right, bottom);
+            drawable.draw(canvas);
         }
     }
 }

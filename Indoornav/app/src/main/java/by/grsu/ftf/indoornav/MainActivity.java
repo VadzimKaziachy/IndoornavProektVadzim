@@ -1,8 +1,7 @@
 package by.grsu.ftf.indoornav;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,25 +10,19 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-
 import com.example.indoornav.R;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
+import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
@@ -57,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     boolean mBound;
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_masterdetail);
 
         initViews();
         adapter();
@@ -90,9 +84,17 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView_adapter.setOnItemClickListener(new ClickListener() {
             @Override
             public void onItemClick(Beacon beacon, View view) {
-                Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
-                intent.putExtra(BEACON_FRAGMENT, beacon);
-                startActivity(intent);
+                if (findViewById(R.id.detail_fragment_container) == null) {
+                    Intent intent = new Intent(MainActivity.this, FragmentActivity.class);
+                    intent.putExtra(BEACON_FRAGMENT, beacon);
+                    startActivity(intent);
+                } else {
+                    Fragment beaconFragment = BeaconFragment.newInstance(beacon);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.detail_fragment_container, beaconFragment);
+                    ft.commit();
+
+                }
             }
         });
     }
@@ -144,4 +146,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         recyclerView_adapter.notifyDataSetChanged();
         recyclerView_adapter.notifyItemChanged(beaconMerger.getPosition());
     }
+    //джейсон  json
+    //retrafit2
+
 }

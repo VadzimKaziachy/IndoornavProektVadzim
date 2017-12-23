@@ -1,16 +1,13 @@
 package by.grsu.ftf.indoornav.beaconInfo;
 
-import android.app.Fragment;;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.indoornav.R;
@@ -59,7 +56,7 @@ public class BeaconFragment extends Fragment {
         return view;
     }
 
-    public BeaconFragment newInstance(Beacon beacon) {
+    public static BeaconFragment newInstance(Beacon beacon) {
         Bundle arg = new Bundle();
         arg.putSerializable(ARG_BEACON_ID, beacon);
 

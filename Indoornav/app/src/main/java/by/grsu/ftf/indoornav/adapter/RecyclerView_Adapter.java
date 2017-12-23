@@ -1,6 +1,8 @@
 package by.grsu.ftf.indoornav.adapter;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +40,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Beacon beacon = this.beacon.get(position);
-        holder.bindViewHolder(beacon);
+        holder.bind(beacon);
     }
 
     @Override
@@ -50,12 +52,12 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView beacons;
         private ProgressRSSI progressRSSI;
         private Beacon mBeacon;
         private ImageView rssiSpedometer;
-
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -65,14 +67,14 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             itemView.setOnClickListener(this);
         }
 
-        void bindViewHolder(Beacon beacon) {
+        void bind(Beacon beacon) {
             mBeacon = beacon;
             beacons.setText(mBeacon.getId());
             progressRSSI.setRSSI(mBeacon.getProgressRSSI(), mBeacon.getRSSI());
 
             rssiSpedometer.animate()
                     .rotation(mBeacon.getRSSIprogress())
-                    .setDuration(500)
+                    .setDuration(100)
                     .start();
         }
 

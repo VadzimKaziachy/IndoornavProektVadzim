@@ -3,8 +3,9 @@ package by.grsu.ftf.indoornav.beaconInfo;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.indoornav.R;
 
@@ -12,7 +13,7 @@ import com.example.indoornav.R;
  * Created by Vadzim on 28.11.2017.
  */
 
-public abstract class SingleFragmentActivity extends FragmentActivity {
+public abstract class SingleFragmentActivity extends AppCompatActivity {
     protected abstract Fragment createFragment();
 
     @Override
