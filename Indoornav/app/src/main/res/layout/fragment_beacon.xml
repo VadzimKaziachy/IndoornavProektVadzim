@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/fragmentBeacon"
-        style="?android:listSeparatorTextViewStyle"
+        style="@style/textColor.textBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -24,6 +24,7 @@
 
     <TextView
         android:id="@+id/fragmentRSSI"
+        style="@style/textColor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -40,6 +41,7 @@
 
     <TextView
         android:id="@+id/fragmentDistans"
+        style="@style/textColor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

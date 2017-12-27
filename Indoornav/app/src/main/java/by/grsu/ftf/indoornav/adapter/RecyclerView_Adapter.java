@@ -45,11 +45,9 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
 
     @Override
     public int getItemCount() {
-        if (beacon == null) {
-            return 0;
-        } else {
-            return beacon.size();
-        }
+
+        if (beacon == null) return 0;
+        return beacon.size();
     }
 
 

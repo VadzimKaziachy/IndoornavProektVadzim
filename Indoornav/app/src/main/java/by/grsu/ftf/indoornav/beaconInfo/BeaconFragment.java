@@ -30,6 +30,7 @@ public class BeaconFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setRetainInstance(true);
         beacon = (Beacon) getArguments().getSerializable(ARG_BEACON_ID);
 
         animator_beacon = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_beacon);
@@ -46,13 +47,14 @@ public class BeaconFragment extends Fragment {
         fragmentDistance = (TextView) view.findViewById(R.id.fragmentDistans);
 
         fragmentBeacon.setText(beacon.getId());
-        fragmentBeacon.startAnimation(animator_beacon);
-
         fragmentRSSI.setText(beacon.getDistance());
-        fragmentRSSI.startAnimation(animator_beacon);
-
         fragmentDistance.setText(beacon.getRSSI());
-        fragmentDistance.startAnimation(animator_distance);
+
+        if (savedInstanceState == null) {
+            fragmentBeacon.startAnimation(animator_beacon);
+            fragmentRSSI.startAnimation(animator_beacon);
+            fragmentDistance.startAnimation(animator_distance);
+        }
         return view;
     }
 
