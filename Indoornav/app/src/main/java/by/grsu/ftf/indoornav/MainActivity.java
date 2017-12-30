@@ -14,9 +14,13 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
 import com.example.indoornav.R;
+
 import java.util.List;
+
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private Repository repository;
     private Beacon beacon;
     private List<Beacon> beacons;
+    private int positionBeacon;
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
 
     boolean mBound;
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             beacons = repository.getBeacons();
             if (beacons != null) {
                 beaconMerger.putAll(beacons);
-                transmitsBeaconAdapter(beacons);
+                transmitsBeaconAdapter(beacons, 0);
             }
         }
     }
@@ -137,12 +142,25 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         beacon = new Beacon(distance.distanceBeacon(list1));
         beaconMerger.put(beacon);
         beacons = beaconMerger.getBeacons();
+        int position = beaconMerger.getPosition();
 
-        transmitsBeaconAdapter(beacons);
+        transmitsBeaconAdapter(beacons, position);
     }
 
-    private void transmitsBeaconAdapter(List<Beacon> beacons) {
+
+    private void transmitsBeaconAdapter(List<Beacon> beacons, int position) {
         recyclerView_adapter.setBeacon(beacons);
-        recyclerView_adapter.notifyDataSetChanged();
+        if (beacons.size() == positionBeacon) {
+            recyclerView_adapter.notifyItemChanged(position);
+        } else if (beacons.size() > positionBeacon) {
+            recyclerView_adapter.notifyDataSetChanged();
+        } else if (beacons.size() < positionBeacon) {
+            recyclerView_adapter.notifyItemRemoved(position);
+        }
+        positionBeacon = beacons.size();
     }
 }
+
+//Jirebase RTDB
+
+//NOSQL
