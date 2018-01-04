@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/green_100"
+    style="@style/button_form"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -13,8 +13,8 @@
         android:id="@+id/beacon"
         android:layout_width="0dp"
         android:layout_height="67dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginTop="8dp"
         android:textColor="#000000"
         android:textSize="20pt"
@@ -79,6 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="center"
             tools:text="X=11" />
 
         <TextView
@@ -87,6 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="center"
             tools:text="Y=11" />
 
     </LinearLayout>

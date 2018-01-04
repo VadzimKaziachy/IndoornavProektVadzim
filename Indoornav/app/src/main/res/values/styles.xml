@@ -15,4 +15,8 @@
     <style name="textColor.textBold">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="button_form">
+        <item name="android:background">@drawable/button_form_normal</item>
+    </style>
 </resources>

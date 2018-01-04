@@ -32,7 +32,6 @@ import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
 import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
-import by.grsu.ftf.indoornav.adapter.DividerDecoration;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     }
 
     private void adapter() {
-        recyclerView.addItemDecoration(new DividerDecoration(this));
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
