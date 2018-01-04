@@ -16,12 +16,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.indoornav.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
 import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.DividerDecoration;
@@ -73,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
                 transmitsBeaconAdapter(beacons, 0);
             }
         }
+        if (savedInstanceState == null) {
+            dataBaseFireBase();
+        }
+
     }
 
     private void initViews() {
@@ -139,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public void updateClient(List<String> list1) {
 
-        beacon = new Beacon(distance.distanceBeacon(list1));
+        beacon = new Beacon(distance.distanceBeacon(list1, repository.getBeaconCoordinate()));
         beaconMerger.put(beacon);
         beacons = beaconMerger.getBeacons();
         int position = beaconMerger.getPosition();
@@ -159,8 +171,32 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
         positionBeacon = beacons.size();
     }
+
+    private void dataBaseFireBase() {
+        final List<Beacon> mBeacon = new ArrayList<>();
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+        myRef.child("Beacons").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
+                    Beacon beacon1 = new Beacon();
+                    beacon1.setId(dataSh.child("id").getValue(String.class));
+                    beacon1.setX(dataSh.child("X").getValue(Long.class));
+                    beacon1.setY(dataSh.child("Y").getValue(Long.class));
+                    mBeacon.add(beacon1);
+                }
+                repository.setBeaconCoordinate(mBeacon);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),
+                        "нет покдлючения к интернету", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
 
-//Jirebase RTDB
 
 //NOSQL

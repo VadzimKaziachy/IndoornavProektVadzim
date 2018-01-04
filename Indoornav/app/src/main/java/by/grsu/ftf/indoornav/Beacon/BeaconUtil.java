@@ -19,10 +19,10 @@ public class BeaconUtil {
     private List<Integer> POWER_BEACON = new ArrayList<>();
 
     public BeaconUtil() {
-        BEACON_ID.add("id 1");
-        BEACON_ID.add("id 2");
-        BEACON_ID.add("id 3");
-        BEACON_ID.add("id 4");
+        BEACON_ID.add("id1");
+        BEACON_ID.add("id2");
+        BEACON_ID.add("id3");
+        BEACON_ID.add("id4");
 
         LIST_COORDINATE.add(new PointF(1, 1));
         LIST_COORDINATE.add(new PointF(5, 1));

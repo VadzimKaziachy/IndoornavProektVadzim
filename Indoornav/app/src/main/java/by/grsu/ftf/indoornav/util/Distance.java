@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
 
 /**
@@ -12,30 +13,38 @@ import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
  */
 
 public class Distance {
-    private BeaconUtil beacon = new BeaconUtil();
-    private ArrayList<String> LIST_BEACON_DISTANCE = new ArrayList<>();
+    private BeaconUtil beaconUril = new BeaconUtil();
+    private List<String> beaconData = new ArrayList<>();
 
-
-    public List<String> distanceBeacon(List<String> LIST_BEACON) {
+    public List<String> distanceBeacon(List<String> LIST_BEACON, List<Beacon> mCoordinate) {
         Float DISTANCE, progressRSSI, RSSIprogress;
         Float maxRSSI = -35f;
         Float minRSSI = -90f;
 
-        LIST_BEACON_DISTANCE.clear();
+        beaconData.clear();
 
         String name = LIST_BEACON.get(0);
-        Integer index = beacon.getBEACON_ID().indexOf(name);
-        float POWER = beacon.getPOWER_BEACON().get(0);
+        float POWER = beaconUril.getPOWER_BEACON().get(0);
 
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         progressRSSI = Math.abs((maxRSSI - Float.valueOf(LIST_BEACON.get(1))) / (maxRSSI - minRSSI));
-        RSSIprogress =  240 * progressRSSI;
+        RSSIprogress = 240 * progressRSSI;
 
-        this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(0));
-        this.LIST_BEACON_DISTANCE.add(DISTANCE.toString());
-        this.LIST_BEACON_DISTANCE.add(LIST_BEACON.get(1));
-        this.LIST_BEACON_DISTANCE.add(progressRSSI.toString());
-        this.LIST_BEACON_DISTANCE.add(RSSIprogress.toString());
-        return LIST_BEACON_DISTANCE;
+        beaconData.add(LIST_BEACON.get(0));
+        beaconData.add(DISTANCE.toString());
+        beaconData.add(LIST_BEACON.get(1));
+        beaconData.add(progressRSSI.toString());
+        beaconData.add(RSSIprogress.toString());
+
+        if (mCoordinate != null) {
+            for (Beacon beacon : mCoordinate) {
+                if (beacon.getId().equals(name)) {
+                    beaconData.add(beacon.getX());
+                    beaconData.add(beacon.getY());
+                    return beaconData;
+                }
+            }
+        }
+        return beaconData;
     }
 }

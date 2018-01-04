@@ -45,7 +45,6 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
 
     @Override
     public int getItemCount() {
-
         if (beacon == null) return 0;
         return beacon.size();
     }
@@ -53,22 +52,25 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView beacons;
-        private ProgressRSSI progressRSSI;
+        private TextView X;
+        private TextView Y;
         private Beacon mBeacon;
         private ImageView rssiSpedometer;
 
         ViewHolder(View itemView) {
             super(itemView);
             beacons = (TextView) itemView.findViewById(R.id.beacon);
-            progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
             rssiSpedometer = (ImageView) itemView.findViewById(R.id.arrow);
+            X = (TextView) itemView.findViewById(R.id.X);
+            Y = (TextView) itemView.findViewById(R.id.Y);
             itemView.setOnClickListener(this);
         }
 
         void bind(Beacon beacon) {
             mBeacon = beacon;
             beacons.setText(mBeacon.getId());
-            progressRSSI.setRSSI(mBeacon.getProgressRSSI(), mBeacon.getRSSI());
+            X.setText(mBeacon.getX());
+            Y.setText(mBeacon.getY());
 
             rssiSpedometer.animate()
                     .rotation(mBeacon.getRSSIprogress())

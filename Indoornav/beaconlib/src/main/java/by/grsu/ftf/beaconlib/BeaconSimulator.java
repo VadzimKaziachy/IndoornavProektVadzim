@@ -40,7 +40,7 @@ class BeaconSimulator {
                 break;
         }
         list.clear();
-        list.add("id " + String.valueOf(id));
+        list.add("id" + String.valueOf(id));
         list.add(String.valueOf(rssi));
         return list;
     }
