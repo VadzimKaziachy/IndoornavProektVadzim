@@ -7,4 +7,10 @@
     <color name="green_600">#43A047</color>
     <color name="green_900">#1B5E20</color>
     <color name="green_100">#C8E6C9</color>
+    <color name="borderLow">#999</color>
+    <color name="borderHigh">#DDD</color>
+    <color name="gradientStart">#DDD</color>
+    <color name="gradienEnd">#BBB</color>
+    <color name="text">#999</color>
+    <color name="shadow">#FFFFFF</color>
 </resources>

@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_recycler_view"
     android:scrollbars="vertical"
+    android:background="@drawable/backgroundpattern"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:layout_editor_absoluteY="8dp"
