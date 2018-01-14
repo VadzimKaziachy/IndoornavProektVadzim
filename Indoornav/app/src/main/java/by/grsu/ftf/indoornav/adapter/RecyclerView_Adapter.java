@@ -55,12 +55,13 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         private TextView X;
         private TextView Y;
         private Beacon mBeacon;
-        private ImageView rssiSpedometer;
+        private ProgressRSSI progressRSSI;
+
 
         ViewHolder(View itemView) {
             super(itemView);
             beacons = (TextView) itemView.findViewById(R.id.beacon);
-            rssiSpedometer = (ImageView) itemView.findViewById(R.id.arrow);
+            progressRSSI = (ProgressRSSI) itemView.findViewById(R.id.progressRSSI);
             X = (TextView) itemView.findViewById(R.id.X);
             Y = (TextView) itemView.findViewById(R.id.Y);
             itemView.setOnClickListener(this);
@@ -69,13 +70,9 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         void bind(Beacon beacon) {
             mBeacon = beacon;
             beacons.setText(mBeacon.getId());
-            X.setText(mBeacon.getX());
-            Y.setText(mBeacon.getY());
-
-            rssiSpedometer.animate()
-                    .rotation(mBeacon.getRSSIprogress())
-                    .setDuration(100)
-                    .start();
+            X.setText("X =" + mBeacon.getX());
+            Y.setText("Y = " + mBeacon.getY());
+            progressRSSI.setRSSI(mBeacon.getProgressRSSI());
         }
 
         @Override

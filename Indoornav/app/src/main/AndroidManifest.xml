@@ -19,7 +19,9 @@
         <activity
             android:name="by.grsu.ftf.indoornav.beaconInfo.FragmentActivity">
         </activity>
-
+        <activity
+            android:name="by.grsu.ftf.indoornav.navigation.map.MapActivity">
+        </activity>
     </application>
 
 </manifest>

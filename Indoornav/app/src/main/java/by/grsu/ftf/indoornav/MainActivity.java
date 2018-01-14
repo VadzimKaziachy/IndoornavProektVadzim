@@ -2,6 +2,7 @@ package by.grsu.ftf.indoornav;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,16 +29,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
 import by.grsu.ftf.indoornav.Beacon.Repository;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
+import by.grsu.ftf.indoornav.navigation.map.Map;
+import by.grsu.ftf.indoornav.navigation.map.MapActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private List<Beacon> beacons;
     private int positionBeacon;
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
+    public static final String BEACON_MAP = "BEACON_MAP";
 
     boolean mBound;
 
@@ -194,7 +201,26 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_map, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.meny_map:
+                Intent intent = new Intent(this, MapActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(BEACON_MAP, (Serializable) beacons);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
-
-
-//NOSQL

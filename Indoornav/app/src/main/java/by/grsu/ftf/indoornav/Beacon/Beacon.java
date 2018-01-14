@@ -35,8 +35,8 @@ public class Beacon implements Serializable {
             this.x = "";
             this.y = "";
         } else {
-            this.x = "X = " + list.get(5);
-            this.y = "Y = " + list.get(6);
+            this.x = list.get(5);
+            this.y = list.get(6);
         }
     }
 
