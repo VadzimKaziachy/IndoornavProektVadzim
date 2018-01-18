@@ -6,12 +6,9 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -24,34 +21,34 @@ import com.example.indoornav.R;
 public class ProgressRSSI extends View {
 
     private Bitmap tachometer, tachometer1;
-    private Bitmap arrow;
+    private Bitmap arrow, arrow1;
     private Matrix matrix;
     private int angleRSSI;
     private int start;
     private int stop;
-    private int x;
-    private int y;
+    private int x, xTachometer;
+    private int y, yTachometer;
+
+    public ProgressRSSI(Context context) {
+        this(context, null);
+    }
 
     public ProgressRSSI(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.ProgressRSSI, 0, 0);
-        typedArray.recycle();
 
         matrix = new Matrix();
         tachometer = BitmapFactory.decodeResource(getResources(), R.drawable.tachometer);
-        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrowpro);
 
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        canvas.drawBitmap(tachometer1, 0, 0, null);
+        canvas.drawBitmap(tachometer1, xTachometer, yTachometer, null);
 
         matrix.setTranslate(x, y);
-        matrix.preRotate(angleRSSI, arrow.getWidth() / 2, arrow.getHeight() / 2);
-        canvas.drawBitmap(arrow, matrix, null);
+        matrix.preRotate(angleRSSI - 30, arrow1.getWidth() / 2, arrow1.getHeight() / 2);
+        canvas.drawBitmap(arrow1, matrix, null);
     }
 
     public void setRSSI(Float progressRSSI) {
@@ -75,10 +72,13 @@ public class ProgressRSSI extends View {
 
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
+        tachometer1 = Bitmap.createScaledBitmap(tachometer, Math.min(getMeasuredWidth(), getMeasuredHeight()), Math.min(getMeasuredWidth(), getMeasuredHeight()), true);
+        arrow1 = Bitmap.createScaledBitmap(arrow, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 8, true);
 
-        tachometer1 = Bitmap.createScaledBitmap(tachometer, Math.min(width, height), Math.min(width, height), true);
+        xTachometer = width / 2 - tachometer1.getWidth() / 2;
+        yTachometer = height / 2 - tachometer1.getHeight() / 2;
 
-        x = (Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2) - arrow.getWidth() / 2;
-        y = (Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2) - arrow.getHeight() / 2;
+        x = (width / 2) - arrow1.getWidth() / 2;
+        y = (height / 2) - arrow1.getHeight() / 2;
     }
 }

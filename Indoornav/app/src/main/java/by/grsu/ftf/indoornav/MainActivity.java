@@ -8,10 +8,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +46,9 @@ import by.grsu.ftf.indoornav.navigation.map.Map;
 import by.grsu.ftf.indoornav.navigation.map.MapActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
+import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 
 
 /*
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private int positionBeacon;
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
     public static final String BEACON_MAP = "BEACON_MAP";
+    public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
 
     boolean mBound;
 
@@ -75,9 +81,14 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_masterdetail);
-
         initViews();
         adapter();
+
+        if (!isOnline(this) && savedInstanceState == null) {
+            FragmentManager manager = getSupportFragmentManager();
+            InternetInquiryFragment internet = new InternetInquiryFragment();
+            internet.show(manager, DIALOG_INTERNET);
+        }
 
         repository = ViewModelProviders.of(this).get(Repository.class);
         if (repository.getBeacons() != null) {
@@ -178,28 +189,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     }
 
     private void dataBaseFireBase() {
-        final List<Beacon> mBeacon = new ArrayList<>();
-
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child("Beacons").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
-                    Beacon beacon1 = new Beacon();
-                    beacon1.setId(dataSh.child("id").getValue(String.class));
-                    beacon1.setX(dataSh.child("X").getValue(Long.class));
-                    beacon1.setY(dataSh.child("Y").getValue(Long.class));
-                    mBeacon.add(beacon1);
-                }
-                repository.setBeaconCoordinate(mBeacon);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),
-                        "нет покдлючения к интернету", Toast.LENGTH_LONG).show();
-            }
-        });
+        DataBaseFireBase dataBase = new DataBaseFireBase();
+        List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
+        repository.setBeaconCoordinate(mBeacon);
     }
 
     @Override
@@ -222,5 +214,15 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 }

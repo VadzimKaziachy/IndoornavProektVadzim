@@ -64,16 +64,16 @@ public class Beacon implements Serializable {
         return x;
     }
 
-    public void setX(Long x) {
-        this.x = x.toString();
+    public void setX(String x) {
+        this.x = x;
     }
 
     public String getY() {
         return y;
     }
 
-    public void setY(Long y) {
-        this.y = y.toString();
+    public void setY(String y) {
+        this.y = y;
     }
 
     public void setId(String id) {

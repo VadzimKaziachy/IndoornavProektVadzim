@@ -2,4 +2,8 @@
     <string name="app_name">Indoornav</string>
     <string name="RSSI">RSSI </string>
     <string name="Map">Map</string>
+    <string name="messager_dialog_fragment">Для корректной работы приложения,
+        необходимо поключение интеренета</string>
+    <string name="title_dialog_fragment">Внимание</string>
+    <string name="settings">настройки</string>
 </resources>

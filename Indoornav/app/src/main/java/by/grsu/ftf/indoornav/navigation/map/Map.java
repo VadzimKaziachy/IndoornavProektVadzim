@@ -19,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.example.indoornav.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.Beacon.Beacon;
@@ -31,34 +32,31 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
 public class Map extends View {
 
     private Bitmap bluetooth_point;
+    private List<Beacon> beacons = new ArrayList<>();
 
-    private List<Beacon> beacons;
+    public Map(Context context) {
+        this(context, null);
+    }
 
     public Map(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.getTheme()
-                .obtainStyledAttributes(attrs, R.styleable.mapView, 0, 0);
-        typedArray.recycle();
         bluetooth_point = BitmapFactory.decodeResource(getResources(), R.drawable.bluetooth_point);
-
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         for (Beacon beacon : beacons) {
-            if (beacon.getX().equals("")) {
+            if (beacon.getY().equals("")) {
                 break;
             } else {
-                int x = Integer.parseInt(beacon.getX()) +100;
-                int y = Integer.parseInt(beacon.getY()) + 100;
+                Integer x = Integer.parseInt(beacon.getX()) + 200;
+                Integer y = Integer.parseInt(beacon.getY()) + 200;
                 canvas.drawBitmap(bluetooth_point, x, y, null);
             }
         }
     }
 
-    public void provaider(List<Beacon> beacons) {
+    public void provider(List<Beacon> beacons) {
         this.beacons = beacons;
         invalidate();
     }

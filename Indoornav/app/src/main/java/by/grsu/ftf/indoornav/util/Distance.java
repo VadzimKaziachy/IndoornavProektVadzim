@@ -47,4 +47,18 @@ public class Distance {
         }
         return beaconData;
     }
+
+    public List<Beacon> mCoordinate(List<Beacon> mBeacon, List<Beacon> mCoordinate) {
+        if (mCoordinate != null && mBeacon != null) {
+            for (Beacon beacon : mBeacon) {
+                for (Beacon coordinete : mCoordinate) {
+                    if (beacon.getId().equals(coordinete.getId())) {
+                        beacon.setX(coordinete.getX());
+                        beacon.setY(coordinete.getY());
+                    }
+                }
+            }
+        }
+        return mBeacon;
+    }
 }
