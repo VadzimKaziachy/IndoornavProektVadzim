@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.navigation.map;
 
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -40,11 +41,15 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activite_map);
 
+        if (!MainActivity.isOnline(this) && savedInstanceState == null) {
+            FragmentManager manager = getSupportFragmentManager();
+            InternetInquiryFragment interne = new InternetInquiryFragment();
+            interne.show(manager, DIALOG_INTERNET);
+        }
+
         beacons = (List<Beacon>) getIntent().getSerializableExtra(BEACON_MAP);
         repository = ViewModelProviders.of(this).get(Repository.class);
         distance = new Distance();
-
-
         map = (Map) findViewById(R.id.map);
 
         drawable = getResources().getDrawable(R.drawable.floor);
@@ -53,11 +58,7 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (!MainActivity.isOnline(this)) {
-            FragmentManager manager = getSupportFragmentManager();
-            InternetInquiryFragment interne = new InternetInquiryFragment();
-            interne.show(manager, DIALOG_INTERNET);
-        } else {
+        if (MainActivity.isOnline(this)) {
             if (beacons.get(0).getX().equals("")) {
                 DataBaseFireBase dataBase = new DataBaseFireBase();
                 List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);

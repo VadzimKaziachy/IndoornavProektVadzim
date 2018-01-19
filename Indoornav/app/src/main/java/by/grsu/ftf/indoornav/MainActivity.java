@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public void updateClient(List<String> list1) {
 
-        beacon = new Beacon(distance.distanceBeacon(list1, repository.getBeaconCoordinate()));
+        beacon = distance.distanceBeacon(list1, repository.getBeaconCoordinate());
         beaconMerger.put(beacon);
         beacons = beaconMerger.getBeacons();
         int position = beaconMerger.getPosition();

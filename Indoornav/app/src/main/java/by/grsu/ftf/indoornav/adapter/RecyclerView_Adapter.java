@@ -70,7 +70,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
         void bind(Beacon beacon) {
             mBeacon = beacon;
             beacons.setText(mBeacon.getId());
-            X.setText("X =" + mBeacon.getX());
+            X.setText("X = " + mBeacon.getX());
             Y.setText("Y = " + mBeacon.getY());
             progressRSSI.setRSSI(mBeacon.getProgressRSSI());
         }

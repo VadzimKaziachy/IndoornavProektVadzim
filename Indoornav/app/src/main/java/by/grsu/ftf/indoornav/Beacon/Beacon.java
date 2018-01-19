@@ -23,21 +23,7 @@ public class Beacon implements Serializable {
     private String y;
 
     public Beacon() {
-    }
 
-    public Beacon(List<String> list) {
-        this.id = list.get(0);
-        this.distance = list.get(1);
-        this.RSSI = list.get(2);
-        this.progressRSSI = Float.valueOf(list.get(3));
-        this.RSSIprogress = Float.valueOf(list.get(4));
-        if (list.size() == 5) {
-            this.x = "";
-            this.y = "";
-        } else {
-            this.x = list.get(5);
-            this.y = list.get(6);
-        }
     }
 
     public Float getRSSIprogress() {
@@ -78,6 +64,22 @@ public class Beacon implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public void setRSSI(String RSSI) {
+        this.RSSI = RSSI;
+    }
+
+    public void setProgressRSSI(Float progressRSSI) {
+        this.progressRSSI = progressRSSI;
+    }
+
+    public void setRSSIprogress(Float RSSIprogress) {
+        this.RSSIprogress = RSSIprogress;
     }
 }
 

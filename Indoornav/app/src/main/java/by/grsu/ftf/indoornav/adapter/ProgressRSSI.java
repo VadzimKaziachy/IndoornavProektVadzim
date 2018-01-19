@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -28,6 +29,7 @@ public class ProgressRSSI extends View {
     private int stop;
     private int x, xTachometer;
     private int y, yTachometer;
+    private Drawable drawable;
 
     public ProgressRSSI(Context context) {
         this(context, null);
@@ -39,6 +41,7 @@ public class ProgressRSSI extends View {
         matrix = new Matrix();
         tachometer = BitmapFactory.decodeResource(getResources(), R.drawable.tachometer);
         arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrowpro);
+        drawable = getResources().getDrawable(R.drawable.tachometer);
 
     }
 

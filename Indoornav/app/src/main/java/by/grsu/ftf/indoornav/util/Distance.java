@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.util;
 
+import android.graphics.PointF;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -14,14 +15,15 @@ import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
 
 public class Distance {
     private BeaconUtil beaconUril = new BeaconUtil();
-    private List<String> beaconData = new ArrayList<>();
 
-    public List<String> distanceBeacon(List<String> LIST_BEACON, List<Beacon> mCoordinate) {
+
+    public Beacon distanceBeacon(List<String> LIST_BEACON, List<Beacon> mCoordinate) {
         Float DISTANCE, progressRSSI, RSSIprogress;
         Float maxRSSI = -35f;
         Float minRSSI = -90f;
+        Beacon beacon = new Beacon();
+        PointF pointF = new PointF(0,0);
 
-        beaconData.clear();
 
         String name = LIST_BEACON.get(0);
         float POWER = beaconUril.getPOWER_BEACON().get(0);
@@ -30,22 +32,29 @@ public class Distance {
         progressRSSI = Math.abs((maxRSSI - Float.valueOf(LIST_BEACON.get(1))) / (maxRSSI - minRSSI));
         RSSIprogress = 240 * progressRSSI;
 
-        beaconData.add(LIST_BEACON.get(0));
-        beaconData.add(DISTANCE.toString());
-        beaconData.add(LIST_BEACON.get(1));
-        beaconData.add(progressRSSI.toString());
-        beaconData.add(RSSIprogress.toString());
+
+        beacon.setId(LIST_BEACON.get(0));
+        beacon.setDistance(DISTANCE.toString());
+        beacon.setRSSI(LIST_BEACON.get(1));
+        beacon.setProgressRSSI(progressRSSI);
+        beacon.setRSSIprogress(RSSIprogress);
 
         if (mCoordinate != null) {
-            for (Beacon beacon : mCoordinate) {
-                if (beacon.getId().equals(name)) {
-                    beaconData.add(beacon.getX());
-                    beaconData.add(beacon.getY());
-                    return beaconData;
+            for (Beacon mBeacon : mCoordinate) {
+                if (mBeacon.getId().equals(name)) {
+                    beacon.setX(mBeacon.getX());
+                    beacon.setY(mBeacon.getY());
+                    return beacon;
+                } else {
+                    beacon.setX("");
+                    beacon.setY("");
                 }
             }
+        }else{
+            beacon.setX("");
+            beacon.setY("");
         }
-        return beaconData;
+        return beacon;
     }
 
     public List<Beacon> mCoordinate(List<Beacon> mBeacon, List<Beacon> mCoordinate) {
