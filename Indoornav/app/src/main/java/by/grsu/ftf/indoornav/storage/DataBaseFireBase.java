@@ -32,8 +32,8 @@ public class DataBaseFireBase {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
                     Beacon beacon = new Beacon();
                     beacon.setId(dataSh.child("id").getValue(String.class));
-                    beacon.setX(dataSh.child("X").getValue(Long.class).toString());
-                    beacon.setY(dataSh.child("Y").getValue(Long.class).toString());
+                    beacon.setX(dataSh.child("X").getValue(Float.class));
+                    beacon.setY(dataSh.child("Y").getValue(Float.class));
                     mBeacon.add(beacon);
                 }
 

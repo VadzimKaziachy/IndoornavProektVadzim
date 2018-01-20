@@ -1,13 +1,11 @@
 package by.grsu.ftf.indoornav.navigation.map;
 
-import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.example.indoornav.R;
 
@@ -30,7 +28,6 @@ import static by.grsu.ftf.indoornav.MainActivity.DIALOG_INTERNET;
 public class MapActivity extends AppCompatActivity {
 
     private Repository repository;
-    private Drawable drawable;
     private Map map;
     private List<Beacon> beacons;
     private Distance distance;
@@ -52,19 +49,17 @@ public class MapActivity extends AppCompatActivity {
         distance = new Distance();
         map = (Map) findViewById(R.id.map);
 
-        drawable = getResources().getDrawable(R.drawable.floor);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         if (MainActivity.isOnline(this)) {
-            if (beacons.get(0).getX().equals("")) {
+            if (beacons.get(0) != null) {
                 DataBaseFireBase dataBase = new DataBaseFireBase();
                 List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
                 beacons = distance.mCoordinate(beacons, mBeacon);
             }
-            map.setBackground(drawable);
             map.provider(beacons);
         }
     }

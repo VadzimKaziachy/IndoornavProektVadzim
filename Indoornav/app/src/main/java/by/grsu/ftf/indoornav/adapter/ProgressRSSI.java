@@ -21,14 +21,14 @@ import com.example.indoornav.R;
 
 public class ProgressRSSI extends View {
 
-    private Bitmap tachometer, tachometer1;
+
     private Bitmap arrow, arrow1;
     private Matrix matrix;
     private int angleRSSI;
     private int start;
     private int stop;
-    private int x, xTachometer;
-    private int y, yTachometer;
+    private int x;
+    private int y;
     private Drawable drawable;
 
     public ProgressRSSI(Context context) {
@@ -39,7 +39,6 @@ public class ProgressRSSI extends View {
         super(context, attrs);
 
         matrix = new Matrix();
-        tachometer = BitmapFactory.decodeResource(getResources(), R.drawable.tachometer);
         arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrowpro);
         drawable = getResources().getDrawable(R.drawable.tachometer);
 
@@ -47,7 +46,7 @@ public class ProgressRSSI extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(tachometer1, xTachometer, yTachometer, null);
+        drawable.draw(canvas);
 
         matrix.setTranslate(x, y);
         matrix.preRotate(angleRSSI - 30, arrow1.getWidth() / 2, arrow1.getHeight() / 2);
@@ -75,13 +74,15 @@ public class ProgressRSSI extends View {
 
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
-        tachometer1 = Bitmap.createScaledBitmap(tachometer, Math.min(getMeasuredWidth(), getMeasuredHeight()), Math.min(getMeasuredWidth(), getMeasuredHeight()), true);
         arrow1 = Bitmap.createScaledBitmap(arrow, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 8, true);
-
-        xTachometer = width / 2 - tachometer1.getWidth() / 2;
-        yTachometer = height / 2 - tachometer1.getHeight() / 2;
-
         x = (width / 2) - arrow1.getWidth() / 2;
         y = (height / 2) - arrow1.getHeight() / 2;
+
+        int min = Math.min(getMeasuredWidth(), getMeasuredHeight());
+        int left = (getMeasuredWidth() / 2) - min / 2;
+        int top = 0;
+        int right = (getMeasuredWidth() / 2) + min / 2;
+        int bottom = min;
+        drawable.setBounds(left, top, right, bottom);
     }
 }

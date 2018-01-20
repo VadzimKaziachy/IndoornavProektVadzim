@@ -22,7 +22,6 @@ public class Distance {
         Float maxRSSI = -35f;
         Float minRSSI = -90f;
         Beacon beacon = new Beacon();
-        PointF pointF = new PointF(0,0);
 
 
         String name = LIST_BEACON.get(0);
@@ -46,13 +45,13 @@ public class Distance {
                     beacon.setY(mBeacon.getY());
                     return beacon;
                 } else {
-                    beacon.setX("");
-                    beacon.setY("");
+                    beacon.setX(null);
+                    beacon.setY(null);
                 }
             }
         }else{
-            beacon.setX("");
-            beacon.setY("");
+            beacon.setX(null);
+            beacon.setY(null);
         }
         return beacon;
     }

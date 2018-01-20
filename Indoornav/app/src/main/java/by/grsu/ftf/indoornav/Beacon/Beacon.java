@@ -19,8 +19,8 @@ public class Beacon implements Serializable {
     private String distance;
     private Float progressRSSI;
     private Float RSSIprogress;
-    private String x;
-    private String y;
+    private Float x;
+    private Float y;
 
     public Beacon() {
 
@@ -46,19 +46,19 @@ public class Beacon implements Serializable {
         return distance;
     }
 
-    public String getX() {
+    public Float getX() {
         return x;
     }
 
-    public void setX(String x) {
+    public void setX(Float x) {
         this.x = x;
     }
 
-    public String getY() {
+    public Float getY() {
         return y;
     }
 
-    public void setY(String y) {
+    public void setY(Float y) {
         this.y = y;
     }
 
