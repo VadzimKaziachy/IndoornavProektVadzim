@@ -2,7 +2,6 @@ package by.grsu.ftf.indoornav.adapter;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -39,7 +38,7 @@ public class ProgressRSSI extends View {
         super(context, attrs);
 
         matrix = new Matrix();
-        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrowpro);
+        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
         drawable = getResources().getDrawable(R.drawable.tachometer);
 
     }

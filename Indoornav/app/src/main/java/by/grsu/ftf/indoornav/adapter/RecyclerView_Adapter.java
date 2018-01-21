@@ -73,6 +73,9 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
             if (mBeacon.getX() != null) {
                 X.setText("X = " + mBeacon.getX());
                 Y.setText("Y = " + mBeacon.getY());
+            } else {
+                X.setText("X = ");
+                Y.setText("Y = ");
             }
             progressRSSI.setRSSI(mBeacon.getProgressRSSI());
         }

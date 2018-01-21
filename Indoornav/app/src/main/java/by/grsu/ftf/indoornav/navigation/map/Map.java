@@ -52,13 +52,12 @@ public class Map extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Integer k = 20;
         map.draw(canvas);
 
         for (Beacon beacon : beacons) {
             if (beacon.getX() != null) {
-                Integer x = Math.round(beacon.getX()) * canvas.getWidth() / k;
-                Integer y = Math.round(beacon.getY()) * canvas.getHeight() / k;
+                Integer x = Math.round(beacon.getX() * canvas.getWidth());
+                Integer y = Math.round(beacon.getY() * canvas.getHeight());
                 bluetooth_point.setBounds(x, y, x + 100, y + 100);
                 bluetooth_point.draw(canvas);
             }
