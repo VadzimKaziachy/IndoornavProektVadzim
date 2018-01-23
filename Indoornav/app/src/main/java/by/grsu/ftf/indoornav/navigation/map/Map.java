@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RotateDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -36,8 +37,11 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
 
 public class Map extends View {
 
+    private Boolean mCoordinate = false;
     private Drawable bluetooth_point;
     private Drawable map;
+    private Drawable human;
+    private PointF coordinate;
     private List<Beacon> beacons = new ArrayList<>();
 
     public Map(Context context) {
@@ -46,19 +50,29 @@ public class Map extends View {
 
     public Map(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
         bluetooth_point = getResources().getDrawable(R.drawable.bluetooth_point);
         map = getResources().getDrawable(R.drawable.map);
+        human = getResources().getDrawable(R.drawable.ic_action_name);
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         map.draw(canvas);
 
+        if (mCoordinate) {
+            Integer x = Math.round(coordinate.x * canvas.getWidth());
+            Integer y = Math.round(coordinate.y * canvas.getHeight());
+            human.setBounds(x - 50, y - 50, x + 50, y + 50);
+            human.draw(canvas);
+        }
+
         for (Beacon beacon : beacons) {
             if (beacon.getX() != null) {
                 Integer x = Math.round(beacon.getX() * canvas.getWidth());
                 Integer y = Math.round(beacon.getY() * canvas.getHeight());
-                bluetooth_point.setBounds(x, y, x + 100, y + 100);
+                bluetooth_point.setBounds(x - 50, y - 50, x + 50, y + 50);
                 bluetooth_point.draw(canvas);
             }
         }
@@ -70,11 +84,16 @@ public class Map extends View {
 
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
-
         map.setBounds(0, 0, width, height);
     }
 
-    public void provider(List<Beacon> beacons) {
+    public void provider(List<Beacon> beacons, PointF coordinate) {
+
+        if (coordinate != null) {
+            this.coordinate = coordinate;
+            mCoordinate = true;
+        }
+
         this.beacons = beacons;
         invalidate();
     }

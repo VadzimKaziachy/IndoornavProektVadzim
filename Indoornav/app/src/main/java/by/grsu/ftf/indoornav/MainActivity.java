@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,8 @@ import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 
+//import static by.grsu.ftf.indoornav.navigation.map.MapActivity.LIST_BEACON;
+
 
 /*
  * This class is the main, some kind of kernel program.
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private int positionBeacon;
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
     public static final String BEACON_MAP = "BEACON_MAP";
+    public static final String BEACON_COORDINATE = "BEACON_COORDINATE";
     public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
 
     boolean mBound;
@@ -142,13 +146,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     protected void onStop() {
         super.onStop();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
+        unBindService();
         repository.setBeacons(beacons);
     }
-
 
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -165,9 +165,8 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     };
 
     @Override
-    public void updateClient(List<String> list1) {
-
-        beacon = distance.distanceBeacon(list1, repository.getBeaconCoordinate());
+    public void updateClient(List<String> list) {
+        beacon = distance.distanceBeacon(list, repository.getBeaconCoordinate());
         beaconMerger.put(beacon);
         beacons = beaconMerger.getBeacons();
         int position = beaconMerger.getPosition();
@@ -205,10 +204,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.meny_map:
+                unBindService();
+
                 Intent intent = new Intent(this, MapActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(BEACON_MAP, (Serializable) beacons);
-                intent.putExtras(bundle);
+                intent.putExtra(BEACON_MAP, (Serializable) beacons);
+                intent.putExtra(BEACON_COORDINATE, (Serializable) repository.getBeaconCoordinate());
                 startActivity(intent);
                 return true;
             default:
@@ -225,4 +225,19 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
         return false;
     }
+
+    private void unBindService() {
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+//        if(resultCode == RESULT_OK){
+//            beacons = (List<Beacon>) intent.getSerializableExtra(LIST_BEACON);
+//        }
+//    }
 }

@@ -1,6 +1,7 @@
 package by.grsu.ftf.indoornav.Beacon;
 
 import android.arch.lifecycle.ViewModel;
+import android.graphics.PointF;
 import android.util.Log;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Repository extends ViewModel {
     private List<Beacon> beacons;
     private List<Beacon> beaconCoordinate;
+    private PointF deviceCoordinate;
 
     public List<Beacon> getBeaconCoordinate() {
         return beaconCoordinate;
@@ -27,5 +29,13 @@ public class Repository extends ViewModel {
 
     public void setBeacons(List<Beacon> beacons) {
         this.beacons = beacons;
+    }
+
+    public PointF getDeviceCoordinate() {
+        return deviceCoordinate;
+    }
+
+    public void setDeviceCoordinate(PointF deviceCoordinate) {
+        this.deviceCoordinate = deviceCoordinate;
     }
 }

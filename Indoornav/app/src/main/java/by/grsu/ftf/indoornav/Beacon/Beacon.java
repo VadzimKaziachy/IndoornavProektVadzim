@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.Beacon;
 
+import android.graphics.PointF;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -16,15 +17,12 @@ public class Beacon implements Serializable {
 
     private String id;
     private String RSSI;
-    private String distance;
+    private Float distance;
     private Float progressRSSI;
     private Float RSSIprogress;
     private Float x;
     private Float y;
-
-    public Beacon() {
-
-    }
+    private PointF coordinate;
 
     public Float getRSSIprogress() {
         return RSSIprogress;
@@ -42,7 +40,7 @@ public class Beacon implements Serializable {
         return RSSI;
     }
 
-    public String getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
@@ -66,7 +64,7 @@ public class Beacon implements Serializable {
         this.id = id;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 
@@ -80,6 +78,14 @@ public class Beacon implements Serializable {
 
     public void setRSSIprogress(Float RSSIprogress) {
         this.RSSIprogress = RSSIprogress;
+    }
+
+    public PointF getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(PointF coordinate) {
+        this.coordinate = coordinate;
     }
 }
 

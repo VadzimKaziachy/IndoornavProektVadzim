@@ -57,8 +57,8 @@ public class BeaconControllerService extends Service {
 
     public class MyBinder extends Binder {
         public void connectCallbacks(Callbacks callbacks) {
-            if(serviceRun){
-                callback =  callbacks;
+            if (serviceRun) {
+                callback = callbacks;
                 serviceRun = false;
             }
 

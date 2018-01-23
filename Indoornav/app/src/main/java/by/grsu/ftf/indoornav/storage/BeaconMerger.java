@@ -4,6 +4,7 @@ import android.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,20 +16,29 @@ import by.grsu.ftf.indoornav.Beacon.Beacon;
  */
 
 public class BeaconMerger {
-    private Map<String, Beacon> beaconMap = new ArrayMap<>();
+    private Map<String, Beacon> mBeacon = new ArrayMap<>();
+    private Map<Float, Beacon> beaconMap;
     private List<Beacon> beacons;
     private int position;
 
     public void put(Beacon beacon) {
-        this.beaconMap.put(beacon.getId(), beacon);
-        this.beacons = new ArrayList<>(beaconMap.values());
+        this.mBeacon.put(beacon.getId(), beacon);
+        this.beacons = new ArrayList<>(mBeacon.values());
         position = beacons.indexOf(beacon);
     }
 
     public void putAll(Collection<Beacon> beacons) {
         for (Beacon beacon : beacons) {
-            beaconMap.put(beacon.getId(), beacon);
+            mBeacon.put(beacon.getId(), beacon);
         }
+    }
+
+    public List<Beacon> putAllBeaconMap(Collection<Beacon> beacons) {
+        beaconMap = new ArrayMap<>();
+        for(Beacon beacon : beacons){
+            beaconMap.put(beacon.getDistance(), beacon);
+        }
+        return new ArrayList<>(beaconMap.values());
     }
 
     public int getPosition() {
@@ -36,7 +46,7 @@ public class BeaconMerger {
     }
 
     public List<Beacon> getBeacons() {
-        return new ArrayList<>(beaconMap.values());
+        return new ArrayList<>(mBeacon.values());
     }
 }
 

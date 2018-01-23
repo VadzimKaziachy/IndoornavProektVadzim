@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -84,4 +85,17 @@ public class ProgressRSSI extends View {
         int bottom = min;
         drawable.setBounds(left, top, right, bottom);
     }
+
+//    @Override
+//    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+//        Log.d("Log", "left = " + left + ", top = " + top + ", right = " + right + ", bottom = " + bottom);
+//        super.onLayout(changed, left, top, right, bottom);
+//        int min = Math.min(right, bottom);
+//        int left1 = (right / 2) - min / 2;
+//        int right1 = (right / 2) + min / 2;
+//        int bottom1 = min;
+//        Log.d("Log", "min = " + min);
+//        Log.d("Log", "left1 = " + left1 + ", top1 = " + 0 + ", right1 = " + right1 + ", bottom1 = " + bottom1);
+//        drawable.setBounds(left1, 0, right1, bottom1);
+//    }
 }

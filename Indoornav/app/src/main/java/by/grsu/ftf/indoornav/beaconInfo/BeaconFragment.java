@@ -47,7 +47,7 @@ public class BeaconFragment extends Fragment {
         fragmentDistance = (TextView) view.findViewById(R.id.fragmentDistans);
 
         fragmentBeacon.setText(beacon.getId());
-        fragmentRSSI.setText(beacon.getDistance());
+        fragmentRSSI.setText(beacon.getDistance().toString());
         fragmentDistance.setText(beacon.getRSSI());
 
         if (savedInstanceState == null) {

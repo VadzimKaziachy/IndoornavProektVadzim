@@ -18,25 +18,35 @@ class BeaconSimulator {
         Integer rssi = null;
         id = 10 - random.nextInt(10);
         switch (id) {
-            case 2:
-            case 5:
-                rssi = random.nextInt(10) - 46;
-                break;
             case 1:
-            case 6:
-                rssi = random.nextInt(10) - 80;
+                rssi = random.nextInt(5) - 35;
+                break;
+            case 2:
+                rssi = random.nextInt(5) - 40;
                 break;
             case 3:
-            case 9:
-                rssi = random.nextInt(10) - 70;
+                rssi = random.nextInt(5) - 70;
                 break;
             case 4:
-            case 8:
-                rssi = random.nextInt(10) - 56;
+                rssi = random.nextInt(5) - 45;
+                break;
+            case 5:
+                rssi = random.nextInt(5) - 75;
+                break;
+            case 6:
+                rssi = random.nextInt(5) - 60;
                 break;
             case 7:
+                rssi = random.nextInt(5) - 65;
+                break;
+            case 8:
+                rssi = random.nextInt(5) - 55;
+                break;
+            case 9:
+                rssi = random.nextInt(5) - 55;
+                break;
             case 10:
-                rssi = random.nextInt(10) - 60;
+                rssi = random.nextInt(5) - 80;
                 break;
         }
         list.clear();

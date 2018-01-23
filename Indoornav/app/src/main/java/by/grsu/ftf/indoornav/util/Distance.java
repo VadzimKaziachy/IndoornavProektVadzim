@@ -14,8 +14,8 @@ import by.grsu.ftf.indoornav.Beacon.BeaconUtil;
  */
 
 public class Distance {
-    private BeaconUtil beaconUril = new BeaconUtil();
 
+    private BeaconUtil beaconUril = new BeaconUtil();
 
     public Beacon distanceBeacon(List<String> LIST_BEACON, List<Beacon> mCoordinate) {
         Float DISTANCE, progressRSSI, RSSIprogress;
@@ -33,7 +33,7 @@ public class Distance {
 
 
         beacon.setId(LIST_BEACON.get(0));
-        beacon.setDistance(DISTANCE.toString());
+        beacon.setDistance(DISTANCE);
         beacon.setRSSI(LIST_BEACON.get(1));
         beacon.setProgressRSSI(progressRSSI);
         beacon.setRSSIprogress(RSSIprogress);
