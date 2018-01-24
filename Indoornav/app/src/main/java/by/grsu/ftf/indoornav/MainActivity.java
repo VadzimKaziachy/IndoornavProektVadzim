@@ -51,7 +51,7 @@ import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 
-//import static by.grsu.ftf.indoornav.navigation.map.MapActivity.LIST_BEACON;
+import static by.grsu.ftf.indoornav.navigation.map.MapActivity.LIST_BEACON;
 
 
 /*
@@ -76,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     public static final String BEACON_MAP = "BEACON_MAP";
     public static final String BEACON_COORDINATE = "BEACON_COORDINATE";
     public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
+    private static final int SECOND_ACTIVITY_RESULT_CODE = 0;
 
     boolean mBound;
+    boolean mBeacons = false;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -97,15 +99,19 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         repository = ViewModelProviders.of(this).get(Repository.class);
         if (repository.getBeacons() != null) {
             beacons = repository.getBeacons();
-            if (beacons != null) {
-                beaconMerger.putAll(beacons);
-                transmitsBeaconAdapter(beacons, 0);
-            }
+            gggg();
         }
         if (savedInstanceState == null) {
             dataBaseFireBase();
         }
 
+    }
+
+    private void gggg() {
+        if (beacons != null) {
+            beaconMerger.putAll(beacons);
+            transmitsBeaconAdapter(beacons, 0);
+        }
     }
 
     private void initViews() {
@@ -141,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         super.onStart();
         bindService(new Intent(MainActivity.this, BeaconControllerService.class),
                 mConnection, Context.BIND_AUTO_CREATE);
+        if (mBeacons) {
+            gggg();
+            mBeacons = false;
+        }
     }
 
     @Override
@@ -209,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
                 Intent intent = new Intent(this, MapActivity.class);
                 intent.putExtra(BEACON_MAP, (Serializable) beacons);
                 intent.putExtra(BEACON_COORDINATE, (Serializable) repository.getBeaconCoordinate());
-                startActivity(intent);
+                startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -233,11 +243,15 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//        super.onActivityResult(requestCode, resultCode, intent);
-//        if(resultCode == RESULT_OK){
-//            beacons = (List<Beacon>) intent.getSerializableExtra(LIST_BEACON);
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == SECOND_ACTIVITY_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                beacons = (List<Beacon>) intent.getSerializableExtra(LIST_BEACON);
+                mBeacons = true;
+            }
+        }
+    }
 }

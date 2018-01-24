@@ -16,7 +16,7 @@ public class Trilateration {
 
     public PointF coordinatesOfThePhone(List<Beacon> mBeacon) {
 
-        List<Beacon>  maxBeaconList = new ArrayList<>();
+        List<Beacon> maxBeaconList = new ArrayList<>();
         Beacon maxBeacon;
 
         for (Beacon beacon : mBeacon) {
@@ -85,6 +85,9 @@ public class Trilateration {
         float lon = triPt[0];
         float lat = triPt[1];
 
+        if (Float.isNaN(lon) && Float.isNaN(lat)) return null;
+
         return new PointF(lon, lat);
+
     }
 }

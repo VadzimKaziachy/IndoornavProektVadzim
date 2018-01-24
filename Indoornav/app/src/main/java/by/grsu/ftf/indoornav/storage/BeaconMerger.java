@@ -28,15 +28,19 @@ public class BeaconMerger {
     }
 
     public void putAll(Collection<Beacon> beacons) {
-        for (Beacon beacon : beacons) {
-            mBeacon.put(beacon.getId(), beacon);
+        if (beacons != null) {
+            for (Beacon beacon : beacons) {
+                mBeacon.put(beacon.getId(), beacon);
+            }
         }
     }
 
     public List<Beacon> putAllBeaconMap(Collection<Beacon> beacons) {
         beaconMap = new ArrayMap<>();
-        for(Beacon beacon : beacons){
-            beaconMap.put(beacon.getDistance(), beacon);
+        if(beacons != null) {
+            for (Beacon beacon : beacons) {
+                beaconMap.put(beacon.getDistance(), beacon);
+            }
         }
         return new ArrayList<>(beaconMap.values());
     }

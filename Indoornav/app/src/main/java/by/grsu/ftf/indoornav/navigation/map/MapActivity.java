@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.example.indoornav.R;
 
@@ -49,7 +50,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     private boolean mRecord = true;
     private BeaconMerger beaconMerger;
     private Beacon beacon;
-//    public static final String LIST_BEACON = "LIST_BEACON";
+    public static final String LIST_BEACON = "LIST_BEACON";
 
 
     @Override
@@ -126,10 +127,20 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         repository.setBeacons(beacons);
         repository.setDeviceCoordinate(mDeviceCoordinate);
 
-//        Intent intent = new Intent();
-//        intent.putExtra(LIST_BEACON, (Serializable) beacons);
-//        setResult(RESULT_OK, intent);
-//        finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        //replaces the default 'Back' button action
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            Intent intent = new Intent();
+            intent.putExtra(LIST_BEACON, (Serializable) beacons);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        return true;
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -164,6 +175,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         if (repository.getBeaconCoordinate() != null && mRecord) {
             List<Beacon> mBeacon = distance.mCoordinate(beacons, repository.getBeaconCoordinate());
             beaconMerger.putAll(mBeacon);
+            mDeviceCoordinate = new Trilateration().coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
             mRecord = false;
         }
     }

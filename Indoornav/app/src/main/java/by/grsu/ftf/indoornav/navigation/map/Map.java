@@ -93,9 +93,10 @@ public class Map extends View {
             this.coordinate = coordinate;
             mCoordinate = true;
         }
-
-        this.beacons = beacons;
-        invalidate();
+        if (beacons != null) {
+            this.beacons = beacons;
+            invalidate();
+        }
     }
 }
 

@@ -25,7 +25,7 @@ class BeaconSimulator {
                 rssi = random.nextInt(5) - 40;
                 break;
             case 3:
-                rssi = random.nextInt(5) - 70;
+                rssi = random.nextInt(5) - 50;
                 break;
             case 4:
                 rssi = random.nextInt(5) - 45;
@@ -40,7 +40,7 @@ class BeaconSimulator {
                 rssi = random.nextInt(5) - 65;
                 break;
             case 8:
-                rssi = random.nextInt(5) - 55;
+                rssi = random.nextInt(5) - 70;
                 break;
             case 9:
                 rssi = random.nextInt(5) - 55;
