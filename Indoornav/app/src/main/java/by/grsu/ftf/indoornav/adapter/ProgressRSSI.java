@@ -22,14 +22,13 @@ import com.example.indoornav.R;
 public class ProgressRSSI extends View {
 
 
-    private Bitmap arrow, arrow1;
-    private Matrix matrix;
     private int angleRSSI;
     private int start;
     private int stop;
     private int x;
     private int y;
-    private Drawable drawable;
+    private Drawable tachometer;
+    private Drawable arrow;
 
     public ProgressRSSI(Context context) {
         this(context, null);
@@ -38,19 +37,16 @@ public class ProgressRSSI extends View {
     public ProgressRSSI(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        matrix = new Matrix();
-        arrow = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
-        drawable = getResources().getDrawable(R.drawable.tachometer);
+        arrow = getResources().getDrawable(R.drawable.arrow);
+        tachometer = getResources().getDrawable(R.drawable.tachometer);
 
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        drawable.draw(canvas);
-
-        matrix.setTranslate(x, y);
-        matrix.preRotate(angleRSSI - 30, arrow1.getWidth() / 2, arrow1.getHeight() / 2);
-        canvas.drawBitmap(arrow1, matrix, null);
+        tachometer.draw(canvas);
+        canvas.rotate(angleRSSI, x, y);
+        arrow.draw(canvas);
     }
 
     public void setRSSI(Float progressRSSI) {
@@ -60,7 +56,7 @@ public class ProgressRSSI extends View {
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-                angleRSSI = (int) animation.getAnimatedValue();
+                angleRSSI = (int) animation.getAnimatedValue() - 30;
                 invalidate();
             }
         });
@@ -68,34 +64,27 @@ public class ProgressRSSI extends View {
         start = stop;
     }
 
+
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        int width = right - left;
+        int height = bottom - top;
+        x = width / 2;
+        y = height / 2;
 
-        final int width = getMeasuredWidth();
-        final int height = getMeasuredHeight();
-        arrow1 = Bitmap.createScaledBitmap(arrow, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2, Math.min(getMeasuredWidth(), getMeasuredHeight()) / 8, true);
-        x = (width / 2) - arrow1.getWidth() / 2;
-        y = (height / 2) - arrow1.getHeight() / 2;
+        int min = Math.min(width, height);
+        int leftTachometer = ((right - left) / 2) - min / 2;
+        int rightTachometer = ((right - left) / 2) + min / 2;
+        int bottomTachometer = min;
+        tachometer.setBounds(leftTachometer, 0, rightTachometer, bottomTachometer);
 
-        int min = Math.min(getMeasuredWidth(), getMeasuredHeight());
-        int left = (getMeasuredWidth() / 2) - min / 2;
-        int top = 0;
-        int right = (getMeasuredWidth() / 2) + min / 2;
-        int bottom = min;
-        drawable.setBounds(left, top, right, bottom);
+        int leftArrow = (width / 2) - min / 4;
+        int rightArrow = (width / 2) + min / 4;
+        int topArrow = (min / 2) - ((rightArrow - leftArrow) / 8);
+        int bottomArrow = (min / 2) + ((rightArrow - leftArrow) / 8);
+        arrow.setBounds(leftArrow, topArrow, rightArrow, bottomArrow);
+
+
     }
-
-//    @Override
-//    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-//        Log.d("Log", "left = " + left + ", top = " + top + ", right = " + right + ", bottom = " + bottom);
-//        super.onLayout(changed, left, top, right, bottom);
-//        int min = Math.min(right, bottom);
-//        int left1 = (right / 2) - min / 2;
-//        int right1 = (right / 2) + min / 2;
-//        int bottom1 = min;
-//        Log.d("Log", "min = " + min);
-//        Log.d("Log", "left1 = " + left1 + ", top1 = " + 0 + ", right1 = " + right1 + ", bottom1 = " + bottom1);
-//        drawable.setBounds(left1, 0, right1, bottom1);
-//    }
 }
