@@ -4,12 +4,10 @@ import android.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Вадим on 10.09.2017.
@@ -22,7 +20,7 @@ public class BeaconMerger {
     private int position;
 
     public void put(Beacon beacon) {
-        this.mBeacon.put(beacon.getId(), beacon);
+        this.mBeacon.put(beacon.getName(), beacon);
         this.beacons = new ArrayList<>(mBeacon.values());
         position = beacons.indexOf(beacon);
     }
@@ -30,7 +28,7 @@ public class BeaconMerger {
     public void putAll(Collection<Beacon> beacons) {
         if (beacons != null) {
             for (Beacon beacon : beacons) {
-                mBeacon.put(beacon.getId(), beacon);
+                mBeacon.put(beacon.getName(), beacon);
             }
         }
     }

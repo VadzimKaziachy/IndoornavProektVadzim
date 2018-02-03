@@ -1,34 +1,19 @@
 package by.grsu.ftf.indoornav.navigation.map;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 
 import com.example.indoornav.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Вадим on 25.07.2017.

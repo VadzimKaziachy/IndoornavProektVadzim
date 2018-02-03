@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.indoornav.R;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Vadzim on 28.11.2017.
@@ -46,7 +46,7 @@ public class BeaconFragment extends Fragment {
         fragmentRSSI = (TextView) view.findViewById(R.id.fragmentRSSI);
         fragmentDistance = (TextView) view.findViewById(R.id.fragmentDistans);
 
-        fragmentBeacon.setText(beacon.getId());
+        fragmentBeacon.setText(beacon.getName());
         fragmentRSSI.setText(beacon.getDistance().toString());
         fragmentDistance.setText(beacon.getRSSI());
 

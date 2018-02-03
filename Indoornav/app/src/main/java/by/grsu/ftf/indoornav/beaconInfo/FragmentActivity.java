@@ -1,13 +1,8 @@
 package by.grsu.ftf.indoornav.beaconInfo;
 
 import android.app.Fragment;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-import com.example.indoornav.R;
-
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 import by.grsu.ftf.indoornav.MainActivity;
 
 /**

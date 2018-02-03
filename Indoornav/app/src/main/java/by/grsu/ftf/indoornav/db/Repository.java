@@ -1,8 +1,7 @@
-package by.grsu.ftf.indoornav.Beacon;
+package by.grsu.ftf.indoornav.db;
 
 import android.arch.lifecycle.ViewModel;
 import android.graphics.PointF;
-import android.util.Log;
 
 import java.util.List;
 

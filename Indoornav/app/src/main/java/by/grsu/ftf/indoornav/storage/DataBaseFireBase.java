@@ -1,7 +1,6 @@
 package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Vadzim on 17.01.2018.
@@ -31,12 +30,11 @@ public class DataBaseFireBase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
                     Beacon beacon = new Beacon();
-                    beacon.setId(dataSh.child("id").getValue(String.class));
+                    beacon.setName(dataSh.child("id").getValue(String.class));
                     beacon.setX(dataSh.child("X").getValue(Float.class));
                     beacon.setY(dataSh.child("Y").getValue(Float.class));
                     mBeacon.add(beacon);
                 }
-
             }
 
             @Override

@@ -1,22 +1,17 @@
 package by.grsu.ftf.indoornav.adapter;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.indoornav.R;
 
 import java.util.List;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Вадим on 22.10.2017.
@@ -69,7 +64,7 @@ public class RecyclerView_Adapter extends RecyclerView.Adapter<RecyclerView_Adap
 
         void bind(Beacon beacon) {
             mBeacon = beacon;
-            beacons.setText(mBeacon.getId());
+            beacons.setText(mBeacon.getName());
             if (mBeacon.getX() != null) {
                 X.setText("X = " + mBeacon.getX());
                 Y.setText("Y = " + mBeacon.getY());

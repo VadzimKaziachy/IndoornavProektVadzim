@@ -1,12 +1,11 @@
 package by.grsu.ftf.indoornav.util;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.Beacon.Beacon;
+import by.grsu.ftf.indoornav.db.Beacon;
 
 /**
  * Created by Vadzim on 21.01.2018.

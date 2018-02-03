@@ -6,13 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.example.indoornav.R;
@@ -21,8 +19,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.Beacon.Beacon;
-import by.grsu.ftf.indoornav.Beacon.Repository;
+import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.BeaconLifecycle;
+import by.grsu.ftf.indoornav.db.Repository;
 import by.grsu.ftf.indoornav.MainActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
@@ -57,6 +56,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activite_map);
+        getLifecycle().addObserver(new BeaconLifecycle(this));
         initComponent();
 
         if (!MainActivity.isOnline(this) && savedInstanceState == null) {
@@ -103,8 +103,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     protected void onStart() {
         super.onStart();
 
-        bindService(new Intent(MapActivity.this, BeaconControllerService.class),
-                mConnection, Context.BIND_AUTO_CREATE);
 
         if (MainActivity.isOnline(this)) {
             if (repository.getBeaconCoordinate() == null) {
@@ -120,10 +118,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     @Override
     protected void onPause() {
         super.onPause();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
+
         repository.setBeacons(beacons);
         repository.setDeviceCoordinate(mDeviceCoordinate);
 
@@ -143,19 +138,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         return true;
     }
 
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            BeaconControllerService.MyBinder binder = (BeaconControllerService.MyBinder) service;
-            binder.connectCallbacks(MapActivity.this);
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBound = false;
-        }
-    };
 
 
     @Override
