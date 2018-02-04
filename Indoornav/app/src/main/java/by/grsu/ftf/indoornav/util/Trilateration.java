@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.DeviceCoordinate;
 
 /**
  * Created by Vadzim on 21.01.2018.
@@ -15,12 +16,12 @@ public class Trilateration {
 
     public PointF coordinatesOfThePhone(List<Beacon> mBeacon) {
 
-        List<Beacon> maxBeaconList = new ArrayList<>();
-        Beacon maxBeacon;
+        List<DeviceCoordinate> maxBeaconList = new ArrayList<>();
+        DeviceCoordinate maxBeacon;
 
         for (Beacon beacon : mBeacon) {
             if (beacon.getX() != null && maxBeaconList.size() < 3) {
-                maxBeacon = new Beacon();
+                maxBeacon = new DeviceCoordinate();
                 maxBeacon.setCoordinate(new PointF(beacon.getX(), beacon.getY()));
                 maxBeacon.setDistance(beacon.getDistance());
                 maxBeaconList.add(maxBeacon);

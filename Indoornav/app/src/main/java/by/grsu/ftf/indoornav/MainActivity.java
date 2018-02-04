@@ -2,21 +2,21 @@ package by.grsu.ftf.indoornav;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +29,7 @@ import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.db.BeaconLifecycle;
-import by.grsu.ftf.indoornav.db.Repository;
+import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private BeaconMerger beaconMerger = new BeaconMerger();
     private Distance distance = new Distance();
 
-    private Repository repository;
+    private BeaconViewModel beaconViewModel;
     private Beacon beacon;
     private List<Beacon> beacons;
     private int positionBeacon;
@@ -66,10 +66,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     public static final String BEACON_MAP = "BEACON_MAP";
     public static final String BEACON_COORDINATE = "BEACON_COORDINATE";
     public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
-    private static final int SECOND_ACTIVITY_RESULT_CODE = 0;
 
-    boolean mBeacons = false;
-
+    int position = 0;
+    Boolean mMerger;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -86,26 +85,40 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             internet.show(manager, DIALOG_INTERNET);
         }
 
-        repository = ViewModelProviders.of(this).get(Repository.class);
-        if (repository.getBeacons() != null) {
-            beacons = repository.getBeacons();
-            gggg();
-        }
         if (savedInstanceState == null) {
             dataBaseFireBase();
+            beaconViewModel.deleteAll();
         }
+
+        beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
+            @Override
+            public void onChanged(@Nullable List<Beacon> mBeacon) {
+                beacons = mBeacon;
+                gggg();
+            }
+        });
 
     }
 
     private void gggg() {
         if (beacons != null) {
-            beaconMerger.putAll(beacons);
-            transmitsBeaconAdapter(beacons, 0);
+            if(mMerger){
+                beaconMerger.putAll(beacons);
+                mMerger = false;
+            }
+            transmitsBeaconAdapter(beacons, position);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mMerger = true;
     }
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        beaconViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
     }
 
     private void adapter() {
@@ -132,30 +145,14 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mBeacons) {
-            gggg();
-            mBeacons = false;
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        repository.setBeacons(beacons);
-    }
-
 
     @Override
     public void updateClient(List<String> list) {
-        beacon = distance.distanceBeacon(list, repository.getBeaconCoordinate());
-        beaconMerger.put(beacon);
-        beacons = beaconMerger.getBeacons();
-        int position = beaconMerger.getPosition();
-
-        transmitsBeaconAdapter(beacons, position);
+        beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
+        Boolean flag = beaconMerger.put(beacon);
+        position = beaconMerger.getPosition();
+        
+        beaconViewModel.beaconSort(beacon, flag);
     }
 
 
@@ -174,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private void dataBaseFireBase() {
         DataBaseFireBase dataBase = new DataBaseFireBase();
         List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
-        repository.setBeaconCoordinate(mBeacon);
+        beaconViewModel.setBeaconCoordinate(mBeacon);
     }
 
     @Override
@@ -188,10 +185,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.meny_map:
-                Intent intent = new Intent(this, MapActivity.class);
-                intent.putExtra(BEACON_MAP, (Serializable) beacons);
-                intent.putExtra(BEACON_COORDINATE, (Serializable) repository.getBeaconCoordinate());
-                startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
+                startActivity(new Intent(this, MapActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -206,17 +200,5 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             return true;
         }
         return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-
-        if (requestCode == SECOND_ACTIVITY_RESULT_CODE) {
-            if (resultCode == RESULT_OK) {
-                beacons = (List<Beacon>) intent.getSerializableExtra(LIST_BEACON);
-                mBeacons = true;
-            }
-        }
     }
 }

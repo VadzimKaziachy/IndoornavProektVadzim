@@ -1,5 +1,7 @@
 package by.grsu.ftf.indoornav.db;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.PointF;
 
 import java.io.Serializable;
@@ -8,11 +10,12 @@ import java.io.Serializable;
 /**
  * Created by Vadzim on 13.11.2017.
  */
-
+@Entity(tableName = "Beacon")
 public class Beacon implements Serializable {
 
-
+    @PrimaryKey
     private Integer id;
+
     private String name;
     private String RSSI;
     private Float distance;
@@ -20,7 +23,7 @@ public class Beacon implements Serializable {
     private Float RSSIprogress;
     private Float x;
     private Float y;
-    private PointF coordinate;
+//    private PointF coordinate;
 
     public Float getRSSIprogress() {
         return RSSIprogress;
@@ -78,13 +81,13 @@ public class Beacon implements Serializable {
         this.RSSIprogress = RSSIprogress;
     }
 
-    public PointF getCoordinate() {
-        return coordinate;
-    }
-
-    public void setCoordinate(PointF coordinate) {
-        this.coordinate = coordinate;
-    }
+//    public PointF getCoordinate() {
+//        return coordinate;
+//    }
+//
+//    public void setCoordinate(PointF coordinate) {
+//        this.coordinate = coordinate;
+//    }
 
     public String getName() {
         return name;
