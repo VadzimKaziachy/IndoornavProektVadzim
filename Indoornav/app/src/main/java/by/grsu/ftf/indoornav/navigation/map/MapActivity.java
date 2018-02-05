@@ -40,7 +40,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     private PointF mDeviceCoordinate;
     private List<Beacon> beacons;
 
-    boolean mBound;
     private boolean mRecord = true;
 
     private Map map;
@@ -49,9 +48,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     private Trilateration mCoordinate;
     private BeaconMerger beaconMerger;
     private Beacon beacon;
-
-    public static final String LIST_BEACON = "LIST_BEACON";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,30 +58,32 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
 
         if (!MainActivity.isOnline(this) && savedInstanceState == null) {
             FragmentManager manager = getSupportFragmentManager();
-            InternetInquiryFragment interne = new InternetInquiryFragment();
-            interne.show(manager, DIALOG_INTERNET);
+            InternetInquiryFragment internet = new InternetInquiryFragment();
+            internet.show(manager, DIALOG_INTERNET);
         }
 
     }
 
     private void initComponent() {
 
-
-        beaconViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
-        beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
-            @Override
-            public void onChanged(@Nullable List<Beacon> mBeacon) {
-                beacons = mBeacon;
-            }
-        });
         distance = new Distance();
         beaconMerger = new BeaconMerger();
         mCoordinate = new Trilateration();
         map = (Map) findViewById(R.id.map);
 
-        if (beaconViewModel.getDeviceCoordinate() != null) {
-            mDeviceCoordinate = beaconViewModel.getDeviceCoordinate();
-        }
+        beaconViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
+
+        beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
+            @Override
+            public void onChanged(@Nullable List<Beacon> mBeacon) {
+                beacons = mBeacon;
+
+                if (beaconMerger.getBeacons().size() == 0) beaconMerger.putAll(beacons);
+
+                mDeviceCoordinate = new Trilateration().coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
+                map.provider(beacons, mDeviceCoordinate);
+            }
+        });
     }
 
     @Override
@@ -98,14 +96,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
                 List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
                 beaconViewModel.setBeaconCoordinate(mBeacon);
             }
-            map.provider(beacons, mDeviceCoordinate);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        beaconViewModel.setDeviceCoordinate(mDeviceCoordinate);
     }
 
 
@@ -116,18 +107,13 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
         Boolean flag = beaconMerger.put(beacon);
         beaconViewModel.beaconSort(beacon, flag);
-        beacons = beaconMerger.getBeacons();
-        mDeviceCoordinate = new Trilateration().coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
-
-        map.provider(beacons, mDeviceCoordinate);
-
     }
 
     private void coordinateRecord() {
         if (beaconViewModel.getBeaconCoordinate() != null && mRecord) {
             List<Beacon> mBeacon = distance.mCoordinate(beacons, beaconViewModel.getBeaconCoordinate());
             beaconMerger.putAll(mBeacon);
-            mDeviceCoordinate = new Trilateration().coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
+            beaconViewModel.updateList(mBeacon);
             mRecord = false;
         }
     }

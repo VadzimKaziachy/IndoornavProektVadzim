@@ -22,7 +22,6 @@ public class BeaconViewModel extends AndroidViewModel {
     private BeaconRepository repository;
 
     private List<Beacon> beaconCoordinate;
-    private PointF deviceCoordinate;
 
     public BeaconViewModel(@NonNull Application application) {
         super(application);
@@ -48,6 +47,10 @@ public class BeaconViewModel extends AndroidViewModel {
         }
     }
 
+    public void updateList(List<Beacon> beaconList){
+        repository.updateList(beaconList);
+    }
+
 
     public List<Beacon> getBeaconCoordinate() {
         return beaconCoordinate;
@@ -55,13 +58,5 @@ public class BeaconViewModel extends AndroidViewModel {
 
     public void setBeaconCoordinate(List<Beacon> beaconCoordinate) {
         this.beaconCoordinate = beaconCoordinate;
-    }
-
-    public PointF getDeviceCoordinate() {
-        return deviceCoordinate;
-    }
-
-    public void setDeviceCoordinate(PointF deviceCoordinate) {
-        this.deviceCoordinate = deviceCoordinate;
     }
 }

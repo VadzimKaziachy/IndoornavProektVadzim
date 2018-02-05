@@ -41,9 +41,6 @@ import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 
-import static by.grsu.ftf.indoornav.navigation.map.MapActivity.LIST_BEACON;
-
-
 /*
  * This class is the main, some kind of kernel program.
  * The program goes to the Bluetooth class at startup, which checks if Bluetooth is turned on.

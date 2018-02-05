@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity(tableName = "Beacon")
 public class Beacon implements Serializable {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
 
     private String name;
@@ -23,7 +23,6 @@ public class Beacon implements Serializable {
     private Float RSSIprogress;
     private Float x;
     private Float y;
-//    private PointF coordinate;
 
     public Float getRSSIprogress() {
         return RSSIprogress;
@@ -80,14 +79,6 @@ public class Beacon implements Serializable {
     public void setRSSIprogress(Float RSSIprogress) {
         this.RSSIprogress = RSSIprogress;
     }
-
-//    public PointF getCoordinate() {
-//        return coordinate;
-//    }
-//
-//    public void setCoordinate(PointF coordinate) {
-//        this.coordinate = coordinate;
-//    }
 
     public String getName() {
         return name;

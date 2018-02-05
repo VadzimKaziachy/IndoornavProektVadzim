@@ -52,4 +52,13 @@ public class BeaconRepository {
             }
         });
     }
+
+    public void updateList(final List<Beacon> beaconList) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                beaconDAO.updateList(beaconList);
+            }
+        });
+    }
 }

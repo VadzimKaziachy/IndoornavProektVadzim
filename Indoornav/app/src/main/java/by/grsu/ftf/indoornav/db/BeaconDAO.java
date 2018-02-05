@@ -24,6 +24,9 @@ public interface BeaconDAO {
     @Update
     void updateBeacon(Beacon beacon);
 
+    @Update
+    void updateList(List<Beacon> beaconList);
+
     @Insert
     void setBeacon(Beacon beacon);
 }
