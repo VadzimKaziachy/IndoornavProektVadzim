@@ -18,14 +18,11 @@ public class BeaconMerger {
     private Map<String, Beacon> mBeacon = new ArrayMap<>();
     private Map<Float, Beacon> beaconMap;
     private List<Beacon> beacons;
-    private int position;
 
-    public boolean put(Beacon beacon) {
-        boolean flag = mBeacon.containsKey(beacon.getName());
+    public int put(Beacon beacon) {
         this.mBeacon.put(beacon.getName(), beacon);
         this.beacons = new ArrayList<>(mBeacon.values());
-        position = beacons.indexOf(beacon);
-        return flag;
+        return beacons.indexOf(beacon);
     }
 
     public void putAll(Collection<Beacon> beacons) {
@@ -44,15 +41,6 @@ public class BeaconMerger {
             }
         }
         return new ArrayList<>(beaconMap.values());
-    }
-
-
-    public int getPosition() {
-        return position;
-    }
-
-    public List<Beacon> getBeacons() {
-        return new ArrayList<>(mBeacon.values());
     }
 }
 

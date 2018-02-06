@@ -39,15 +39,11 @@ public class BeaconViewModel extends AndroidViewModel {
         repository.deleteAll();
     }
 
-    public void beaconSort(Beacon beacon, boolean flag) {
-        if (flag) {
-            repository.updateBeacon(beacon);
-        } else {
-            repository.addBeacon(beacon);
-        }
+    public void beaconSort(Beacon beacon) {
+        repository.addBeacon(beacon);
     }
 
-    public void updateList(List<Beacon> beaconList){
+    public void updateList(List<Beacon> beaconList) {
         repository.updateList(beaconList);
     }
 

@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private List<Beacon> beacons;
     private int positionBeacon;
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
-    public static final String BEACON_MAP = "BEACON_MAP";
-    public static final String BEACON_COORDINATE = "BEACON_COORDINATE";
     public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
 
     int position = 0;
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private void gggg() {
         if (beacons != null) {
-            if(mMerger){
+            if (mMerger) {
                 beaconMerger.putAll(beacons);
                 mMerger = false;
             }
@@ -146,10 +144,9 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public void updateClient(List<String> list) {
         beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
-        Boolean flag = beaconMerger.put(beacon);
-        position = beaconMerger.getPosition();
-        
-        beaconViewModel.beaconSort(beacon, flag);
+        position = beaconMerger.put(beacon);
+
+        beaconViewModel.beaconSort(beacon);
     }
 
 

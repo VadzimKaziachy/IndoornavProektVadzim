@@ -22,11 +22,8 @@ public interface BeaconDAO {
     void deleteAll();
 
     @Update
-    void updateBeacon(Beacon beacon);
-
-    @Update
     void updateList(List<Beacon> beaconList);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void setBeacon(Beacon beacon);
 }

@@ -38,7 +38,7 @@ public class Map extends View {
 
         bluetooth_point = getResources().getDrawable(R.drawable.bluetooth_point);
         map = getResources().getDrawable(R.drawable.map);
-        human = getResources().getDrawable(R.drawable.ic_action_name);
+        human = getResources().getDrawable(R.drawable.ic_android);
 
     }
 

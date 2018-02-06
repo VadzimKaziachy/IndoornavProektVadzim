@@ -27,8 +27,6 @@ import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 import by.grsu.ftf.indoornav.util.Trilateration;
 
-import static by.grsu.ftf.indoornav.MainActivity.BEACON_COORDINATE;
-import static by.grsu.ftf.indoornav.MainActivity.BEACON_MAP;
 import static by.grsu.ftf.indoornav.MainActivity.DIALOG_INTERNET;
 
 /**
@@ -78,9 +76,8 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
             public void onChanged(@Nullable List<Beacon> mBeacon) {
                 beacons = mBeacon;
 
-                if (beaconMerger.getBeacons().size() == 0) beaconMerger.putAll(beacons);
-
-                mDeviceCoordinate = new Trilateration().coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
+                mDeviceCoordinate = new Trilateration()
+                        .coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
                 map.provider(beacons, mDeviceCoordinate);
             }
         });
@@ -105,14 +102,12 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         coordinateRecord();
 
         beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
-        Boolean flag = beaconMerger.put(beacon);
-        beaconViewModel.beaconSort(beacon, flag);
+        beaconViewModel.beaconSort(beacon);
     }
 
     private void coordinateRecord() {
         if (beaconViewModel.getBeaconCoordinate() != null && mRecord) {
             List<Beacon> mBeacon = distance.mCoordinate(beacons, beaconViewModel.getBeaconCoordinate());
-            beaconMerger.putAll(mBeacon);
             beaconViewModel.updateList(mBeacon);
             mRecord = false;
         }

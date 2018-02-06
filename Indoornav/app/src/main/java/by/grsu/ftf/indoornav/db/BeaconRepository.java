@@ -31,19 +31,6 @@ public class BeaconRepository {
         });
     }
 
-    public void updateBeacon(final Beacon beacon) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                beaconDAO.updateBeacon(beacon);
-            }
-        });
-    }
-
-    public LiveData<List<Beacon>> getAll() {
-        return beaconDAO.getAll();
-    }
-
     public void deleteAll() {
         executor.execute(new Runnable() {
             @Override
@@ -60,5 +47,9 @@ public class BeaconRepository {
                 beaconDAO.updateList(beaconList);
             }
         });
+    }
+
+    public LiveData<List<Beacon>> getAll() {
+        return beaconDAO.getAll();
     }
 }
