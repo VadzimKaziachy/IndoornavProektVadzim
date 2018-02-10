@@ -11,6 +11,7 @@ import by.grsu.ftf.indoornav.db.Beacon;
  */
 
 public class Distance {
+//    int a = 0;
 
     public Beacon distanceBeacon(List<String> LIST_BEACON, List<Beacon> mCoordinate) {
         Float DISTANCE, progressRSSI, RSSIprogress;
@@ -21,12 +22,14 @@ public class Distance {
 
         String name = LIST_BEACON.get(0);
         Integer id = Integer.parseInt(name.substring(2));
+//        Integer id = a++;
         float POWER = -65;
 
         DISTANCE = (float) Math.pow(10, (Float.valueOf(LIST_BEACON.get(1)) - POWER) / ((float) -10 * 3.2));
         progressRSSI = Math.abs((maxRSSI - Float.valueOf(LIST_BEACON.get(1))) / (maxRSSI - minRSSI));
         RSSIprogress = 240 * progressRSSI;
 
+        Log.d("Log", name + " = " + LIST_BEACON.get(1) + " = " + DISTANCE);
         beacon.setId(id);
         beacon.setName(name);
         beacon.setDistance(DISTANCE);

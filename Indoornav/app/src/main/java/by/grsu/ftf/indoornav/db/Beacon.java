@@ -2,9 +2,11 @@ package by.grsu.ftf.indoornav.db;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.graphics.PointF;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**

@@ -25,5 +25,6 @@ public interface BeaconDAO {
     void updateList(List<Beacon> beaconList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    @Insert
     void setBeacon(Beacon beacon);
 }
