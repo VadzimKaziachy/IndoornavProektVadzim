@@ -6,4 +6,5 @@
         необходимо поключение интеренета</string>
     <string name="title_dialog_fragment">Внимание</string>
     <string name="settings">настройки</string>
+    <string name="Administrator">Administrator</string>
 </resources>

@@ -9,8 +9,11 @@ import android.graphics.PointF;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 
 /**
@@ -19,9 +22,12 @@ import by.grsu.ftf.indoornav.storage.BeaconMerger;
 
 public class BeaconViewModel extends AndroidViewModel {
     private MutableLiveData<List<Beacon>> mBeacon;
+    private MutableLiveData<List<BeaconAdmin>> mBeaconAdmin;
     private BeaconRepository repository;
 
     private List<Beacon> beaconCoordinate;
+    private List<BeaconAdmin> mAdmin;
+    private Integer time;
 
     public BeaconViewModel(@NonNull Application application) {
         super(application);
@@ -33,6 +39,13 @@ public class BeaconViewModel extends AndroidViewModel {
             mBeacon = new MutableLiveData<>();
         }
         return repository.getAll();
+    }
+
+    public LiveData<List<BeaconAdmin>> getBeaconAdmin() {
+        if (mBeaconAdmin == null) {
+            mBeaconAdmin = new MutableLiveData<>();
+        }
+        return repository.getAllAdmin();
     }
 
     public void deleteAll() {
@@ -54,5 +67,34 @@ public class BeaconViewModel extends AndroidViewModel {
 
     public void setBeaconCoordinate(List<Beacon> beaconCoordinate) {
         this.beaconCoordinate = beaconCoordinate;
+    }
+
+    public void addBeaconAdmin(BeaconAdmin mBeaconAdmin) {
+        repository.addBeaconAdmin(mBeaconAdmin);
+    }
+
+    public void deleteBeaconAdminAll() {
+        repository.deleteBeaconAdminAll();
+    }
+
+    public void deleteBeaconAdmin(BeaconAdmin mBeacon){
+        repository.deleteBeaconAdmin(mBeacon);
+    }
+
+
+    public List<BeaconAdmin> getAdmin() {
+        return mAdmin;
+    }
+
+    public void setAdmin(List<BeaconAdmin> mAdmin) {
+        this.mAdmin = mAdmin;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
     }
 }

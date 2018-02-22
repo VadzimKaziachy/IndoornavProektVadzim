@@ -21,12 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="by.grsu.ftf.indoornav.beaconInfo.FragmentActivity">
-        </activity>
-        <activity
-            android:name="by.grsu.ftf.indoornav.navigation.map.MapActivity">
-        </activity>
+        <activity android:name="by.grsu.ftf.indoornav.beaconInfo.FragmentActivity" />
+        <activity android:name="by.grsu.ftf.indoornav.navigation.map.MapActivity" />
+        <activity android:name="by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity" />
+        <activity android:name="by.grsu.ftf.indoornav.administrator.activityEntry.EntryActivity"></activity>
     </application>
 
 </manifest>

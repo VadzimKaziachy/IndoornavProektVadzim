@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,10 +23,10 @@ import android.view.View;
 
 import com.example.indoornav.R;
 
-import java.io.Serializable;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
+import by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity;
 import by.grsu.ftf.indoornav.db.BeaconLifecycle;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
@@ -49,7 +48,7 @@ import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
 public class MainActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
 
     private RecyclerView recyclerView;
-    RecyclerView_Adapter recyclerView_adapter;
+    private RecyclerView_Adapter recyclerView_adapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private BeaconMerger beaconMerger = new BeaconMerger();
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private Beacon beacon;
     private List<Beacon> beacons;
     private int positionBeacon;
+
     public static final String BEACON_FRAGMENT = "BEACON_FRAGMENT";
     public static final String DIALOG_INTERNET = "DIALOG_INTERNET";
 
@@ -178,8 +178,11 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.meny_map:
+            case R.id.menu_map:
                 startActivity(new Intent(this, MapActivity.class));
+                return true;
+            case R.id.menu_administrator:
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

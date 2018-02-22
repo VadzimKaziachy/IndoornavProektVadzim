@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
+import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdminDAO;
+
 /**
  * Created by Vadzim on 03.02.2018.
  */
@@ -15,10 +18,12 @@ import java.util.concurrent.Executors;
 public class BeaconRepository {
 
     private final BeaconDAO beaconDAO;
+    private final BeaconAdminDAO beaconAdminDAO;
     private final Executor executor;
 
     public BeaconRepository(Context context) {
         beaconDAO = BeaconDatabase.getDatabase(context).beaconDAO();
+        beaconAdminDAO = BeaconDatabase.getDatabase(context).beaconAdminDAO();
         executor = Executors.newFixedThreadPool(2);
     }
 
@@ -51,5 +56,36 @@ public class BeaconRepository {
 
     public LiveData<List<Beacon>> getAll() {
         return beaconDAO.getAll();
+    }
+
+    public LiveData<List<BeaconAdmin>> getAllAdmin() {
+        return beaconAdminDAO.getAll();
+    }
+
+    public void addBeaconAdmin(final BeaconAdmin mBeacon) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                beaconAdminDAO.setBeacon(mBeacon);
+            }
+        });
+    }
+
+    public void deleteBeaconAdminAll() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                beaconAdminDAO.deleteBeaconAdminAll();
+            }
+        });
+    }
+
+    public void deleteBeaconAdmin(final BeaconAdmin mBeacon) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                beaconAdminDAO.deleteBeaconAdmin(mBeacon);
+            }
+        });
     }
 }
