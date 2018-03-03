@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.db;
+package by.grsu.ftf.indoornav.db.classesAssistant;
 
 import android.graphics.PointF;
 
@@ -7,8 +7,9 @@ import android.graphics.PointF;
  */
 
 public class DeviceCoordinate {
-    PointF coordinate;
-    Float distance;
+
+    private PointF coordinate;
+    private Float distance;
 
     public Float getDistance() {
         return distance;

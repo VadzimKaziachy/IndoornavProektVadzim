@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.indoornav.R;
 
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 
 /**
  * Created by Vadzim on 28.11.2017.

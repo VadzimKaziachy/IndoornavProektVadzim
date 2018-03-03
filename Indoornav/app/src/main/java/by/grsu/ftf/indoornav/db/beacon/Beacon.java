@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.db;
+package by.grsu.ftf.indoornav.db.beacon;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -25,6 +25,8 @@ public class Beacon implements Serializable {
     private Float RSSIprogress;
     private Float x;
     private Float y;
+    private boolean mFlagBeacon;
+
 
     public Float getRSSIprogress() {
         return RSSIprogress;
@@ -88,6 +90,14 @@ public class Beacon implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean getFlagBeacon() {
+        return mFlagBeacon;
+    }
+
+    public void setFlagBeacon(boolean mFlagBeacon) {
+        this.mFlagBeacon = mFlagBeacon;
     }
 }
 

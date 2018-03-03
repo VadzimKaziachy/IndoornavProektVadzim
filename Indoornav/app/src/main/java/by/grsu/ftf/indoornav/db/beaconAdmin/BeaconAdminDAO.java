@@ -9,7 +9,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 
 /**
  * Created by Vadzim on 17.02.2018.

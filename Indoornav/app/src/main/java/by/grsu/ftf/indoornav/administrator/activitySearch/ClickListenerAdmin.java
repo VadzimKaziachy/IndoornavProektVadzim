@@ -2,7 +2,7 @@ package by.grsu.ftf.indoornav.administrator.activitySearch;
 
 import android.view.View;
 
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 
 /**

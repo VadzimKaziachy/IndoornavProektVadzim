@@ -11,24 +11,29 @@ class BeaconSimulator {
     private ArrayList<String> list = new ArrayList<>();
 
     private Random random = new Random();
-
+    private int a3 = 0;
+    private int a4 = 10;
 
     ArrayList<String> getList() {
         Integer id;
         Integer rssi = null;
-        id = 10 - random.nextInt(10);
+        id = 4 - random.nextInt(4);
         switch (id) {
             case 1:
-                rssi = random.nextInt(5) - 35;
+//                rssi = random.nextInt(5) - 35;
+                rssi = -51;
                 break;
             case 2:
-                rssi = random.nextInt(5) - 40;
+//                rssi = random.nextInt(5) - 40;
+                rssi = -56;
                 break;
             case 3:
-                rssi = random.nextInt(5) - 50;
+//                rssi = random.nextInt(5) - 50;
+                rssi = -55 - a3++;
                 break;
             case 4:
-                rssi = random.nextInt(5) - 45;
+//                rssi = random.nextInt(5) - 45;
+                rssi = -55 - a4--;
                 break;
             case 5:
                 rssi = random.nextInt(5) - 75;

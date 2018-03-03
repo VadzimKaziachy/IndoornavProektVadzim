@@ -17,10 +17,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.BeaconLifecycle;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.MainActivity;
+import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
@@ -36,9 +37,11 @@ import static by.grsu.ftf.indoornav.MainActivity.DIALOG_INTERNET;
 public class MapActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
 
     private PointF mDeviceCoordinate;
+    private PointF mNewDeviceCoordinate;
     private List<Beacon> beacons;
 
     private boolean mRecord = true;
+    private boolean mFlagCor = true;
 
     private Map map;
     private BeaconViewModel beaconViewModel;
@@ -76,9 +79,20 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
             public void onChanged(@Nullable List<Beacon> mBeacon) {
                 beacons = mBeacon;
 
-                mDeviceCoordinate = new Trilateration()
-                        .coordinatesOfThePhone(beaconMerger.putAllBeaconMap(beacons));
-                map.provider(beacons, mDeviceCoordinate);
+                mNewDeviceCoordinate = new Trilateration()
+                        .mDeviceCoordinate(beaconMerger.putAllBeaconMap(beacons));
+
+                if (mFlagCor && mNewDeviceCoordinate != null) {
+                    mDeviceCoordinate = mNewDeviceCoordinate;
+                    mFlagCor = false;
+                }
+                if (mDeviceCoordinate == mNewDeviceCoordinate || mNewDeviceCoordinate == null) {
+                    map.provider(beacons, mNewDeviceCoordinate);
+                } else {
+                    map.coordinateDevice(beacons, mDeviceCoordinate, mNewDeviceCoordinate);
+                    mDeviceCoordinate = mNewDeviceCoordinate;
+                }
+
             }
         });
     }
@@ -90,7 +104,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         if (MainActivity.isOnline(this)) {
             if (beaconViewModel.getBeaconCoordinate() == null) {
                 DataBaseFireBase dataBase = new DataBaseFireBase();
-                List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
+                List<BeaconFireBase> mBeacon = dataBase.dataBaseFireBase(this);
                 beaconViewModel.setBeaconCoordinate(mBeacon);
             }
         }
@@ -102,7 +116,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         coordinateRecord();
 
         beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
-        beaconViewModel.beaconSort(beacon);
+        beaconViewModel.addBeacon(beacon);
     }
 
     private void coordinateRecord() {

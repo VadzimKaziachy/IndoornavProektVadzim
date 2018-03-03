@@ -20,11 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.example.indoornav.R;
-
 import java.util.List;
-
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity;
 import by.grsu.ftf.indoornav.db.BeaconLifecycle;
@@ -33,9 +30,10 @@ import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
 import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
+import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 import by.grsu.ftf.indoornav.navigation.map.MapActivity;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
@@ -146,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
         position = beaconMerger.put(beacon);
 
-        beaconViewModel.beaconSort(beacon);
+        beaconViewModel.addBeacon(beacon);
     }
 
 
@@ -164,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     private void dataBaseFireBase() {
         DataBaseFireBase dataBase = new DataBaseFireBase();
-        List<Beacon> mBeacon = dataBase.dataBaseFireBase(this);
+        List<BeaconFireBase> mBeacon = dataBase.dataBaseFireBase(this);
         beaconViewModel.setBeaconCoordinate(mBeacon);
     }
 

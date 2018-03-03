@@ -116,8 +116,11 @@ public class EntryActivity extends AppCompatActivity implements BeaconController
         for (BeaconAdmin beacon : mBeacon) {
             sum = sum + Float.valueOf(beacon.getRSSI());
         }
-        String a = String.valueOf(sum / mBeacon.size());
+        Float a = sum / mBeacon.size();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("Vadim").child("Beacon" + beacon.getName().substring(2)).child("r").setValue(a);
+        mDatabase.child("Vadim")
+                 .child("Beacon" + beacon.getName().substring(2))
+                 .child("base")
+                 .setValue(a);
     }
 }

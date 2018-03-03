@@ -1,12 +1,12 @@
 package by.grsu.ftf.indoornav.util;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import by.grsu.ftf.indoornav.db.Beacon;
-import by.grsu.ftf.indoornav.db.DeviceCoordinate;
+import by.grsu.ftf.indoornav.db.classesAssistant.DeviceCoordinate;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 
 /**
  * Created by Vadzim on 21.01.2018.
@@ -88,6 +88,14 @@ public class Trilateration {
         if (Float.isNaN(lon) && Float.isNaN(lat)) return null;
 
         return new PointF(lon, lat);
+    }
 
+    public PointF mDeviceCoordinate(List<Beacon> mBeacon){
+        for(Beacon b : mBeacon){
+            if(b.getFlagBeacon()){
+                return new PointF(b.getX(), b.getY());
+            }
+        }
+        return null;
     }
 }

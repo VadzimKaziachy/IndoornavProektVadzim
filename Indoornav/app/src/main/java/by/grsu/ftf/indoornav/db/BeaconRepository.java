@@ -3,11 +3,12 @@ package by.grsu.ftf.indoornav.db;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.BeaconDAO;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdminDAO;
 
@@ -24,7 +25,7 @@ public class BeaconRepository {
     public BeaconRepository(Context context) {
         beaconDAO = BeaconDatabase.getDatabase(context).beaconDAO();
         beaconAdminDAO = BeaconDatabase.getDatabase(context).beaconAdminDAO();
-        executor = Executors.newFixedThreadPool(2);
+        executor = Executors.newFixedThreadPool(1);
     }
 
     public void addBeacon(final Beacon beacon) {

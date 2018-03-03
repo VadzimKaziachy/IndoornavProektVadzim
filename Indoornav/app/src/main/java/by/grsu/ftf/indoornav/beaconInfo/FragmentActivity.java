@@ -2,7 +2,7 @@ package by.grsu.ftf.indoornav.beaconInfo;
 
 import android.app.Fragment;
 
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.MainActivity;
 
 /**

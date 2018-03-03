@@ -4,17 +4,12 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.graphics.PointF;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
-import by.grsu.ftf.indoornav.storage.BeaconMerger;
+import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 
 /**
  * Created by Vadzim on 12.12.2017.
@@ -25,7 +20,7 @@ public class BeaconViewModel extends AndroidViewModel {
     private MutableLiveData<List<BeaconAdmin>> mBeaconAdmin;
     private BeaconRepository repository;
 
-    private List<Beacon> beaconCoordinate;
+    private List<BeaconFireBase> beaconCoordinate;
     private List<BeaconAdmin> mAdmin;
     private Integer time;
 
@@ -52,7 +47,7 @@ public class BeaconViewModel extends AndroidViewModel {
         repository.deleteAll();
     }
 
-    public void beaconSort(Beacon beacon) {
+    public void addBeacon(Beacon beacon) {
         repository.addBeacon(beacon);
     }
 
@@ -61,11 +56,11 @@ public class BeaconViewModel extends AndroidViewModel {
     }
 
 
-    public List<Beacon> getBeaconCoordinate() {
+    public List<BeaconFireBase> getBeaconCoordinate() {
         return beaconCoordinate;
     }
 
-    public void setBeaconCoordinate(List<Beacon> beaconCoordinate) {
+    public void setBeaconCoordinate(List<BeaconFireBase> beaconCoordinate) {
         this.beaconCoordinate = beaconCoordinate;
     }
 

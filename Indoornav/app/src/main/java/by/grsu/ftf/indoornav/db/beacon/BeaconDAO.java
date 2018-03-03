@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.db;
+package by.grsu.ftf.indoornav.db.beacon;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

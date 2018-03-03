@@ -51,7 +51,7 @@ public class BeaconControllerService extends Service {
             } else {
                 startScan();
             }
-            mHandler.postDelayed(this, 200);
+            mHandler.postDelayed(this, 1000);
         }
     };
 

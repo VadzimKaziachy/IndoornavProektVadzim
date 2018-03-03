@@ -8,11 +8,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.BeaconDatabase;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
+import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 
 /**
  * Created by Vadzim on 17.01.2018.
@@ -20,19 +21,22 @@ import by.grsu.ftf.indoornav.db.Beacon;
 
 public class DataBaseFireBase {
 
-    public List<Beacon> dataBaseFireBase(final Context context) {
+    public List<BeaconFireBase> dataBaseFireBase(final Context context) {
 
-        final List<Beacon> mBeacon = new ArrayList<>();
+        final List<BeaconFireBase> mBeacon = new ArrayList<>();
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("Vadim").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
-                    Beacon beacon = new Beacon();
+                    BeaconFireBase beacon = new BeaconFireBase();
                     beacon.setName(dataSh.child("id").getValue(String.class));
                     beacon.setX(dataSh.child("X").getValue(Float.class));
                     beacon.setY(dataSh.child("Y").getValue(Float.class));
+                    if(dataSh.child("base").exists()){
+                        beacon.setMaxDist(dataSh.child("base").getValue(Float.class));
+                    }
                     mBeacon.add(beacon);
                 }
             }

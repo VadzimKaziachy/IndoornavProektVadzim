@@ -1,14 +1,11 @@
 package by.grsu.ftf.indoornav.storage;
 
 import android.util.ArrayMap;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import by.grsu.ftf.indoornav.db.Beacon;
+import by.grsu.ftf.indoornav.db.beacon.Beacon;
 
 /**
  * Created by Вадим on 10.09.2017.
@@ -37,10 +34,11 @@ public class BeaconMerger {
         beaconMap = new ArrayMap<>();
         if (beacons != null) {
             for (Beacon beacon : beacons) {
-                beaconMap.put(beacon.getDistance(), beacon);
+                beaconMap.put(Float.valueOf(beacon.getRSSI()), beacon);
             }
         }
         return new ArrayList<>(beaconMap.values());
     }
+
 }
 
