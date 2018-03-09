@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <Button
+        android:id="@+id/startFragment2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Fragment1"
+        tools:text="startFragment2" />
+
+</android.support.constraint.ConstraintLayout>

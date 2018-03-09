@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.administrator.activitySearch;
+package by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin;
 
 import android.view.View;
 

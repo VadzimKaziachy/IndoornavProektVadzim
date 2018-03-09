@@ -1,158 +1,81 @@
 package by.grsu.ftf.indoornav.administrator.activitySearch;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.ArrayMap;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.indoornav.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.administrator.ConnectionService;
-import by.grsu.ftf.indoornav.administrator.activityEntry.EntryActivity;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin.ButtonFragment;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin.StartFragment2;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_2_Admin.SearchFragment;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_2_Admin.StartFragment3;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin.ListFragment;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 
-public class SearchActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
+public class SearchActivity extends AppCompatActivity implements BeaconControllerService.Callbacks, StartFragment2, StartFragment3 {
 
-    private Button button;
-    private TextView textView;
     private BeaconViewModel mViewModel;
-    private Admin_RecyclerView mRecycler;
-    private RecyclerView.LayoutManager mManager;
-    private RecyclerView recyclerView;
-    private List<BeaconAdmin> mBeacon;
-    private ConnectionService mConnect;
-    private Integer time;
-    private BeaconAdmin mBeaconAdmin;
-    public static final String BEACON_INFO = "BEACON_INFO";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        initViews();
-
+        if (savedInstanceState == null) {
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = fm.findFragmentById(R.id.activity_admin);
+            if (fragment == null) {
+                fragment = new ButtonFragment().newInstance();
+                fm.beginTransaction()
+                        .add(R.id.activity_admin, fragment)
+                        .commit();
+            }
+        }
         room(savedInstanceState);
-        connectionService();
-        adapter();
-
-        clickListener();
     }
 
-    private void initViews() {
-        button = (Button) findViewById(R.id.button2);
-        textView = (TextView) findViewById(R.id.textView);
-        recyclerView = (RecyclerView) findViewById(R.id.adminRecyclerView);
-
-        mBeacon = new ArrayList<>();
-        time = 5;
-    }
-
-    private void room(Bundle savedInstanceState){
+    private void room(Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
-        if(savedInstanceState == null ){
+        if (savedInstanceState == null) {
             mViewModel.deleteBeaconAdminAll();
         }
-        mViewModel.getBeaconAdmin().observe(this, new Observer<List<BeaconAdmin>>() {
-            @Override
-            public void onChanged(@Nullable List<BeaconAdmin> beacon) {
-                mBeacon = beacon;
-                notifyAdapter();
-            }
-        });
     }
-
-    private void connectionService() {
-        mConnect = new ConnectionService();
-        mConnect.mConnection(this);
-    }
-
-    private void adapter() {
-        recyclerView.setHasFixedSize(true);
-        mManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(mManager);
-        mRecycler = new Admin_RecyclerView();
-        recyclerView.setAdapter(mRecycler);
-        mRecycler.setOnItemClickListener(new ClickListenerAdmin() {
-            @Override
-            public void onItemClick(BeaconAdmin beacon, View view) {
-                Intent intent = new Intent(SearchActivity.this, EntryActivity.class);
-                intent.putExtra(BEACON_INFO, beacon);
-                startActivity(intent);
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mViewModel.getTime() != null && mViewModel.getTime() != 1) {
-            time = mViewModel.getTime();
-            timerBeacon();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mConnect.unBindService();
-    }
-
-    private void clickListener() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               timerBeacon();
-            }
-        });
-    }
-
 
     @Override
     public void updateClient(List<String> list) {
-        mBeaconAdmin = new BeaconAdmin();
+        BeaconAdmin mBeaconAdmin = new BeaconAdmin();
         mBeaconAdmin.setId(Integer.parseInt(list.get(0).substring(2)));
         mBeaconAdmin.setName(list.get(0));
         mBeaconAdmin.setRSSI(list.get(1));
         mViewModel.addBeaconAdmin(mBeaconAdmin);
-
     }
 
-    private void notifyAdapter() {
-        mRecycler.setBeacon(mBeacon);
-        mRecycler.notifyDataSetChanged();
+    @Override
+    public void mStartFragment2() {
+        Fragment startFragment = SearchFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.activity_admin, startFragment);
+        ft.commit();
     }
 
-    private void timerBeacon(){
-        mConnect.bindService();
-        new CountDownTimer(5 * 1000, 1000) {
-
-            @Override
-            public void onTick(long l) {
-                mViewModel.setTime((int) (l / 1000));
-                textView.setText("осталась = " + l / 1000);
-            }
-
-            @Override
-            public void onFinish() {
-                textView.setText("конец");
-                mConnect.unBindService();
-            }
-        }.start();
+    @Override
+    public void mStartFragment3() {
+        Fragment fragment = ListFragment.newInstance();
+        Log.d("Log", "fragment = "+ fragment);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Log.d("Log", "fragmentManager = "+ fragmentManager);
+        FragmentTransaction fm = fragmentManager.beginTransaction();
+        Log.d("Log", "fm = "+ fm);
+        fm.replace(R.id.activity_admin, fragment);
+        fm.commit();
     }
 }
