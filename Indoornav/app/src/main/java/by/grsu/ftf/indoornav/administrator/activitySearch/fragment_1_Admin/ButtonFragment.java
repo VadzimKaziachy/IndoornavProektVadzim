@@ -17,20 +17,20 @@ import com.example.indoornav.R;
 
 public class ButtonFragment extends Fragment {
 
-    private Button startFragment2;
     private StartFragment2 startFragment;
+    private ButtonView mButtonView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_1_admin, container, false);
-        startFragment2 = (Button) view.findViewById(R.id.startFragment2);
+        mButtonView = (ButtonView) view.findViewById(R.id.buttonView);
         clickListener();
         return view;
     }
 
     private void clickListener(){
-        startFragment2.setOnClickListener(new View.OnClickListener() {
+        mButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startFragment.mStartFragment2();
