@@ -2,11 +2,11 @@ package by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +18,6 @@ import com.example.indoornav.R;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.administrator.activityEntry.EntryActivity;
-import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin.ButtonFragment;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 
@@ -27,10 +26,12 @@ import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
  */
 
 public class ListFragment extends Fragment {
+
     private Admin_RecyclerView mRecyclerView;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mManager;
     private BeaconViewModel mViewModel;
+    private StartFragment1 startFragment;
     public static final String BEACON_INFO = "BEACON_INFO";
 
     @Nullable
@@ -48,20 +49,14 @@ public class ListFragment extends Fragment {
         mViewModel.getBeaconAdmin().observe(this, new Observer<List<BeaconAdmin>>() {
             @Override
             public void onChanged(@Nullable List<BeaconAdmin> mBeacon) {
-                if(mBeacon.size() == 0){
-                    startFragment3();
+                if(mBeacon != null && mBeacon.size() == 0){
+                    startFragment.mStartFragment1();
                 } else {
                     mRecyclerView.setBeacon(mBeacon);
                     mRecyclerView.notifyDataSetChanged();
                 }
             }
         });
-    }
-    private void startFragment3(){
-        Fragment fragment = ButtonFragment.newInstance();
-        FragmentTransaction fm = getFragmentManager().beginTransaction();
-        fm.replace(R.id.activity_admin, fragment);
-        fm.commit();
     }
 
     private void adapter() {
@@ -85,5 +80,15 @@ public class ListFragment extends Fragment {
         ListFragment fragment = new ListFragment();
         fragment.setArguments(arg);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            startFragment = (StartFragment1) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement StartFragment1");
+        }
     }
 }

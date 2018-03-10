@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +14,6 @@ import android.view.ViewGroup;
 import com.example.indoornav.R;
 
 import by.grsu.ftf.indoornav.administrator.ConnectionService;
-import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin.StartFragment2;
-import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin.ListFragment;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 
 /**
@@ -32,6 +28,7 @@ public class SearchFragment extends Fragment {
     private Integer time;
     private TimerView timerView;
     private StartFragment3 startFragment;
+    private MyCountDownTimer myCountDownTimer;
 
 
     @Nullable
@@ -47,13 +44,12 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
         room();
         connectionService();
     }
 
     private void room() {
-//        mViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
     }
 
 
@@ -65,46 +61,30 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        if (mViewModel.getTime() != null && mViewModel.getTime() != 1) {
-//            time = mViewModel.getTime();
-            timerBeacon();
-//        }
+        if (mViewModel.getTime() != null) {
+            if (mViewModel.getTime() != 1) {
+                time = mViewModel.getTime();
+                timerBeacon();
+            } else {
+                startFragment.mStartFragment3();
+            }
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mConnect.unBindService();
+        if (myCountDownTimer != null) {
+            myCountDownTimer.cancel();
+        }
     }
 
     private void timerBeacon() {
         mConnect.bindService();
-//        timerView.setTimerView(time);
-        new CountDownTimer(5 * 1000, 1000) {
-
-            @Override
-            public void onTick(long l) {
-//                mViewModel.setTime((int) (l / 1000));
-                timerView.tim((int) (l / 1000));
-            }
-
-            @Override
-            public void onFinish() {
-                mConnect.unBindService();
-                timerView.mFlag(false);
-                startFragment.mStartFragment3();
-//                startFragment3();
-            }
-        }.start();
-    }
-
-
-    private void startFragment3() {
-        Fragment fragment = ListFragment.newInstance();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fm = fragmentManager.beginTransaction();
-        fm.replace(R.id.activity_admin, fragment);
-        fm.commit();
+        timerView.setTimerView(time);
+        myCountDownTimer = new MyCountDownTimer(time * 1000, 1000);
+        myCountDownTimer.start();
     }
 
     public static SearchFragment newInstance() {
@@ -120,7 +100,27 @@ public class SearchFragment extends Fragment {
         try {
             startFragment = (StartFragment3) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
+            throw new ClassCastException(context.toString() + " must implement StartFragment3");
+        }
+    }
+
+    private class MyCountDownTimer extends CountDownTimer {
+
+        MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+            mViewModel.setTime((int) (l / 1000));
+            timerView.tim((int) (l / 1000));
+        }
+
+        @Override
+        public void onFinish() {
+            mConnect.unBindService();
+            timerView.mFlag(false);
+            startFragment.mStartFragment3();
         }
     }
 }

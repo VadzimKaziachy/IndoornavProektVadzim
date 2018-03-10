@@ -16,6 +16,7 @@ import com.example.indoornav.R;
  */
 
 public class ButtonFragment extends Fragment {
+
     private Button startFragment2;
     private StartFragment2 startFragment;
 
@@ -23,7 +24,6 @@ public class ButtonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_1_admin, container, false);
-//        setRetainInstance(true);
         startFragment2 = (Button) view.findViewById(R.id.startFragment2);
         clickListener();
         return view;
@@ -51,7 +51,7 @@ public class ButtonFragment extends Fragment {
         try {
             startFragment = (StartFragment2) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement onSomeEventListener");
+            throw new ClassCastException(context.toString() + " must implement StartFragment2");
         }
     }
 }

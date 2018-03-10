@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.example.indoornav.R;
 
@@ -18,10 +17,14 @@ import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin.Start
 import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_2_Admin.SearchFragment;
 import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_2_Admin.StartFragment3;
 import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin.ListFragment;
+import by.grsu.ftf.indoornav.administrator.activitySearch.fragment_3_admin.StartFragment1;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beaconAdmin.BeaconAdmin;
 
-public class SearchActivity extends AppCompatActivity implements BeaconControllerService.Callbacks, StartFragment2, StartFragment3 {
+public class SearchActivity extends AppCompatActivity implements BeaconControllerService.Callbacks,
+        StartFragment1,
+        StartFragment2,
+        StartFragment3 {
 
     private BeaconViewModel mViewModel;
 
@@ -31,14 +34,12 @@ public class SearchActivity extends AppCompatActivity implements BeaconControlle
         setContentView(R.layout.activity_admin);
         if (savedInstanceState == null) {
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = fm.findFragmentById(R.id.activity_admin);
-            if (fragment == null) {
-                fragment = new ButtonFragment().newInstance();
-                fm.beginTransaction()
-                        .add(R.id.activity_admin, fragment)
-                        .commit();
-            }
+            Fragment fragment = ButtonFragment.newInstance();
+            fm.beginTransaction()
+                    .add(R.id.activity_admin, fragment)
+                    .commit();
         }
+
         room(savedInstanceState);
     }
 
@@ -59,10 +60,17 @@ public class SearchActivity extends AppCompatActivity implements BeaconControlle
     }
 
     @Override
+    public void mStartFragment1() {
+        Fragment fragment = ButtonFragment.newInstance();
+        FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
+        fm.replace(R.id.activity_admin, fragment);
+        fm.commit();
+    }
+
+    @Override
     public void mStartFragment2() {
         Fragment startFragment = SearchFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.activity_admin, startFragment);
         ft.commit();
     }
@@ -70,11 +78,7 @@ public class SearchActivity extends AppCompatActivity implements BeaconControlle
     @Override
     public void mStartFragment3() {
         Fragment fragment = ListFragment.newInstance();
-        Log.d("Log", "fragment = "+ fragment);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Log.d("Log", "fragmentManager = "+ fragmentManager);
-        FragmentTransaction fm = fragmentManager.beginTransaction();
-        Log.d("Log", "fm = "+ fm);
+        FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
         fm.replace(R.id.activity_admin, fragment);
         fm.commit();
     }

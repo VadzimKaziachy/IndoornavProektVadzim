@@ -5,5 +5,5 @@ package by.grsu.ftf.indoornav.administrator.activitySearch.fragment_1_Admin;
  */
 
 public interface StartFragment2 {
-    public void mStartFragment2();
+    void mStartFragment2();
 }
