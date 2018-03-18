@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornav.navigation.map;
+package by.grsu.ftf.indoornav.navigation.map.fragment_2_map;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -28,7 +28,7 @@ import by.grsu.ftf.indoornav.db.beacon.Beacon;
 
 public class Map extends View {
 
-    private Boolean mCoordinate;
+    private Boolean mCoordinate = false;
     private Drawable bluetooth_point;
     private Drawable map;
     private Drawable human;
@@ -44,7 +44,7 @@ public class Map extends View {
     public Map(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        bluetooth_point = getResources().getDrawable(R.drawable.bluetooth_point);
+        bluetooth_point = getResources().getDrawable(R.drawable.ic_bluetooth_point);
         map = getResources().getDrawable(R.drawable.map);
         human = getResources().getDrawable(R.drawable.ic_android);
         init();
@@ -60,25 +60,26 @@ public class Map extends View {
     protected void onDraw(Canvas canvas) {
         map.draw(canvas);
 
-        if (mCoordinate) {
-            Integer x = Math.round(X * canvas.getWidth());
-            Integer y = Math.round(Y * canvas.getHeight());
-            human.setBounds(x - 50, y - 50, x + 50, y + 50);
-            human.draw(canvas);
-        }
         for (Beacon beacon : beacons) {
             if (beacon.getX() != null) {
                 Integer x = Math.round(beacon.getX() * canvas.getWidth());
                 Integer y = Math.round(beacon.getY() * canvas.getHeight());
                 bluetooth_point.setBounds(x - 50, y - 50, x + 50, y + 50);
                 bluetooth_point.draw(canvas);
-                if(canvas.getWidth()<canvas.getHeight()){
+                if (canvas.getWidth() < canvas.getHeight()) {
                     canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getWidth(), paint);
                 } else {
                     canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getHeight(), paint);
                 }
 
             }
+        }
+
+        if (mCoordinate) {
+            Integer x = Math.round(X * canvas.getWidth());
+            Integer y = Math.round(Y * canvas.getHeight());
+            human.setBounds(x - 50, y - 50, x + 50, y + 50);
+            human.draw(canvas);
         }
     }
 
@@ -116,7 +117,7 @@ public class Map extends View {
         PropertyValuesHolder y = PropertyValuesHolder.ofFloat("y", start.y, stop.y);
         ValueAnimator xy = new ValueAnimator();
         xy.setValues(x, y);
-        xy.setDuration(1000);
+        xy.setDuration(190);
         xy.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {

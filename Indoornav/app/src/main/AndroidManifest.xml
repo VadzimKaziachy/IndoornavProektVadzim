@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="by.grsu.ftf.indoornav.MainActivity">
+        <activity android:name="by.grsu.ftf.indoornav.navigation.map.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="by.grsu.ftf.indoornav.beaconInfo.FragmentActivity" />
-        <activity android:name="by.grsu.ftf.indoornav.navigation.map.MapActivity" />
+        <activity android:name="by.grsu.ftf.indoornav.MainActivity" />
         <activity android:name="by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity" />
         <activity android:name="by.grsu.ftf.indoornav.administrator.activityEntry.EntryActivity"></activity>
     </application>

@@ -1,6 +1,8 @@
 package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -8,11 +10,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import by.grsu.ftf.indoornav.db.BeaconDatabase;
-import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 
 /**
@@ -20,6 +21,17 @@ import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
  */
 
 public class DataBaseFireBase {
+
+
+    public interface Callback {
+        void mCallingBack(List<BeaconFireBase> mBeacon);
+    }
+
+    private Callback callback;
+
+    public DataBaseFireBase(Callback callback) {
+        this.callback = callback;
+    }
 
     public List<BeaconFireBase> dataBaseFireBase(final Context context) {
 
@@ -34,7 +46,7 @@ public class DataBaseFireBase {
                     beacon.setName(dataSh.child("id").getValue(String.class));
                     beacon.setX(dataSh.child("X").getValue(Float.class));
                     beacon.setY(dataSh.child("Y").getValue(Float.class));
-                    if(dataSh.child("base").exists()){
+                    if (dataSh.child("base").exists()) {
                         beacon.setMaxDist(dataSh.child("base").getValue(Float.class));
                     }
                     mBeacon.add(beacon);
@@ -46,6 +58,7 @@ public class DataBaseFireBase {
                 Toast.makeText(context, "нет покдлючения к интернету", Toast.LENGTH_LONG).show();
             }
         });
+        callback.mCallingBack(mBeacon);
         return mBeacon;
     }
 }

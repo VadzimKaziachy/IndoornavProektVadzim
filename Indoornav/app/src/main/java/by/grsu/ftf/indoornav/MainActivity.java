@@ -16,24 +16,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.example.indoornav.R;
+
 import java.util.List;
+
 import by.grsu.ftf.beaconlib.BeaconControllerService;
-import by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity;
-import by.grsu.ftf.indoornav.db.BeaconLifecycle;
-import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.adapter.ClickListener;
 import by.grsu.ftf.indoornav.adapter.RecyclerView_Adapter;
+import by.grsu.ftf.indoornav.administrator.activitySearch.SearchActivity;
 import by.grsu.ftf.indoornav.beaconInfo.BeaconFragment;
 import by.grsu.ftf.indoornav.beaconInfo.FragmentActivity;
-import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
-import by.grsu.ftf.indoornav.navigation.map.MapActivity;
-import by.grsu.ftf.indoornav.storage.BeaconMerger;
+import by.grsu.ftf.indoornav.db.BeaconLifecycle;
+import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beacon.Beacon;
+import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
+import by.grsu.ftf.indoornav.storage.BeaconMerger;
 import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
@@ -43,7 +46,8 @@ import by.grsu.ftf.indoornav.util.InternetInquiryFragment;
  * The program goes to the Bluetooth class at startup, which checks if Bluetooth is turned on.
  */
 
-public class MainActivity extends AppCompatActivity implements BeaconControllerService.Callbacks {
+public class MainActivity extends AppCompatActivity implements BeaconControllerService.Callbacks,
+                                                               DataBaseFireBase.Callback {
 
     private RecyclerView recyclerView;
     private RecyclerView_Adapter recyclerView_adapter;
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
         if (savedInstanceState == null) {
             dataBaseFireBase();
-            beaconViewModel.deleteAll();
         }
 
         beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
@@ -161,24 +164,22 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     }
 
     private void dataBaseFireBase() {
-        DataBaseFireBase dataBase = new DataBaseFireBase();
-        List<BeaconFireBase> mBeacon = dataBase.dataBaseFireBase(this);
-        beaconViewModel.setBeaconCoordinate(mBeacon);
+        DataBaseFireBase dataBase = new DataBaseFireBase(this);
+        dataBase.dataBaseFireBase(this);
+//        List<BeaconFireBase> mBeacon = dataBase.dataBaseFireBase(this);
+//        beaconViewModel.setBeaconCoordinate(mBeacon);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_map, menu);
+        inflater.inflate(R.menu.menu_main_activity, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_map:
-                startActivity(new Intent(this, MapActivity.class));
-                return true;
             case R.id.menu_administrator:
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
@@ -195,5 +196,12 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void mCallingBack(List<BeaconFireBase> mBeacon) {
+        Log.d("Log", "скачались данные пришли " + mBeacon);
+        beaconViewModel.setBeaconCoordinate(mBeacon);
+        Log.d("Log", "скачались данные спомощью Callback");
     }
 }

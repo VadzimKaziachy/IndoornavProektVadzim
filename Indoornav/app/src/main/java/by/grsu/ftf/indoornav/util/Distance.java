@@ -13,7 +13,6 @@ import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 
 public class Distance {
 //    int a = 0;
-
     public Beacon distanceBeacon(List<String> LIST_BEACON, List<BeaconFireBase> mCoordinate) {
         Float DISTANCE, progressRSSI, RSSIprogress;
         Float maxRSSI = -35f;

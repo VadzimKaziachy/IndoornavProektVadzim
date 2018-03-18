@@ -10,6 +10,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import javax.security.auth.callback.Callback;
+
 import by.grsu.ftf.beaconlib.BeaconControllerService;
 import by.grsu.ftf.indoornav.MainActivity;
 

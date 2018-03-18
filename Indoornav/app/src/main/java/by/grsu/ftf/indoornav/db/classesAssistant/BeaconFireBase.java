@@ -20,7 +20,6 @@ public class BeaconFireBase {
     }
 
     public Float getY() {
-
         return y;
     }
 
@@ -29,7 +28,6 @@ public class BeaconFireBase {
     }
 
     public Float getX() {
-
         return x;
     }
 
