@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
         }
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
