@@ -64,6 +64,7 @@ public class SearchFragment extends Fragment {
         if (mViewModel.getTime() != null) {
             if (mViewModel.getTime() != 1) {
                 time = mViewModel.getTime();
+                timerView.setAngle(mViewModel.getAngle());
                 timerBeacon();
             } else {
                 startFragment.mStartFragment3();
@@ -114,6 +115,7 @@ public class SearchFragment extends Fragment {
         public void onTick(long l) {
             mViewModel.setTime((int) (l / 1000));
             timerView.tim((int) (l / 1000));
+            mViewModel.setAngle(timerView.getAngle());
         }
 
         @Override

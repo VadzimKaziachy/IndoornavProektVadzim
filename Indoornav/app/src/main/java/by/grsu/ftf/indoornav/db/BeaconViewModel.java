@@ -23,6 +23,7 @@ public class BeaconViewModel extends AndroidViewModel {
     private List<BeaconFireBase> beaconCoordinate;
     private List<BeaconAdmin> mAdmin;
     private Integer time;
+    private Integer angle;
 
     public BeaconViewModel(@NonNull Application application) {
         super(application);
@@ -91,5 +92,13 @@ public class BeaconViewModel extends AndroidViewModel {
 
     public void setTime(Integer time) {
         this.time = time;
+    }
+
+    public Integer getAngle() {
+        return angle;
+    }
+
+    public void setAngle(Integer angle) {
+        this.angle = angle;
     }
 }

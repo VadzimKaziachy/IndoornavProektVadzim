@@ -21,6 +21,7 @@ import com.example.indoornav.R;
  */
 
 public class TimerView extends View {
+
     private int X;
     private int Y;
     private int x;
@@ -87,8 +88,10 @@ public class TimerView extends View {
         paint.setColor(ContextCompat.getColor(context, R.color.borderHigh));
         paint.setStyle(Paint.Style.STROKE);
 
-        paintG.setColor(ContextCompat.getColor(context, R.color.green_600));
+        paintG.setAntiAlias(true);
         paintG.setStyle(Paint.Style.STROKE);
+        paintG.setStrokeCap(Paint.Cap.ROUND);
+        paintG.setColor(ContextCompat.getColor(context, R.color.green_600));
 
         paintT.setColor(Color.BLACK);
         paintT.setAntiAlias(true);
@@ -96,7 +99,7 @@ public class TimerView extends View {
     }
 
     public void setTimerView(int time) {
-        final ValueAnimator animator = ValueAnimator.ofInt(0, 360);
+        final ValueAnimator animator = ValueAnimator.ofInt(angle, 360);
         animator.setDuration(time * 1000);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -117,5 +120,13 @@ public class TimerView extends View {
     public void mFlag(boolean mFlag) {
         this.mFlag = mFlag;
         invalidate();
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
     }
 }
