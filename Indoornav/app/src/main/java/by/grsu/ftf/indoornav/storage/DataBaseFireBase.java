@@ -38,7 +38,7 @@ public class DataBaseFireBase {
         final List<BeaconFireBase> mBeacon = new ArrayList<>();
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child("Vadim").addValueEventListener(new ValueEventListener() {
+        myRef.child("Vadim").child("Beacon").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {

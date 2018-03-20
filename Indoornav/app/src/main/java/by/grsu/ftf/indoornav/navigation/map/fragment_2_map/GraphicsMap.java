@@ -29,7 +29,7 @@ import by.grsu.ftf.indoornav.util.Trilateration;
  * Created by Vadzim on 17.03.2018.
  */
 
-public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback{
+public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback {
 
     private Map map;
     private BeaconViewModel beaconViewModel;
@@ -62,7 +62,7 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback{
         distance = new Distance();
     }
 
-    private void room(){
+    private void room() {
         beaconViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
         beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
             @Override
@@ -72,12 +72,20 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback{
                 mNewDeviceCoordinate = new Trilateration()
                         .mDeviceCoordinate(beaconMerger.putAllBeaconMap(mBeacons));
 
+
                 if (mFlagCor && mNewDeviceCoordinate != null) {
                     mDeviceCoordinate = mNewDeviceCoordinate;
                     mFlagCor = false;
                 }
-                if (mDeviceCoordinate == mNewDeviceCoordinate || mNewDeviceCoordinate == null) {
+
+                if (mDeviceCoordinate == mNewDeviceCoordinate) {
                     map.provider(mBeacons, mNewDeviceCoordinate);
+                } else if (mNewDeviceCoordinate == null && mDeviceCoordinate != null) {
+                    map.provider(mBeacons, null);
+                    mDeviceCoordinate = null;
+                } else if (mDeviceCoordinate == null && mNewDeviceCoordinate != null) {
+                    map.provider(mBeacons, mNewDeviceCoordinate);
+                    mDeviceCoordinate = mNewDeviceCoordinate;
                 } else {
                     map.coordinateDevice(mBeacons, mDeviceCoordinate, mNewDeviceCoordinate);
                     mDeviceCoordinate = mNewDeviceCoordinate;
@@ -103,7 +111,7 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback{
         mCallbackCoordin.callbackCoordin(mBeacon);
     }
 
-    public static GraphicsMap newInstance(){
+    public static GraphicsMap newInstance() {
         Bundle arg = new Bundle();
         GraphicsMap fragment = new GraphicsMap();
         fragment.setArguments(arg);

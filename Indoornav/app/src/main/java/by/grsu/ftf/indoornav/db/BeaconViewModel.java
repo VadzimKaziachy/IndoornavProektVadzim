@@ -24,6 +24,7 @@ public class BeaconViewModel extends AndroidViewModel {
     private List<BeaconAdmin> mAdmin;
     private Integer time;
     private Integer angle;
+    private List<String> List_zal;
 
     public BeaconViewModel(@NonNull Application application) {
         super(application);
@@ -100,5 +101,13 @@ public class BeaconViewModel extends AndroidViewModel {
 
     public void setAngle(Integer angle) {
         this.angle = angle;
+    }
+
+    public List<String> getList_zal() {
+        return List_zal;
+    }
+
+    public void setList_zal(List<String> list_zal) {
+        List_zal = list_zal;
     }
 }
