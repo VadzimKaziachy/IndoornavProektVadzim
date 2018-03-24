@@ -25,15 +25,6 @@ public class Map_RecyclerView extends RecyclerView.Adapter<Map_RecyclerView.View
     private List<String> list_hall;
     private static ClickListenerMap click;
 
-    public Map_RecyclerView() {
-        list_hall = new ArrayList<>();
-        list_hall.add("зал A");
-        list_hall.add("зал Б");
-        list_hall.add("зал В");
-        list_hall.add("зал Г");
-        list_hall.add("зал Д");
-        notifyDataSetChanged();
-    }
 
     public void setList_hall(List<String> mList_hall){
         this.list_hall = mList_hall;

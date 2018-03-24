@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.indoornav.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.MainActivity;
@@ -27,7 +28,7 @@ import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
  * Created by Vadzim on 17.03.2018.
  */
 
-public class ListMap extends Fragment implements DataBaseFireBaseFragmentMap.Callback {
+public class ListMap extends Fragment  {
 
     private Map_RecyclerView mMapRecyclerView;
     private RecyclerView recyclerView;
@@ -58,18 +59,15 @@ public class ListMap extends Fragment implements DataBaseFireBaseFragmentMap.Cal
                 startFragment.startFragment2();
             }
         });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (isOnline(getContext())) {
-            if (beaconViewModel.getList_zal() == null) {
-                DataBaseFireBaseFragmentMap dataBase = new DataBaseFireBaseFragmentMap(this);
-                dataBase.dataBaseFireBase(getContext());
-            }
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            ArrayList<String> list_zal = bundle.getStringArrayList("List_zal");
+            mMapRecyclerView.setList_hall(list_zal);
+            mMapRecyclerView.notifyDataSetChanged();
         }
     }
+
 
     public static ListMap newInstance() {
         Bundle arg = new Bundle();
@@ -86,24 +84,5 @@ public class ListMap extends Fragment implements DataBaseFireBaseFragmentMap.Cal
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement StartFragment2");
         }
-    }
-
-    @Override
-    public void mCallback(List<String> mList_Zal) {
-//        Log.d("Log", "ListMap, list_zal " + mList_Zal);
-//        if (mList_Zal != null) {
-//            mMapRecyclerView.setList_hall(mList_Zal);
-//            mMapRecyclerView.notifyDataSetChanged();
-//        }
-    }
-
-    public static boolean isOnline(Context context) {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
     }
 }

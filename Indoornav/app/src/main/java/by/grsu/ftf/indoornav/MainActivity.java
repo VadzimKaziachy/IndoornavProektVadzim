@@ -166,8 +166,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     private void dataBaseFireBase() {
         DataBaseFireBase dataBase = new DataBaseFireBase(this);
         dataBase.dataBaseFireBase(this);
-//        List<BeaconFireBase> mBeacon = dataBase.dataBaseFireBase(this);
-//        beaconViewModel.setBeaconCoordinate(mBeacon);
     }
 
     @Override
@@ -200,8 +198,6 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
 
     @Override
     public void mCallingBack(List<BeaconFireBase> mBeacon) {
-        Log.d("Log", "скачались данные пришли " + mBeacon);
         beaconViewModel.setBeaconCoordinate(mBeacon);
-        Log.d("Log", "скачались данные спомощью Callback");
     }
 }

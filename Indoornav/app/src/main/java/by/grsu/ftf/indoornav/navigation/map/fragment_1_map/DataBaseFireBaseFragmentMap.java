@@ -23,7 +23,7 @@ public class DataBaseFireBaseFragmentMap {
 
     private Callback callback;
 
-    public interface Callback{
+    public interface Callback {
         void mCallback(List<String> mList_Zal);
     }
 
@@ -31,9 +31,9 @@ public class DataBaseFireBaseFragmentMap {
         this.callback = callback;
     }
 
-    public void dataBaseFireBase(final Context context){
+    public void dataBaseFireBase(final Context context) {
 
-       final List<String> list_Zal = new ArrayList<>();
+        final List<String> list_Zal = new ArrayList<>();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
         myRef.child("Vadim").child("List_Zal").addValueEventListener(new ValueEventListener() {
             @Override
@@ -41,6 +41,7 @@ public class DataBaseFireBaseFragmentMap {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
                     list_Zal.add(dataSh.getValue(String.class));
                 }
+                callback.mCallback(list_Zal);
             }
 
             @Override
@@ -48,6 +49,5 @@ public class DataBaseFireBaseFragmentMap {
                 Toast.makeText(context, "нет покдлючения к интернету", Toast.LENGTH_LONG).show();
             }
         });
-        callback.mCallback(list_Zal);
     }
 }

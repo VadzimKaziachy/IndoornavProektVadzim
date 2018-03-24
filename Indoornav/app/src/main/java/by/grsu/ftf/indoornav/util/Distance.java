@@ -30,7 +30,7 @@ public class Distance {
         progressRSSI = Math.abs((minRSSI - Float.valueOf(rssi)) / (maxRSSI - minRSSI));
         RSSIprogress = Math.abs((maxRSSI - Float.valueOf(rssi)) / (maxRSSI - minRSSI));
 
-        Log.d("Log", name + " = " + LIST_BEACON.get(1) + " = " + DISTANCE);
+//        Log.d("Log", name + " = " + LIST_BEACON.get(1) + " = " + DISTANCE);
         beacon.setId(id);
         beacon.setName(name);
         beacon.setDistance(DISTANCE);

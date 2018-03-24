@@ -120,6 +120,7 @@ public class EntryActivity extends AppCompatActivity implements BeaconController
             Log.d("Log", "summa = " + a);
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mDatabase.child("Vadim")
+                    .child("Beacon")
                     .child("Beacon" + beacon.getName().substring(2))
                     .child("base")
                     .setValue(a);

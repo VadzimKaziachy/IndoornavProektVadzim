@@ -33,7 +33,7 @@ public class DataBaseFireBase {
         this.callback = callback;
     }
 
-    public List<BeaconFireBase> dataBaseFireBase(final Context context) {
+    public void dataBaseFireBase(final Context context) {
 
         final List<BeaconFireBase> mBeacon = new ArrayList<>();
 
@@ -51,6 +51,7 @@ public class DataBaseFireBase {
                     }
                     mBeacon.add(beacon);
                 }
+                callback.mCallingBack(mBeacon);
             }
 
             @Override
@@ -58,7 +59,5 @@ public class DataBaseFireBase {
                 Toast.makeText(context, "нет покдлючения к интернету", Toast.LENGTH_LONG).show();
             }
         });
-        callback.mCallingBack(mBeacon);
-        return mBeacon;
     }
 }

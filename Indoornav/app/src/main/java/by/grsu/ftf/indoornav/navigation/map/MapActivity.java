@@ -2,8 +2,14 @@ package by.grsu.ftf.indoornav.navigation.map;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +22,7 @@ import android.view.MenuItem;
 
 import com.example.indoornav.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlib.BeaconControllerService;
@@ -25,6 +32,8 @@ import by.grsu.ftf.indoornav.db.BeaconLifecycle;
 import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
+import by.grsu.ftf.indoornav.navigation.map.fragment_0_map.InitialWindow;
+import by.grsu.ftf.indoornav.navigation.map.fragment_1_map.DataBaseFireBaseFragmentMap;
 import by.grsu.ftf.indoornav.navigation.map.fragment_1_map.ListMap;
 import by.grsu.ftf.indoornav.navigation.map.fragment_1_map.StartFragment2Map;
 import by.grsu.ftf.indoornav.navigation.map.fragment_2_map.CallbackCoordin;
@@ -40,16 +49,24 @@ import static by.grsu.ftf.indoornav.MainActivity.DIALOG_INTERNET;
  */
 
 public class MapActivity extends AppCompatActivity implements BeaconControllerService.Callbacks,
-                                                              StartFragment2Map,
-                                                              CallbackCoordin {
+        StartFragment2Map,
+        CallbackCoordin,
+        DataBaseFireBaseFragmentMap.Callback {
 
 
-    private BeaconViewModel beaconViewModel;
+    private BeaconViewModel mViewModel;
+    private MyCountDownTime myCountDownTimer;
     private Distance distance;
     private Trilateration mCoordinate;
     private Beacon beacon;
+    private TimerRun run;
+    private Handler handler;
     private List<Beacon> beacons;
+    private List<String> list_zal;
+    private int time = 0;
     private boolean mRecord = true;
+    private boolean mFlagTime = false;
+    private boolean mFlagList = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,27 +76,59 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         initComponent();
 
         if (savedInstanceState == null) {
-            beaconViewModel.deleteAll();
+            mViewModel.deleteAll();
+
             FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = ListMap.newInstance();
+            Fragment fragment = InitialWindow.newInstance();
             fm.beginTransaction()
                     .add(R.id.activity_map, fragment)
                     .commit();
+            time = 3;
+            myCountDownTimer = new MyCountDownTime(time * 1000, 1000);
+            myCountDownTimer.start();
         }
 
-        if (!MainActivity.isOnline(this) && savedInstanceState == null) {
+        if (!isOnline(this) && savedInstanceState == null) {
             FragmentManager manager = getSupportFragmentManager();
             InternetInquiryFragment internet = new InternetInquiryFragment();
             internet.show(manager, DIALOG_INTERNET);
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mViewModel.getTime() != null) {
+            time = mViewModel.getTime();
+            myCountDownTimer = new MyCountDownTime(time * 1000, 1000);
+            myCountDownTimer.start();
+        }
+
+        if (isOnline(this) && mViewModel.getList_zal() == null) {
+            DataBaseFireBaseFragmentMap dataBase = new DataBaseFireBaseFragmentMap(this);
+            dataBase.dataBaseFireBase(this);
+        } else if (mViewModel.getList_zal() != null) {
+            list_zal = mViewModel.getList_zal();
+        }
+        run.run();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (myCountDownTimer != null) {
+            myCountDownTimer.cancel();
+        }
+        handler.removeCallbacks(run);
     }
 
     private void initComponent() {
         distance = new Distance();
         mCoordinate = new Trilateration();
-        beaconViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
-        beaconViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
+        handler = new Handler();
+        run = new TimerRun();
+        mViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
+        mViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
             @Override
             public void onChanged(@Nullable List<Beacon> mBeacon) {
                 beacons = mBeacon;
@@ -91,15 +140,15 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     @Override
     public void updateClient(List<String> list) {
         coordinateRecord();
-        beacon = distance.distanceBeacon(list, beaconViewModel.getBeaconCoordinate());
-        beaconViewModel.addBeacon(beacon);
+        beacon = distance.distanceBeacon(list, mViewModel.getBeaconCoordinate());
+        mViewModel.addBeacon(beacon);
     }
 
     private void coordinateRecord() {
-        if(beaconViewModel.getBeaconCoordinate()!=null) {
-            if (beaconViewModel.getBeaconCoordinate().size() != 0 && mRecord) {
-                List<Beacon> mBeacon = distance.mCoordinate(beacons, beaconViewModel.getBeaconCoordinate());
-                beaconViewModel.updateList(mBeacon);
+        if (mViewModel.getBeaconCoordinate() != null) {
+            if (mViewModel.getBeaconCoordinate().size() != 0 && mRecord) {
+                List<Beacon> mBeacon = distance.mCoordinate(beacons, mViewModel.getBeaconCoordinate());
+                mViewModel.updateList(mBeacon);
                 mRecord = false;
             }
         }
@@ -137,6 +186,62 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
 
     @Override
     public void callbackCoordin(List<BeaconFireBase> mBeacon) {
-        beaconViewModel.setBeaconCoordinate(mBeacon);
+        mViewModel.setBeaconCoordinate(mBeacon);
+    }
+
+    @Override
+    public void mCallback(List<String> mList_Zal) {
+        mViewModel.setList_zal(mList_Zal);
+        list_zal = mList_Zal;
+        mFlagList = true;
+    }
+
+
+    private class MyCountDownTime extends CountDownTimer {
+
+        public MyCountDownTime(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+            mViewModel.setTime((int) (l / 1000));
+        }
+
+        @Override
+        public void onFinish() {
+            mFlagTime = true;
+        }
+    }
+
+    private class TimerRun implements Runnable {
+
+        @Override
+        public void run() {
+            if (mFlagList && mFlagTime) {
+                Bundle arg = new Bundle();
+                ListMap listMap = new ListMap();
+                arg.putStringArrayList("List_zal", (ArrayList<String>) list_zal);
+                listMap.setArguments(arg);
+                FragmentManager fm = getSupportFragmentManager();
+                Fragment fragment = listMap;
+                fm.beginTransaction()
+                        .replace(R.id.activity_map, fragment)
+                        .commit();
+                mFlagTime = false;
+                mFlagList = false;
+            }
+            handler.postDelayed(run, 500);
+        }
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 }
