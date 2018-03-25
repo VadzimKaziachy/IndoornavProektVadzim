@@ -1,5 +1,6 @@
 package by.grsu.ftf.indoornav.navigation.map;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,13 +10,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.provider.ContactsContract;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,7 +60,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     private Trilateration mCoordinate;
     private Beacon beacon;
     private TimerRun run;
-    private Handler handler;
     private List<Beacon> beacons;
     private List<String> list_zal;
     private int time = 0;
@@ -107,10 +106,13 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         if (isOnline(this) && mViewModel.getList_zal() == null) {
             DataBaseFireBaseFragmentMap dataBase = new DataBaseFireBaseFragmentMap(this);
             dataBase.dataBaseFireBase(this);
-        } else if (mViewModel.getList_zal() != null) {
-            list_zal = mViewModel.getList_zal();
         }
-        run.run();
+
+        if (mViewModel.getList_zal() != null) {
+            list_zal = mViewModel.getList_zal();
+        } else {
+            run.run();
+        }
     }
 
     @Override
@@ -125,7 +127,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     private void initComponent() {
         distance = new Distance();
         mCoordinate = new Trilateration();
-        handler = new Handler();
         run = new TimerRun();
         mViewModel = ViewModelProviders.of(this).get(BeaconViewModel.class);
         mViewModel.getBeacon().observe(this, new Observer<List<Beacon>>() {
@@ -135,7 +136,6 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
             }
         });
     }
-
 
     @Override
     public void updateClient(List<String> list) {
@@ -214,22 +214,30 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         }
     }
 
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle arg = new Bundle();
+            ListMap listMap = new ListMap();
+            arg.putStringArrayList("List_zal", (ArrayList<String>) list_zal);
+            listMap.setArguments(arg);
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.activity_map, listMap)
+                    .commit();
+            handler.removeCallbacks(run);
+        }
+    };
+
+
     private class TimerRun implements Runnable {
 
         @Override
         public void run() {
             if (mFlagList && mFlagTime) {
-                Bundle arg = new Bundle();
-                ListMap listMap = new ListMap();
-                arg.putStringArrayList("List_zal", (ArrayList<String>) list_zal);
-                listMap.setArguments(arg);
-                FragmentManager fm = getSupportFragmentManager();
-                Fragment fragment = listMap;
-                fm.beginTransaction()
-                        .replace(R.id.activity_map, fragment)
-                        .commit();
-                mFlagTime = false;
-                mFlagList = false;
+                handler.sendEmptyMessage(1);
             }
             handler.postDelayed(run, 500);
         }
