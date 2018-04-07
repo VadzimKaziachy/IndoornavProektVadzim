@@ -5,10 +5,14 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -32,13 +36,19 @@ public class Map extends View {
     private Drawable bluetooth_point;
     private Drawable map;
     private Drawable human;
+    private Bitmap mapBas;
     private Paint paint;
     private List<Beacon> beacons = new ArrayList<>();
     private float X;
     private float Y;
+    private int width;
+    private int height;
+    private boolean flagPicture = false;
+    private Context context;
 
     public Map(Context context) {
         this(context, null);
+        this.context = context;
     }
 
     public Map(Context context, @Nullable AttributeSet attrs) {
@@ -58,7 +68,11 @@ public class Map extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        map.draw(canvas);
+        if (flagPicture) {
+            canvas.drawBitmap(mapBas, 0, 0, null);
+        } else {
+            map.draw(canvas);
+        }
 
         for (Beacon beacon : beacons) {
             if (beacon.getX() != null) {
@@ -87,8 +101,8 @@ public class Map extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        final int width = getMeasuredWidth();
-        final int height = getMeasuredHeight();
+        width = getMeasuredWidth();
+        height = getMeasuredHeight();
         map.setBounds(0, 0, width, height);
 
     }
@@ -128,6 +142,15 @@ public class Map extends View {
             }
         });
         xy.start();
+    }
+
+    public void picture(Drawable pictureDrawable) {
+        mapBas = Bitmap.createBitmap(pictureDrawable.getIntrinsicWidth(), pictureDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mapBas);
+        pictureDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        pictureDrawable.draw(canvas);
+        flagPicture = true;
+        invalidate();
     }
 }
 

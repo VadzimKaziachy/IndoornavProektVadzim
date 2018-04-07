@@ -8,18 +8,106 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:238864344344:android:0f09b63e8b235c2a",
+        "mobilesdk_app_id": "1:238864344344:android:e2ddfde83d2912a4",
         "android_client_info": {
-          "package_name": "com.example.indoornav"
+          "package_name": "andrei.ftf.grsu.by.maps"
         }
       },
       "oauth_client": [
         {
-          "client_id": "238864344344-t9g3h2vmdth28i0bvapfjohe8a558813.apps.googleusercontent.com",
+          "client_id": "238864344344-f6knj2j3dk1bkfc5fmiup9nvdhp77fgh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.indoornav",
-            "certificate_hash": "16a030cedf3d6621602b368d910904cf2cb44ca0"
+            "package_name": "andrei.ftf.grsu.by.maps",
+            "certificate_hash": "bac7306d7023a207d1bb5da8d994752ac334b3f8"
+          }
+        },
+        {
+          "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7O3aol_5cX2ubSHWIhFk_Knc-qLUn_y8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238864344344:android:407159a0082656a1",
+        "android_client_info": {
+          "package_name": "by.grsu.ftf.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238864344344-5darneagspbkvhdj9qn99ehtnp28bsh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "by.grsu.ftf.activity",
+            "certificate_hash": "c02868ef938d39bfffbff4b944d8165d9fccd1aa"
+          }
+        },
+        {
+          "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7O3aol_5cX2ubSHWIhFk_Knc-qLUn_y8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238864344344:android:567ecc495cd3e814",
+        "android_client_info": {
+          "package_name": "by.grsu.ftf.indoornavigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238864344344-4nsvggfp0qcelbk48v5248974dqtgigr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "by.grsu.ftf.indoornavigation",
+            "certificate_hash": "6787292c12155792b35ca85cf95c57f99bdb8172"
           }
         },
         {
@@ -108,6 +196,50 @@
           "android_info": {
             "package_name": "com.example.firebase",
             "certificate_hash": "c02868ef938d39bfffbff4b944d8165d9fccd1aa"
+          }
+        },
+        {
+          "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7O3aol_5cX2ubSHWIhFk_Knc-qLUn_y8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238864344344-10jmjcs4b499h8h5t2ru97n6td0e0knb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238864344344:android:0f09b63e8b235c2a",
+        "android_client_info": {
+          "package_name": "com.example.indoornav"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238864344344-t9g3h2vmdth28i0bvapfjohe8a558813.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.indoornav",
+            "certificate_hash": "16a030cedf3d6621602b368d910904cf2cb44ca0"
           }
         },
         {

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements BeaconControllerS
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_masterdetail);
         getLifecycle().addObserver(new BeaconLifecycle(this));

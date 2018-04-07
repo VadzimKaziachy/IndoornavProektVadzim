@@ -70,6 +70,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.activite_map);
         getLifecycle().addObserver(new BeaconLifecycle(this));
         initComponent();
@@ -77,11 +78,11 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         if (savedInstanceState == null) {
             mViewModel.deleteAll();
 
-            FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = InitialWindow.newInstance();
-            fm.beginTransaction()
-                    .add(R.id.activity_map, fragment)
-                    .commit();
+//            FragmentManager fm = getSupportFragmentManager();
+//            Fragment fragment = InitialWindow.newInstance();
+//            fm.beginTransaction()
+//                    .add(R.id.activity_map, fragment)
+//                    .commit();
             time = 3;
             myCountDownTimer = new MyCountDownTime(time * 1000, 1000);
             myCountDownTimer.start();
@@ -225,7 +226,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
             listMap.setArguments(arg);
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction()
-                    .replace(R.id.activity_map, listMap)
+                    .add(R.id.activity_map, listMap)
                     .commit();
             handler.removeCallbacks(run);
         }

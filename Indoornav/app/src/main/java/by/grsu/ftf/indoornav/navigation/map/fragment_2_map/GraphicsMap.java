@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import by.grsu.ftf.indoornav.db.BeaconViewModel;
 import by.grsu.ftf.indoornav.db.beacon.Beacon;
 import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 import by.grsu.ftf.indoornav.storage.BeaconMerger;
+import by.grsu.ftf.indoornav.storage.CallbackPicture;
 import by.grsu.ftf.indoornav.storage.DataBaseFireBase;
 import by.grsu.ftf.indoornav.util.Distance;
 import by.grsu.ftf.indoornav.util.Trilateration;
@@ -30,7 +32,7 @@ import by.grsu.ftf.indoornav.util.Trilateration;
  * Created by Vadzim on 17.03.2018.
  */
 
-public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback {
+public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback, CallbackPicture {
 
     private Map map;
     private BeaconViewModel beaconViewModel;
@@ -100,8 +102,14 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback {
         super.onStart();
 
         if (MainActivity.isOnline(getContext())) {
+            DataBaseFireBase dataBase = new DataBaseFireBase(this);
+            if(beaconViewModel.getPicture() == null){
+                dataBase.setCallbackPicture(this);
+                dataBase.fireBasePicture();
+            } else {
+                map.picture(beaconViewModel.getPicture());
+            }
             if (beaconViewModel.getBeaconCoordinate() == null) {
-                DataBaseFireBase dataBase = new DataBaseFireBase(this);
                 dataBase.dataBaseFireBase(getContext());
             }
         }
@@ -110,6 +118,12 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback {
     @Override
     public void mCallingBack(List<BeaconFireBase> mBeacon) {
         mCallbackCoordin.callbackCoordin(mBeacon);
+    }
+
+    @Override
+    public void CallbackPict(Drawable drawable) {
+        beaconViewModel.setPicture(drawable);
+        map.picture(drawable);
     }
 
     public static GraphicsMap newInstance() {
