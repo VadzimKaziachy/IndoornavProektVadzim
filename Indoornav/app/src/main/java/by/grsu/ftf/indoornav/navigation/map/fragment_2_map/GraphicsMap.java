@@ -4,6 +4,7 @@ package by.grsu.ftf.indoornav.navigation.map.fragment_2_map;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Picture;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -107,7 +108,7 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback, 
                 dataBase.setCallbackPicture(this);
                 dataBase.fireBasePicture();
             } else {
-                map.picture(beaconViewModel.getPicture());
+                map.setPicture(beaconViewModel.getPicture());
             }
             if (beaconViewModel.getBeaconCoordinate() == null) {
                 dataBase.dataBaseFireBase(getContext());
@@ -121,9 +122,9 @@ public class GraphicsMap extends Fragment implements DataBaseFireBase.Callback, 
     }
 
     @Override
-    public void CallbackPict(Drawable drawable) {
+    public void CallbackPict(Picture drawable) {
         beaconViewModel.setPicture(drawable);
-        map.picture(drawable);
+        map.setPicture(drawable);
     }
 
     public static GraphicsMap newInstance() {

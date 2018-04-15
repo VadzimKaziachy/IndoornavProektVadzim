@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import java.util.List;
@@ -26,7 +27,7 @@ public class BeaconViewModel extends AndroidViewModel {
     private Integer time;
     private Integer angle;
     private List<String> List_zal;
-    private Drawable picture;
+    private Picture picture;
 
     public BeaconViewModel(@NonNull Application application) {
         super(application);
@@ -113,11 +114,11 @@ public class BeaconViewModel extends AndroidViewModel {
         List_zal = list_zal;
     }
 
-    public Drawable getPicture() {
+    public Picture getPicture() {
         return picture;
     }
 
-    public void setPicture(Drawable picture) {
+    public void setPicture(Picture picture) {
         this.picture = picture;
     }
 }

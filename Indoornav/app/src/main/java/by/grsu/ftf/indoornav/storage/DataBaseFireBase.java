@@ -2,6 +2,7 @@ package by.grsu.ftf.indoornav.storage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -97,8 +98,8 @@ public class DataBaseFireBase {
                                 e.printStackTrace();
                             }
                             SVG svg = SVGParser.getSVGFromInputStream(a);
-                            Drawable drawable = svg.createPictureDrawable();
-                            callbackPicture.CallbackPict(drawable);
+                            Picture p = svg.getPicture();
+                            callbackPicture.CallbackPict(p);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
