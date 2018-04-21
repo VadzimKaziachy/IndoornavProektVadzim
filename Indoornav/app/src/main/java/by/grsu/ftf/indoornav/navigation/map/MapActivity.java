@@ -78,11 +78,11 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         if (savedInstanceState == null) {
             mViewModel.deleteAll();
 
-//            FragmentManager fm = getSupportFragmentManager();
-//            Fragment fragment = InitialWindow.newInstance();
-//            fm.beginTransaction()
-//                    .add(R.id.activity_map, fragment)
-//                    .commit();
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment fragment = InitialWindow.newInstance();
+            fm.beginTransaction()
+                    .add(R.id.activity_map, fragment)
+                    .commit();
             time = 3;
             myCountDownTimer = new MyCountDownTime(time * 1000, 1000);
             myCountDownTimer.start();
@@ -182,6 +182,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
         Fragment fragment = GraphicsMap.newInstance();
         FragmentTransaction fm = getSupportFragmentManager().beginTransaction();
         fm.replace(R.id.activity_map, fragment);
+        fm.addToBackStack(null);
         fm.commit();
     }
 
@@ -226,7 +227,7 @@ public class MapActivity extends AppCompatActivity implements BeaconControllerSe
             listMap.setArguments(arg);
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction()
-                    .add(R.id.activity_map, listMap)
+                    .replace(R.id.activity_map, listMap)
                     .commit();
             handler.removeCallbacks(run);
         }

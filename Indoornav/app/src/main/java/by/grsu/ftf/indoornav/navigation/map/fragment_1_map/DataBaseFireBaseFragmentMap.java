@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
+import by.grsu.ftf.indoornav.db.listZal.Zal;
 
 /**
  * Created by Vadzim on 19.03.2018.
@@ -22,6 +23,7 @@ import by.grsu.ftf.indoornav.db.classesAssistant.BeaconFireBase;
 public class DataBaseFireBaseFragmentMap {
 
     private Callback callback;
+//    private Zal zal;
 
     public interface Callback {
         void mCallback(List<String> mList_Zal);
@@ -35,10 +37,13 @@ public class DataBaseFireBaseFragmentMap {
 
         final List<String> list_Zal = new ArrayList<>();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child("Vadim").child("List_Zal").addValueEventListener(new ValueEventListener() {
+        myRef.child("Vadim").child("zal1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSh : dataSnapshot.getChildren()) {
+//                    zal = new Zal();
+//                    zal.setZal(dataSh.child("zal").getValue(String.class));
+//                    zal.setUrl(dataSh.child("url").getValue(String.class));
                     list_Zal.add(dataSh.getValue(String.class));
                 }
                 callback.mCallback(list_Zal);

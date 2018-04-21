@@ -8,9 +8,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
@@ -44,16 +46,17 @@ public class Map extends View {
     private List<Beacon> beacons = new ArrayList<>();
     private float X;
     private float Y;
-    private float pictXOffset;
-    private float pictYOffset;
-    private int width;
-    private int height;
+    private float svgYOffset = 0;
+    private float svgXOffset = 0;
     private boolean flagPicture = false;
-    private Context context;
+    private boolean flagCalculate = true;
+    private Canvas canvas;
+    private float k;
+    private int radius;
+    private Rect rect;
 
     public Map(Context context) {
         this(context, null);
-        this.context = context;
     }
 
     public Map(Context context, @Nullable AttributeSet attrs) {
@@ -73,33 +76,34 @@ public class Map extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int needSave = canvas.save();
+        this.canvas = canvas;
         if (flagPicture) {
-            canvas.scale((float) canvas.getWidth() / picture.getWidth(),
-                    (float) canvas.getHeight() / picture.getHeight());
+            if (flagCalculate) {
+                calculateScalingOptions();
+            }
+            canvas.drawPicture(picture, rect);
             mapBas.draw(canvas);
-            canvas.restoreToCount(needSave);
 
             if (beacons != null) {
                 for (Beacon beacon : beacons) {
                     if (beacon.getX() != null) {
-                        Integer x = Math.round(beacon.getX() * canvas.getWidth());
-                        Integer y = Math.round(beacon.getY() * canvas.getHeight());
-                        bluetooth_point.setBounds(x - 50, y - 50, x + 50, y + 50);
+                        Integer x = Math.round(svgXOffset + k * beacon.getX() * picture.getWidth());
+                        Integer y = Math.round(svgYOffset + k * beacon.getY() * picture.getHeight());
+                        bluetooth_point.setBounds(x - radius, y - radius, x + radius, y + radius);
                         bluetooth_point.draw(canvas);
-                        if (canvas.getWidth() < canvas.getHeight()) {
-                            canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getWidth(), paint);
-                        } else {
-                            canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getHeight(), paint);
-                        }
+//                        if (canvas.getWidth() < canvas.getHeight()) {
+//                            canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getWidth(), paint);
+//                        } else {
+//                            canvas.drawCircle(x, y, beacon.getRSSIprogress() * canvas.getHeight(), paint);
+//                        }
 
                     }
                 }
             }
             if (mCoordinate) {
-                Integer x = Math.round(X * canvas.getWidth());
-                Integer y = Math.round(Y * canvas.getHeight());
-                human.setBounds(x - 50, y - 50, x + 50, y + 50);
+                Integer x = Math.round(svgXOffset + k * X * picture.getWidth());
+                Integer y = Math.round(svgYOffset + k * Y * picture.getHeight());
+                human.setBounds(x - radius, y - radius, x + radius, y + radius);
                 human.draw(canvas);
             }
         } else {
@@ -110,7 +114,6 @@ public class Map extends View {
     public void setPicture(Picture picture) {
         this.picture = picture;
         mapBas = new PictureDrawable(picture);
-        mapBas.setBounds(0, 0, picture.getWidth(), picture.getHeight());
         flagPicture = true;
         invalidate();
     }
@@ -118,9 +121,9 @@ public class Map extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        int x = (right - left)/2;
-        int y = (bottom - top)/2;
-        map.setBounds(x-50, y - 50, x + 50, y + 50);
+        int x = (right - left) / 2;
+        int y = (bottom - top) / 2;
+        map.setBounds(x - 50, y - 50, x + 50, y + 50);
     }
 
     public void provider(List<Beacon> beacons, PointF coordinate) {
@@ -158,6 +161,33 @@ public class Map extends View {
             }
         });
         xy.start();
+    }
+
+    private void calculateScalingOptions() {
+        float svgWidth = picture.getWidth();
+        float svgHeight = picture.getHeight();
+        float viewWidth = canvas.getWidth();
+        float viewHeight = canvas.getHeight();
+        radius = Math.round(Math.min(picture.getHeight(), picture.getWidth()) / 20);
+
+
+        if (viewWidth > svgWidth && viewHeight > svgHeight) {
+            float x = viewWidth - svgWidth;
+            float y = viewHeight - svgHeight;
+
+            if (x < y) {
+                k = viewWidth / svgWidth;
+                svgYOffset = viewHeight / 2 - k * svgHeight / 2;
+                rect = new Rect(0, (int) ((viewHeight / 2 - k * svgHeight / 2)),
+                        (int) (k * svgWidth), (int) ((viewHeight / 2 + k * svgHeight / 2)));
+            } else {
+                k = viewHeight / svgHeight;
+                svgXOffset = viewWidth / 2 - k * svgWidth / 2;
+                rect = new Rect((int) (viewWidth / 2 - k * svgWidth / 2), 0,
+                        (int) (viewWidth / 2 + k * svgWidth / 2), (int) (k * svgHeight));
+            }
+        }
+        flagCalculate = false;
     }
 }
 

@@ -29,8 +29,8 @@ public class InitialWindow extends Fragment {
         View view = inflater.inflate(R.layout.fragment_0_map, container, false);
         setRetainInstance(true);
 //        initialWindowView = (InitialWindowView) view.findViewById(R.id.initialWindowView);
-        progress = (InitialWindowViewProgress) view.findViewById(R.id.progress);
-        anim_exposit = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_exposit);
+//        progress = (InitialWindowViewProgress) view.findViewById(R.id.progress);
+//        anim_exposit = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_exposit);
 //        if (savedInstanceState == null) {
 //            initialWindowView.startAnimation(anim_exposit);
 //        }
